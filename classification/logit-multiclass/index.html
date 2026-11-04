@@ -1,0 +1,1659 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Data Science interview prep notes">
+      
+      
+      
+      
+        <link rel="prev" href="../../cheatsheet/">
+      
+      
+        <link rel="next" href="../auc/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Logistic & multiclass - Prep DS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#binary-classification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Prep DS" class="md-header__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Prep DS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Logistic & multiclass
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Prep DS" class="md-nav__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Prep DS
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logistic & multiclass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AUC & ROC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Statistical inference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Statistical inference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    p-values and tests
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    p-values and tests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/t-distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    t-distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/one-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/two-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/paired-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paired t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/z-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    z-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/wilcoxon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wilcoxon signed-rank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/chi-square/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chi-square independence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/anova/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-way ANOVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Probability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/expectation-first-step/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First-step expectation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/mle-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLE and MAP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model evaluation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model evaluation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-evaluation/drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data drift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sql/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-design/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System design roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../puzzles/fermi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Puzzles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general-qa/interview-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="binary-classification">Binary classification<a class="headerlink" href="#binary-classification" title="Permanent link">&para;</a></h1>
+<p>A binary classifier receives features <span class="arithmatex">\(x\)</span> and predicts a label <span class="arithmatex">\(y\in\{0,1\}\)</span>. In fraud detection <span class="arithmatex">\(y=1\)</span> means fraud and <span class="arithmatex">\(y=0\)</span> means legitimate. The useful output is not a hard label but a probability </p>
+<div class="arithmatex">\[p(x) = \mathbb{P}(Y=1\mid x),\]</div>
+<p>because decisions (block, review, allow) depend on a threshold that reflects the cost of each kind of error.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 1: Running example</p>
+<p>A payment network processes <span class="arithmatex">\(1{,}000{,}000\)</span> transactions, of which <span class="arithmatex">\(5{,}000\)</span> are fraud. The base rate (prior) is <span class="arithmatex">\(\pi=\mathbb{P}(Y=1)=0.5\%\)</span>. A transaction with the pattern <em>3 a.m., large amount, new device</em> occurs in <span class="arithmatex">\(3{,}000\)</span> of the <span class="arithmatex">\(5{,}000\)</span> frauds and in about <span class="arithmatex">\(10{,}000\)</span> of the <span class="arithmatex">\(995{,}000\)</span> legitimate cases.</p>
+</div>
+<p>Two ways of conditioning give very different answers: </p>
+<div class="arithmatex">\[\mathbb{P}(\text{pattern}\mid\text{fraud})=\tfrac{3000}{5000}=60\%,
+\qquad
+\mathbb{P}(\text{fraud}\mid\text{pattern})=\tfrac{3000}{13000}\approx 23.1\%.\]</div>
+<p>The first describes how fraudsters behave; the second says how trustworthy an alert is. The gap between them is caused by the rarity of fraud, and odds are the cleanest way to see this.</p>
+<h1 id="odds">Odds<a class="headerlink" href="#odds" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Definition: odds</p>
+<p>For an event with probability <span class="arithmatex">\(p\)</span>, the <em>odds</em> are </p>
+<div class="arithmatex">\[\text{odds}(p)=\frac{p}{1-p},\qquad p=\frac{\text{odds}}{1+\text{odds}}.\]</div>
+</div>
+<p>Odds restate a probability as “for versus against”. If <span class="arithmatex">\(3\)</span> of every <span class="arithmatex">\(13\)</span> alerts are fraud, then <span class="arithmatex">\(p=3/13\approx 23\%\)</span> and the odds are <span class="arithmatex">\(3:10=0.30\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><span class="arithmatex">\(p\)</span></th>
+<th style="text-align: right;">odds <span class="arithmatex">\(p/(1-p)\)</span></th>
+<th style="text-align: left;">In words</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0.5%</td>
+<td style="text-align: right;">0.00503</td>
+<td style="text-align: left;">about 1 fraud per 199 legitimate</td>
+</tr>
+<tr>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: left;">1 per 9</td>
+</tr>
+<tr>
+<td style="text-align: right;">23%</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: left;">3 per 10</td>
+</tr>
+<tr>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">even odds</td>
+</tr>
+<tr>
+<td style="text-align: right;">90%</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">9 per 1</td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dd>Probability versus odds. For small <span class="arithmatex">\(p\)</span> they are almost equal; they separate as <span class="arithmatex">\(p\)</span> grows.</dd>
+</dl>
+<h2 id="why-odds">Why odds?<a class="headerlink" href="#why-odds" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Odds range over <span class="arithmatex">\([0,\infty)\)</span> rather than <span class="arithmatex">\([0,1]\)</span>, which is one step closer to what a linear function can produce.</p>
+</li>
+<li>
+<p>Evidence multiplies odds. Bayes’ rule in odds form is </p>
+</li>
+</ol>
+<div class="arithmatex">\[\underbrace{\frac{\mathbb{P}(Y=1\mid x)}{\mathbb{P}(Y=0\mid x)}}_{\text{posterior odds}}
+    =\underbrace{\frac{\mathbb{P}(Y=1)}{\mathbb{P}(Y=0)}}_{\text{prior odds}}
+    \times
+    \underbrace{\frac{\mathbb{P}(x\mid Y=1)}{\mathbb{P}(x\mid Y=0)}}_{\text{likelihood ratio}}.\]</div>
+<pre><code> The marginal $\mathbb{P}(x)$ appears in both posteriors and cancels.
+</code></pre>
+<div class="admonition example">
+<p class="admonition-title">Example 2</p>
+<p>In Example 1 the prior odds are <span class="arithmatex">\(5000:995000\approx 0.005\)</span> and the likelihood ratio is <span class="arithmatex">\(0.60/0.01=60\)</span>. Posterior odds <span class="arithmatex">\(=0.005\times 60=0.30\)</span>, i.e. <span class="arithmatex">\(3000:10000\)</span>, a <span class="arithmatex">\(23\%\)</span> fraud probability. The pattern is <span class="arithmatex">\(60\)</span> times more common among fraud, yet only <span class="arithmatex">\(23\%\)</span> of cases showing it are fraud, because the prior odds are about <span class="arithmatex">\(1:199\)</span>.</p>
+</div>
+<h1 id="the-logit-log-odds">The logit (log-odds)<a class="headerlink" href="#the-logit-log-odds" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Definition: logit</p>
+<div class="arithmatex">\[\mathop{\mathrm{logit}}(p)=\ln\frac{p}{1-p}.\]</div>
+</div>
+<p>Odds are never negative, but a linear score <span class="arithmatex">\(w^\top x+b\)</span> can be any real number. The logarithm removes the last restriction: odds <span class="arithmatex">\(&lt;1\)</span> give a negative logit, odds <span class="arithmatex">\(=1\)</span> give <span class="arithmatex">\(0\)</span>, odds <span class="arithmatex">\(&gt;1\)</span> give a positive logit, and <span class="arithmatex">\(0,\infty\)</span> map to <span class="arithmatex">\(\mp\infty\)</span>. The logarithm also turns the product in Bayes’ rule into a sum: </p>
+<div class="arithmatex">\[\mathop{\mathrm{logit}}\mathbb{P}(Y=1\mid x)=\mathop{\mathrm{logit}}\pi+\ln\frac{\mathbb{P}(x\mid Y=1)}{\mathbb{P}(x\mid Y=0)}.\]</div>
+<p>Each piece of evidence adds a number to a running score, which is exactly how a linear model works.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><span class="arithmatex">\(p\)</span></th>
+<th style="text-align: right;">odds</th>
+<th style="text-align: right;"><span class="arithmatex">\(\mathop{\mathrm{logit}}(p)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1%</td>
+<td style="text-align: right;">0.0101</td>
+<td style="text-align: right;"><span class="arithmatex">\(-4.595\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;"><span class="arithmatex">\(-2.197\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><span class="arithmatex">\(0\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;">90%</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"><span class="arithmatex">\(+2.197\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;">99%</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;"><span class="arithmatex">\(+4.595\)</span></td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dd>The logit is antisymmetric: <span class="arithmatex">\(\mathop{\mathrm{logit}}(1-p)=-\mathop{\mathrm{logit}}(p)\)</span>.</dd>
+</dl>
+<div class="admonition example">
+<p class="admonition-title">Example 3</p>
+<p>The prior logit is <span class="arithmatex">\(\ln(1/199)=-5.29\)</span>. The pattern adds <span class="arithmatex">\(\ln 60=+4.09\)</span>, giving <span class="arithmatex">\(-1.20\)</span>: odds <span class="arithmatex">\(0.30\)</span>, probability <span class="arithmatex">\(23\%\)</span>. The score rose by <span class="arithmatex">\(4.09\)</span> but stays negative because the prior was so low.</p>
+</div>
+<h1 id="the-sigmoid">The sigmoid<a class="headerlink" href="#the-sigmoid" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Definition: sigmoid</p>
+<div class="arithmatex">\[\sigma(z)=\frac{1}{1+e^{-z}},\qquad \sigma(\mathop{\mathrm{logit}}(p))=p.\]</div>
+</div>
+<h4 id="derivation">Derivation.<a class="headerlink" href="#derivation" title="Permanent link">&para;</a></h4>
+<p>Solve <span class="arithmatex">\(z=\ln\frac{p}{1-p}\)</span> for <span class="arithmatex">\(p\)</span>: </p>
+<div class="arithmatex">\[e^{z}=\frac{p}{1-p}\;\Rightarrow\; e^{z}(1-p)=p\;\Rightarrow\; p=\frac{e^{z}}{1+e^{z}}=\frac{1}{1+e^{-z}}.\]</div>
+<h4 id="properties">Properties.<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\(\sigma(z)\in(0,1)\)</span>; <span class="arithmatex">\(\sigma(0)=\tfrac12\)</span>; <span class="arithmatex">\(\sigma(-z)=1-\sigma(z)\)</span>; <span class="arithmatex">\(\sigma'(z)=\sigma(z)(1-\sigma(z))\)</span>, with maximum slope <span class="arithmatex">\(0.25\)</span> at <span class="arithmatex">\(z=0\)</span>; every <span class="arithmatex">\(+1\)</span> on the score multiplies the odds by <span class="arithmatex">\(e\)</span>.</p>
+<p><img alt="" src="../figs/logit_tikz1.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Key idea</p>
+<p>Logit and sigmoid are the same relationship seen from two sides. A classifier works in score space, where addition and linear models are natural, and reports in probability space, where decisions and costs live.</p>
+</div>
+<h1 id="logistic-regression">Logistic regression<a class="headerlink" href="#logistic-regression" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Model</p>
+<p>Logistic regression assumes the log-odds are linear in the features: </p>
+<div class="arithmatex">\[\mathop{\mathrm{logit}}\mathbb{P}(Y=1\mid x)=w^\top x+b
+\quad\Longleftrightarrow\quad
+\mathbb{P}(Y=1\mid x)=\sigma(w^\top x+b).\]</div>
+</div>
+<h4 id="reading-the-weights">Reading the weights.<a class="headerlink" href="#reading-the-weights" title="Permanent link">&para;</a></h4>
+<p>Increasing <span class="arithmatex">\(x_j\)</span> by one unit raises the score by <span class="arithmatex">\(w_j\)</span> and multiplies the odds by <span class="arithmatex">\(e^{w_j}\)</span> (the <em>odds ratio</em>). For <span class="arithmatex">\(w_j=0.7\)</span>, <span class="arithmatex">\(e^{0.7}=2.014\)</span>: the odds double. The bias <span class="arithmatex">\(b\)</span> is the logit at <span class="arithmatex">\(x=0\)</span> and carries the base rate.</p>
+<h4 id="why-is-the-assumption-reasonable">Why is the assumption reasonable?<a class="headerlink" href="#why-is-the-assumption-reasonable" title="Permanent link">&para;</a></h4>
+<p>If features within each class are Gaussian with different means and a shared covariance <span class="arithmatex">\(\Sigma\)</span>, then the quadratic terms cancel and </p>
+<div class="arithmatex">\[\ln\frac{\mathbb{P}(x\mid1)}{\mathbb{P}(x\mid0)}=(\mu_1-\mu_0)^\top\Sigma^{-1}x+\text{const},\]</div>
+<p>which is linear in <span class="arithmatex">\(x\)</span>; adding the prior logit changes only the bias. The assumption concerns the log-odds, not the data being Gaussian.</p>
+<h4 id="geometry">Geometry.<a class="headerlink" href="#geometry" title="Permanent link">&para;</a></h4>
+<p>The boundary at threshold <span class="arithmatex">\(0.5\)</span> is the hyperplane <span class="arithmatex">\(w^\top x+b=0\)</span>. A different threshold <span class="arithmatex">\(t\)</span> shifts it parallel to itself to <span class="arithmatex">\(w^\top x+b=\mathop{\mathrm{logit}}(t)\)</span>.</p>
+<h1 id="binary-cross-entropy">Binary cross-entropy<a class="headerlink" href="#binary-cross-entropy" title="Permanent link">&para;</a></h1>
+<p>For label <span class="arithmatex">\(y\in\{0,1\}\)</span> and <span class="arithmatex">\(p=\sigma(z)\)</span>, the model gives <span class="arithmatex">\(\mathbb{P}(y\mid x)=p^{y}(1-p)^{1-y}\)</span>. For independent examples, the negative log-likelihood is </p>
+<div class="arithmatex">\[\mathcal L=-\frac1N\sum_{i=1}^{N}\bigl[y_i\ln p_i+(1-y_i)\ln(1-p_i)\bigr].\]</div>
+<p>A confident wrong prediction is expensive: <span class="arithmatex">\(p=0.01\)</span> on a fraud case costs <span class="arithmatex">\(-\ln 0.01=4.6\)</span>.</p>
+<div class="admonition info">
+<p class="admonition-title">Gradient</p>
+<p>Using <span class="arithmatex">\(\sigma'=\sigma(1-\sigma)\)</span>, </p>
+<div class="arithmatex">\[\frac{\partial\mathcal L}{\partial z}=p-y,\qquad
+\frac{\partial\mathcal L}{\partial w}=(p-y)\,x .\]</div>
+</div>
+<p>Consequences:</p>
+<ol>
+<li>
+<p><strong>No vanishing gradient.</strong> At <span class="arithmatex">\(p=0.01,\,y=1\)</span> the cross-entropy gradient is <span class="arithmatex">\(-0.99\)</span>, whereas squared error gives about <span class="arithmatex">\(-0.0098\)</span>.</p>
+</li>
+<li>
+<p><strong>Balance at the base rate.</strong> If the model outputs <span class="arithmatex">\(p=\pi=0.5\%\)</span> for everyone, gradients on the <span class="arithmatex">\(5{,}000\)</span> positives sum to <span class="arithmatex">\(-4{,}975\)</span> and on the <span class="arithmatex">\(995{,}000\)</span> negatives to <span class="arithmatex">\(+4{,}975\)</span>. They cancel, so the loss is minimised when predicted probability equals empirical frequency, which is why log loss yields calibrated probabilities.</p>
+</li>
+</ol>
+<p>The loss is convex in <span class="arithmatex">\((w,b)\)</span>.</p>
+<h4 id="focal-loss">Focal loss.<a class="headerlink" href="#focal-loss" title="Permanent link">&para;</a></h4>
+<p>Focal loss multiplies each term by <span class="arithmatex">\((1-p_t)^{\gamma}\)</span>, with <span class="arithmatex">\(p_t\)</span> the probability given to the true class. For <span class="arithmatex">\(\gamma=2\)</span> and <span class="arithmatex">\(p_t=0.9\)</span> cross-entropy is <span class="arithmatex">\(0.1054\)</span> and focal loss <span class="arithmatex">\(0.00105\)</span>; at <span class="arithmatex">\(p_t=0.5\)</span> they are <span class="arithmatex">\(0.693\)</span> and <span class="arithmatex">\(0.173\)</span>. Easy examples are suppressed, at the cost of calibration.</p>
+<p><img alt="" src="../figs/logit_tikz2.png" /></p>
+<h1 id="from-two-classes-to-k-odds-against-a-reference-class">From two classes to <span class="arithmatex">\(K\)</span>: odds against a reference class<a class="headerlink" href="#from-two-classes-to-k-odds-against-a-reference-class" title="Permanent link">&para;</a></h1>
+<p>With <span class="arithmatex">\(K\)</span> classes there is no single “other” class, so choose a reference (say class <span class="arithmatex">\(K\)</span>) and compare every class with it: </p>
+<div class="arithmatex">\[\ln\frac{\mathbb{P}(Y=k\mid x)}{\mathbb{P}(Y=K\mid x)}=z_k-z_K,\qquad k=1,\dots,K-1 .\]</div>
+<p>Setting <span class="arithmatex">\(z_K=0\)</span>, the odds of class <span class="arithmatex">\(k\)</span> against the reference are <span class="arithmatex">\(e^{z_k}\)</span>, and normalisation gives </p>
+<div class="arithmatex">\[\mathbb{P}(Y=K\mid x)=\frac{1}{1+\sum_{j&lt;K}e^{z_j}},\qquad \mathbb{P}(Y=k\mid x)=\mathbb{P}(Y=K\mid x)\,e^{z_k}.\]</div>
+<p>This is multinomial logistic regression, with <span class="arithmatex">\(K-1\)</span> weight vectors. The case <span class="arithmatex">\(K=2\)</span> is ordinary logistic regression.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 4</p>
+<p>Classes: legitimate (reference), card-not-present fraud, account takeover, with <span class="arithmatex">\(z_{\text{cnp}}=1\)</span>, <span class="arithmatex">\(z_{\text{ato}}=0\)</span>. Then <span class="arithmatex">\(\mathbb{P}(\text{legit})=1/(1+e+1)=0.212\)</span>, <span class="arithmatex">\(\mathbb{P}(\text{cnp})=0.576\)</span>, <span class="arithmatex">\(\mathbb{P}(\text{ato})=0.212\)</span>.</p>
+</div>
+<p>Choosing another reference changes the individual weights but not the probabilities: only score <em>differences</em> matter. This leads to the symmetric form.</p>
+<h1 id="softmax">Softmax<a class="headerlink" href="#softmax" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Definition: softmax</p>
+<div class="arithmatex">\[\mathop{\mathrm{softmax}}(z)_k=\frac{e^{z_k}}{\sum_{j=1}^{K}e^{z_j}}.\]</div>
+</div>
+<p>Dividing numerator and denominator by <span class="arithmatex">\(e^{z_K}\)</span> recovers the reference-class form. For <span class="arithmatex">\(K=2\)</span>, <span class="arithmatex">\(\mathop{\mathrm{softmax}}(z)_1=\sigma(z_1-z_2)\)</span>: the sigmoid is a two-class softmax.</p>
+<h4 id="properties_1">Properties.<a class="headerlink" href="#properties_1" title="Permanent link">&para;</a></h4>
+<p>Outputs are positive and sum to <span class="arithmatex">\(1\)</span>; adding a constant to all scores changes nothing (subtract <span class="arithmatex">\(\max_k z_k\)</span> in code to avoid overflow); the log-odds between any two classes is <span class="arithmatex">\(z_i-z_j\)</span>.</p>
+<h4 id="temperature">Temperature.<a class="headerlink" href="#temperature" title="Permanent link">&para;</a></h4>
+<p>Replace <span class="arithmatex">\(z\)</span> by <span class="arithmatex">\(z/T\)</span>. For scores <span class="arithmatex">\((2,1,0)\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><span class="arithmatex">\(T\)</span></th>
+<th style="text-align: right;">class 1</th>
+<th style="text-align: right;">class 2</th>
+<th style="text-align: right;">class 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.8668</td>
+<td style="text-align: right;">0.1173</td>
+<td style="text-align: right;">0.0159</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.6652</td>
+<td style="text-align: right;">0.2447</td>
+<td style="text-align: right;">0.0900</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.5065</td>
+<td style="text-align: right;">0.3072</td>
+<td style="text-align: right;">0.1863</td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dd>As <span class="arithmatex">\(T\to0\)</span> the output becomes one-hot; as <span class="arithmatex">\(T\to\infty\)</span> it becomes uniform.</dd>
+</dl>
+<p><img alt="" src="../figs/logit_tikz3.png" /></p>
+<h4 id="multi-class-versus-multi-label">Multi-class versus multi-label.<a class="headerlink" href="#multi-class-versus-multi-label" title="Permanent link">&para;</a></h4>
+<p>Softmax assumes exactly one correct class. If several labels can hold at once, use an independent sigmoid per label.</p>
+<h1 id="categorical-cross-entropy">Categorical cross-entropy<a class="headerlink" href="#categorical-cross-entropy" title="Permanent link">&para;</a></h1>
+<p>With a one-hot label (<span class="arithmatex">\(1\)</span> at the true class <span class="arithmatex">\(c\)</span>) and softmax probabilities <span class="arithmatex">\(p\)</span>, </p>
+<div class="arithmatex">\[\mathcal L=-\sum_{k=1}^{K}y_k\ln p_k=-\ln p_c .\]</div>
+<p>Binary cross-entropy is the case <span class="arithmatex">\(K=2\)</span>. The gradient with respect to the logits is again prediction minus truth: </p>
+<div class="arithmatex">\[\frac{\partial\mathcal L}{\partial z_k}=p_k-y_k,\]</div>
+<p>and sums to zero across classes, consistent with shift invariance.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5</p>
+<p>Scores <span class="arithmatex">\((2,1,0)\)</span> give <span class="arithmatex">\(p=(0.6652,0.2447,0.0900)\)</span>. If the true class is <span class="arithmatex">\(2\)</span>: <span class="arithmatex">\(\mathcal L=-\ln0.2447=1.408\)</span>, gradient <span class="arithmatex">\((0.6652,-0.7553,0.0900)\)</span>. If it is class <span class="arithmatex">\(1\)</span>: <span class="arithmatex">\(\mathcal L=-\ln0.6652=0.408\)</span>.</p>
+</div>
+<p>Squared error again suffers vanishing gradients for confident wrong predictions and is not the maximum-likelihood objective. In practice, frameworks fuse softmax and cross-entropy on raw logits (log-sum-exp trick) for stability.</p>
+<h1 id="worked-examples">Worked examples<a class="headerlink" href="#worked-examples" title="Permanent link">&para;</a></h1>
+<div class="admonition example">
+<p class="admonition-title">Example 6: Prior shift</p>
+<p>A model trained when fraud was <span class="arithmatex">\(0.5\%\)</span> is deployed at <span class="arithmatex">\(0.25\%\)</span>, assuming only the prior changed: </p>
+<div class="arithmatex">\[z_{\text{new}}=z_{\text{old}}+\mathop{\mathrm{logit}}(\pi_{\text{new}})-\mathop{\mathrm{logit}}(\pi_{\text{old}})=z_{\text{old}}-0.696 .\]</div>
+<p>Odds are multiplied by <span class="arithmatex">\(0.4987\)</span>. A score of <span class="arithmatex">\(23\%\)</span> (odds <span class="arithmatex">\(0.30\)</span>) becomes odds <span class="arithmatex">\(0.150\)</span>, i.e. <span class="arithmatex">\(13\%\)</span>. This is a bias shift, so ROC-AUC and PR-AUC are unchanged while precision at a fixed threshold changes. The same correction maps probabilities from a resampled training set back to the real base rate.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example 7: Odds ratio</p>
+<p>A weight of <span class="arithmatex">\(0.7\)</span> on “new device” gives odds ratio <span class="arithmatex">\(e^{0.7}=2.014\)</span>. From baseline odds <span class="arithmatex">\(0.00503\)</span> (0.5%) the new-device odds are <span class="arithmatex">\(0.01013\)</span>, about <span class="arithmatex">\(1.0\%\)</span>. Doubling odds roughly doubles a small probability, but from <span class="arithmatex">\(50\%\)</span> it only reaches <span class="arithmatex">\(67\%\)</span>.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example 8: Probabilities versus decisions</p>
+<p>With <span class="arithmatex">\(p=(0.665,0.245,0.090)\)</span> for (legitimate, CNP, ATO) the arg-max is legitimate, yet the fraud mass is <span class="arithmatex">\(33.5\%\)</span>. If account takeover is far costlier than a false alert, decide by expected cost, not arg-max.</p>
+</div>
+<h1 id="cheat-sheet-and-interview-one-liners">Cheat sheet and interview one-liners<a class="headerlink" href="#cheat-sheet-and-interview-one-liners" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">Formula</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Odds</td>
+<td style="text-align: left;"><span class="arithmatex">\(p/(1-p)\)</span></td>
+<td style="text-align: left;">for versus against, <span class="arithmatex">\([0,\infty)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Logit</td>
+<td style="text-align: left;"><span class="arithmatex">\(\ln\frac{p}{1-p}\)</span></td>
+<td style="text-align: left;">log-odds, whole real line</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sigmoid</td>
+<td style="text-align: left;"><span class="arithmatex">\(1/(1+e^{-z})\)</span></td>
+<td style="text-align: left;">score <span class="arithmatex">\(\to\)</span> probability</td>
+</tr>
+<tr>
+<td style="text-align: left;">Logistic regression</td>
+<td style="text-align: left;"><span class="arithmatex">\(\sigma(w^\top x+b)\)</span></td>
+<td style="text-align: left;">log-odds linear in <span class="arithmatex">\(x\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Odds ratio</td>
+<td style="text-align: left;"><span class="arithmatex">\(e^{w_j}\)</span></td>
+<td style="text-align: left;">odds multiplier per unit</td>
+</tr>
+<tr>
+<td style="text-align: left;">BCE</td>
+<td style="text-align: left;"><span class="arithmatex">\(-[y\ln p+(1-y)\ln(1-p)]\)</span></td>
+<td style="text-align: left;">negative log-likelihood</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gradient</td>
+<td style="text-align: left;"><span class="arithmatex">\(p-y\)</span></td>
+<td style="text-align: left;">prediction minus truth</td>
+</tr>
+<tr>
+<td style="text-align: left;">Softmax</td>
+<td style="text-align: left;"><span class="arithmatex">\(e^{z_k}/\sum_j e^{z_j}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(K\)</span>-class sigmoid</td>
+</tr>
+<tr>
+<td style="text-align: left;">Categorical CE</td>
+<td style="text-align: left;"><span class="arithmatex">\(-\ln p_c\)</span></td>
+<td style="text-align: left;">NLL of the true class</td>
+</tr>
+<tr>
+<td style="text-align: left;">Prior shift</td>
+<td style="text-align: left;"><span class="arithmatex">\(z+\mathop{\mathrm{logit}}\pi_{\text{new}}-\mathop{\mathrm{logit}}\pi_{\text{old}}\)</span></td>
+<td style="text-align: left;">bias adjustment</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>What is the logit?</strong> The log of the odds; it maps <span class="arithmatex">\((0,1)\)</span> onto the real line so a linear model can predict it.</p>
+</li>
+<li>
+<p><strong>What does logistic regression assume?</strong> That log-odds are linear in the features, not that the data are Gaussian.</p>
+</li>
+<li>
+<p><strong>Why cross-entropy, not MSE?</strong> It is the maximum-likelihood loss, convex here, and its gradient <span class="arithmatex">\(p-y\)</span> does not vanish when the sigmoid saturates.</p>
+</li>
+<li>
+<p><strong>How do you read a coefficient?</strong> <span class="arithmatex">\(e^{w}\)</span> is the odds multiplier per unit, others fixed.</p>
+</li>
+<li>
+<p><strong>Sigmoid versus softmax?</strong> Sigmoid is softmax with two classes applied to the score difference.</p>
+</li>
+<li>
+<p><strong>Why is precision low for a rare class?</strong> Posterior odds <span class="arithmatex">\(=\)</span> prior odds <span class="arithmatex">\(\times\)</span> likelihood ratio; prior odds <span class="arithmatex">\(1:199\)</span> shrink even a likelihood ratio of <span class="arithmatex">\(60\)</span> to a <span class="arithmatex">\(23\%\)</span> probability.</p>
+</li>
+<li>
+<p><strong>What changes under prior shift?</strong> The bias, by <span class="arithmatex">\(\mathop{\mathrm{logit}}\pi_{\text{new}}-\mathop{\mathrm{logit}}\pi_{\text{old}}\)</span>; ranking is unchanged, thresholds must be re-set.</p>
+</li>
+<li>
+<p><strong>Why can focal loss hurt calibration?</strong> It down-weights confident examples, so the minimiser is no longer the true probability; recalibrate (Platt or isotonic) before using scores as probabilities.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+      
+    
+  </body>
+</html>

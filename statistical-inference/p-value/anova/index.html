@@ -1,0 +1,2384 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Data Science interview prep notes">
+      
+      
+      
+      
+        <link rel="prev" href="../chi-square/">
+      
+      
+        <link rel="next" href="../../qa/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>One-way ANOVA - Prep DS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#one-way-analysis-of-variance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Prep DS" class="md-header__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Prep DS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              One-way ANOVA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Prep DS" class="md-nav__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Prep DS
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../classification/logit-multiclass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logistic & multiclass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../classification/auc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AUC & ROC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../classification/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Statistical inference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Statistical inference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    p-values and tests
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    p-values and tests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../t-distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    t-distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../one-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../two-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paired-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paired t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../z-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    z-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wilcoxon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wilcoxon signed-rank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chi-square/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chi-square independence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-way ANOVA
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-way ANOVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-one-way-anova-is-appropriate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When One-Way ANOVA Is Appropriate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hypotheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hypotheses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Idea
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#total-sum-of-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total Sum of Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#between-group-sum-of-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Between-Group Sum of Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#within-group-sum-of-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Within-Group Sum of Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decomposition-of-variability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decomposition of Variability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#degrees-of-freedom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Degrees of Freedom
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mean-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mean Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-f-statistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The \(F\)-Statistic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theoretical-f-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theoretical \(F\)-Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#computing-the-p-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computing the \(p\)-Value
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numerical-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numerical Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anova-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ANOVA Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpreting-a-significant-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpreting a Significant Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effect-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect Size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#independent-versus-repeated-measures-anova" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independent Versus Repeated-Measures ANOVA
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Probability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../probability/expectation-first-step/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First-step expectation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../probability/mle-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLE and MAP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model evaluation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model evaluation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-evaluation/drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data drift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sql/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../system-design/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System design roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../puzzles/fermi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Puzzles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general-qa/interview-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-one-way-anova-is-appropriate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When One-Way ANOVA Is Appropriate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hypotheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hypotheses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Idea
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#total-sum-of-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total Sum of Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#between-group-sum-of-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Between-Group Sum of Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#within-group-sum-of-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Within-Group Sum of Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decomposition-of-variability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decomposition of Variability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#degrees-of-freedom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Degrees of Freedom
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mean-squares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mean Squares
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-f-statistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The \(F\)-Statistic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theoretical-f-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theoretical \(F\)-Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#computing-the-p-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computing the \(p\)-Value
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numerical-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numerical Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anova-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ANOVA Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpreting-a-significant-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpreting a Significant Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effect-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect Size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#independent-versus-repeated-measures-anova" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independent Versus Repeated-Measures ANOVA
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="one-way-analysis-of-variance">One-Way Analysis of Variance<a class="headerlink" href="#one-way-analysis-of-variance" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">At a glance</p>
+<p>One-way ANOVA compares variability between group means with variability within the groups:</p>
+<div class="arithmatex">\[\boxed{
+F_{\mathrm{obs}}
+=
+\frac{
+MS_{\mathrm{Between}}
+}{
+MS_{\mathrm{Within}}
+}.
+}\]</div>
+<p>The main formulas are</p>
+<div class="arithmatex">\[\boxed{
+SS_{\mathrm{Between}}
+=
+\sum_{i=1}^{k}
+n_i(\bar{x}_i-\bar{x})^2
+}\]</div>
+<div class="arithmatex">\[\boxed{
+SS_{\mathrm{Within}}
+=
+\sum_{i=1}^{k}
+\sum_{j=1}^{n_i}
+(x_{ij}-\bar{x}_i)^2
+}\]</div>
+<div class="arithmatex">\[\boxed{
+df_{\mathrm{Between}}=k-1
+}\]</div>
+<div class="arithmatex">\[\boxed{
+df_{\mathrm{Within}}=N-k
+}\]</div>
+<p>and</p>
+<div class="arithmatex">\[\boxed{
+p
+=
+P\left(
+F_{k-1,N-k}
+\geq
+F_{\mathrm{obs}}
+\right).
+}\]</div>
+<p>The complete process is</p>
+<div class="arithmatex">\[\boxed{
+\text{independent groups}
+\rightarrow
+\text{between- and within-group variation}
+\rightarrow
+F_{\mathrm{obs}}
+\rightarrow
+F\text{-distribution}
+\rightarrow
+p\text{-value}.
+}\]</div>
+</div>
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>One-way analysis of variance, commonly called one-way ANOVA, tests whether the population means of three or more independent groups are equal.</p>
+<p>For example, suppose four methods are evaluated using results from independent experimental units:</p>
+<div class="arithmatex">\[\text{Method A},\quad
+\text{Method B},\quad
+\text{Method C},\quad
+\text{Method D}.\]</div>
+<p>ANOVA tests whether the differences among the observed group means are larger than would reasonably be expected from random variation within the groups.</p>
+<p>Although ANOVA is commonly used for three or more groups, it can also be used for two independent groups. With two groups, one-way ANOVA is equivalent to the equal-variance independent two-sample <span class="arithmatex">\(t\)</span>-test:</p>
+<div class="arithmatex">\[F=t^2.\]</div>
+<h2 id="when-one-way-anova-is-appropriate">When One-Way ANOVA Is Appropriate<a class="headerlink" href="#when-one-way-anova-is-appropriate" title="Permanent link">&para;</a></h2>
+<p>One-way ANOVA is appropriate when:</p>
+<ul>
+<li>
+<p>there is one categorical explanatory variable;</p>
+</li>
+<li>
+<p>the categorical variable contains two or more independent groups;</p>
+</li>
+<li>
+<p>the outcome variable is numerical;</p>
+</li>
+<li>
+<p>the objective is to compare the population means of the groups.</p>
+</li>
+</ul>
+<p>For example, the categorical variable may be the learning method:</p>
+<div class="arithmatex">\[\text{Method}\in\{A,B,C,D\},\]</div>
+<p>and the numerical outcome may be AUCPR.</p>
+<p>The word “one-way” means that the analysis contains one grouping factor.</p>
+<h2 id="notation">Notation<a class="headerlink" href="#notation" title="Permanent link">&para;</a></h2>
+<p>Suppose there are <span class="arithmatex">\(k\)</span> independent groups.</p>
+<p>Let</p>
+<div class="arithmatex">\[x_{ij}\]</div>
+<p>denote observation <span class="arithmatex">\(j\)</span> from group <span class="arithmatex">\(i\)</span>, where</p>
+<div class="arithmatex">\[i=1,2,\ldots,k\]</div>
+<p>and</p>
+<div class="arithmatex">\[j=1,2,\ldots,n_i.\]</div>
+<p>Here:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(k\)</span> is the number of groups;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(n_i\)</span> is the number of observations in group <span class="arithmatex">\(i\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N\)</span> is the total number of observations.</p>
+</li>
+</ul>
+<p>The total sample size is</p>
+<div class="arithmatex">\[N=\sum_{i=1}^{k}n_i.\]</div>
+<p>The sample mean of group <span class="arithmatex">\(i\)</span> is</p>
+<div class="arithmatex">\[\bar{x}_i
+=
+\frac{1}{n_i}
+\sum_{j=1}^{n_i}x_{ij}.\]</div>
+<p>The grand mean across all observations is</p>
+<div class="arithmatex">\[\bar{x}
+=
+\frac{1}{N}
+\sum_{i=1}^{k}
+\sum_{j=1}^{n_i}x_{ij}.\]</div>
+<p>Equivalently, the grand mean is the weighted average of the group means:</p>
+<div class="arithmatex">\[\bar{x}
+=
+\frac{
+\sum_{i=1}^{k}n_i\bar{x}_i
+}{
+N
+}.\]</div>
+<h2 id="hypotheses">Hypotheses<a class="headerlink" href="#hypotheses" title="Permanent link">&para;</a></h2>
+<p>The null hypothesis is that all population means are equal:</p>
+<div class="arithmatex">\[\boxed{
+H_0:
+\mu_1=\mu_2=\cdots=\mu_k.
+}\]</div>
+<p>The alternative hypothesis is:</p>
+<div class="arithmatex">\[\boxed{
+H_1:
+\text{not all population means are equal}.
+}\]</div>
+<p>The alternative does not mean that every pair of population means is different. It means that at least one population mean differs from at least one other population mean.</p>
+<p>For example, with three groups, the alternative may be true if</p>
+<div class="arithmatex">\[\mu_1=\mu_2\]</div>
+<p>but</p>
+<div class="arithmatex">\[\mu_3\neq\mu_1.\]</div>
+<h2 id="basic-idea">Basic Idea<a class="headerlink" href="#basic-idea" title="Permanent link">&para;</a></h2>
+<p>ANOVA separates the total variability in the observations into two components:</p>
+<div class="arithmatex">\[\boxed{
+\text{total variability}
+=
+\text{between-group variability}
++
+\text{within-group variability}.
+}\]</div>
+<p>Between-group variability measures how far the group means are from the grand mean.</p>
+<p>Within-group variability measures how far individual observations are from their own group mean.</p>
+<p>If <span class="arithmatex">\(H_0\)</span> is true, both quantities estimate the same underlying population variance.</p>
+<p>If the population means differ, the between-group variability tends to be large relative to the within-group variability.</p>
+<h2 id="total-sum-of-squares">Total Sum of Squares<a class="headerlink" href="#total-sum-of-squares" title="Permanent link">&para;</a></h2>
+<p>The total sum of squares measures the total variability of all observations around the grand mean:</p>
+<div class="arithmatex">\[\boxed{
+SS_{\mathrm{Total}}
+=
+\sum_{i=1}^{k}
+\sum_{j=1}^{n_i}
+(x_{ij}-\bar{x})^2.
+}\]</div>
+<h2 id="between-group-sum-of-squares">Between-Group Sum of Squares<a class="headerlink" href="#between-group-sum-of-squares" title="Permanent link">&para;</a></h2>
+<p>The between-group sum of squares measures the variability of the group means around the grand mean:</p>
+<div class="arithmatex">\[\boxed{
+SS_{\mathrm{Between}}
+=
+\sum_{i=1}^{k}
+n_i(\bar{x}_i-\bar{x})^2.
+}\]</div>
+<p>Each squared difference is multiplied by <span class="arithmatex">\(n_i\)</span> because a group mean represents <span class="arithmatex">\(n_i\)</span> observations.</p>
+<p>If all group means are close to the grand mean, then</p>
+<div class="arithmatex">\[SS_{\mathrm{Between}}\]</div>
+<p>will be small.</p>
+<p>If the group means are far apart, then</p>
+<div class="arithmatex">\[SS_{\mathrm{Between}}\]</div>
+<p>will be large.</p>
+<h2 id="within-group-sum-of-squares">Within-Group Sum of Squares<a class="headerlink" href="#within-group-sum-of-squares" title="Permanent link">&para;</a></h2>
+<p>The within-group sum of squares measures the variability of observations around their respective group means:</p>
+<div class="arithmatex">\[\boxed{
+SS_{\mathrm{Within}}
+=
+\sum_{i=1}^{k}
+\sum_{j=1}^{n_i}
+(x_{ij}-\bar{x}_i)^2.
+}\]</div>
+<p>This represents the variation that remains within groups after accounting for their different means.</p>
+<p>It is also called the error sum of squares or residual sum of squares:</p>
+<div class="arithmatex">\[SS_{\mathrm{Error}}=SS_{\mathrm{Within}}.\]</div>
+<h2 id="decomposition-of-variability">Decomposition of Variability<a class="headerlink" href="#decomposition-of-variability" title="Permanent link">&para;</a></h2>
+<p>The total sum of squares can be decomposed as</p>
+<div class="arithmatex">\[\boxed{
+SS_{\mathrm{Total}}
+=
+SS_{\mathrm{Between}}
++
+SS_{\mathrm{Within}}.
+}\]</div>
+<p>To understand this decomposition, write</p>
+<div class="arithmatex">\[x_{ij}-\bar{x}
+=
+(x_{ij}-\bar{x}_i)
++
+(\bar{x}_i-\bar{x}).\]</div>
+<p>The total deviation of an observation from the grand mean is the sum of:</p>
+<ol>
+<li>
+<p>its deviation from its group mean;</p>
+</li>
+<li>
+<p>its group mean’s deviation from the grand mean.</p>
+</li>
+</ol>
+<p>Squaring and summing over all observations produces the ANOVA decomposition.</p>
+<h2 id="degrees-of-freedom">Degrees of Freedom<a class="headerlink" href="#degrees-of-freedom" title="Permanent link">&para;</a></h2>
+<p>The total degrees of freedom are</p>
+<div class="arithmatex">\[\boxed{
+df_{\mathrm{Total}}=N-1.
+}\]</div>
+<p>The between-group degrees of freedom are</p>
+<div class="arithmatex">\[\boxed{
+df_{\mathrm{Between}}=k-1.
+}\]</div>
+<p>The within-group degrees of freedom are</p>
+<div class="arithmatex">\[\boxed{
+df_{\mathrm{Within}}=N-k.
+}\]</div>
+<p>These satisfy</p>
+<div class="arithmatex">\[df_{\mathrm{Total}}
+=
+df_{\mathrm{Between}}
++
+df_{\mathrm{Within}}.\]</div>
+<p>Indeed,</p>
+<div class="arithmatex">\[N-1=(k-1)+(N-k).\]</div>
+<h2 id="mean-squares">Mean Squares<a class="headerlink" href="#mean-squares" title="Permanent link">&para;</a></h2>
+<p>The sums of squares depend on the number of observations and groups. Therefore, each sum of squares is divided by its degrees of freedom.</p>
+<p>The between-group mean square is</p>
+<div class="arithmatex">\[\boxed{
+MS_{\mathrm{Between}}
+=
+\frac{
+SS_{\mathrm{Between}}
+}{
+k-1
+}.
+}\]</div>
+<p>The within-group mean square is</p>
+<div class="arithmatex">\[\boxed{
+MS_{\mathrm{Within}}
+=
+\frac{
+SS_{\mathrm{Within}}
+}{
+N-k
+}.
+}\]</div>
+<p>The within-group mean square estimates the common population variance under the equal-variance ANOVA model.</p>
+<h2 id="the-f-statistic">The <span class="arithmatex">\(F\)</span>-Statistic<a class="headerlink" href="#the-f-statistic" title="Permanent link">&para;</a></h2>
+<p>The ANOVA test statistic is</p>
+<div class="arithmatex">\[\boxed{
+F_{\mathrm{obs}}
+=
+\frac{
+MS_{\mathrm{Between}}
+}{
+MS_{\mathrm{Within}}
+}.
+}\]</div>
+<p>More explicitly,</p>
+<div class="arithmatex">\[\boxed{
+F_{\mathrm{obs}}
+=
+\frac{
+SS_{\mathrm{Between}}/(k-1)
+}{
+SS_{\mathrm{Within}}/(N-k)
+}.
+}\]</div>
+<p>The <span class="arithmatex">\(F\)</span>-statistic compares variability between the group means with variability within the groups.</p>
+<p>If <span class="arithmatex">\(H_0\)</span> is true, both mean squares estimate the same population variance, so their ratio should generally be near one:</p>
+<div class="arithmatex">\[F_{\mathrm{obs}}\approx1.\]</div>
+<p>If the group means differ substantially, the between-group mean square becomes large relative to the within-group mean square:</p>
+<div class="arithmatex">\[F_{\mathrm{obs}}&gt;1.\]</div>
+<p>A sufficiently large <span class="arithmatex">\(F\)</span>-value provides evidence against <span class="arithmatex">\(H_0\)</span>.</p>
+<h2 id="theoretical-f-distribution">Theoretical <span class="arithmatex">\(F\)</span>-Distribution<a class="headerlink" href="#theoretical-f-distribution" title="Permanent link">&para;</a></h2>
+<p>Under the null hypothesis, the ANOVA statistic follows an <span class="arithmatex">\(F\)</span>-distribution:</p>
+<div class="arithmatex">\[F\sim F_{\nu_1,\nu_2},\]</div>
+<p>where</p>
+<div class="arithmatex">\[\nu_1=k-1\]</div>
+<p>is the numerator degrees of freedom and</p>
+<div class="arithmatex">\[\nu_2=N-k\]</div>
+<p>is the denominator degrees of freedom.</p>
+<p>The probability density function of an <span class="arithmatex">\(F\)</span>-distribution is</p>
+<div class="arithmatex">\[f(x;\nu_1,\nu_2)
+=
+\frac{
+1
+}{
+B\left(\frac{\nu_1}{2},\frac{\nu_2}{2}\right)
+}
+\left(
+\frac{\nu_1}{\nu_2}
+\right)^{\nu_1/2}
+x^{\nu_1/2-1}
+\left(
+1+\frac{\nu_1}{\nu_2}x
+\right)^{-(\nu_1+\nu_2)/2},
+\qquad x&gt;0.\]</div>
+<p>Here:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(x\)</span> is a possible value of the <span class="arithmatex">\(F\)</span>-statistic;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\nu_1\)</span> is the numerator degrees of freedom;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\nu_2\)</span> is the denominator degrees of freedom;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(B(\cdot,\cdot)\)</span> is the beta function.</p>
+</li>
+</ul>
+<p>The beta function is related to the gamma function by</p>
+<div class="arithmatex">\[B(a,b)
+=
+\frac{
+\Gamma(a)\Gamma(b)
+}{
+\Gamma(a+b)
+}.\]</div>
+<p>The <span class="arithmatex">\(F\)</span>-distribution contains only nonnegative values and is generally right-skewed.</p>
+<h2 id="computing-the-p-value">Computing the <span class="arithmatex">\(p\)</span>-Value<a class="headerlink" href="#computing-the-p-value" title="Permanent link">&para;</a></h2>
+<p>Large values of the <span class="arithmatex">\(F\)</span>-statistic provide evidence against the null hypothesis. Therefore, ANOVA uses the right tail of the <span class="arithmatex">\(F\)</span>-distribution:</p>
+<div class="arithmatex">\[\boxed{
+p
+=
+P\left(
+F_{\nu_1,\nu_2}
+\geq
+F_{\mathrm{obs}}
+\mid H_0
+\right).
+}\]</div>
+<p>If <span class="arithmatex">\(G_{\nu_1,\nu_2}\)</span> denotes the cumulative distribution function of the <span class="arithmatex">\(F\)</span>-distribution, then</p>
+<div class="arithmatex">\[\boxed{
+p
+=
+1-
+G_{\nu_1,\nu_2}
+(F_{\mathrm{obs}}).
+}\]</div>
+<p>The standard ANOVA test does not use separate left-sided, right-sided, or two-sided alternatives. Deviations among group means in any direction increase the between-group sum of squares and therefore increase the <span class="arithmatex">\(F\)</span>-statistic.</p>
+<h2 id="numerical-example">Numerical Example<a class="headerlink" href="#numerical-example" title="Permanent link">&para;</a></h2>
+<p>Suppose three independent methods produce the following scores:</p>
+<div class="arithmatex">\[\text{Method A}: 8,\;9,\;7,\]</div>
+<div class="arithmatex">\[\text{Method B}: 5,\;6,\;4,\]</div>
+<div class="arithmatex">\[\text{Method C}: 7,\;8,\;6.\]</div>
+<p>There are</p>
+<div class="arithmatex">\[k=3\]</div>
+<p>groups and</p>
+<div class="arithmatex">\[N=9\]</div>
+<p>observations.</p>
+<p>The group means are</p>
+<div class="arithmatex">\[\bar{x}_1=\frac{8+9+7}{3}=8,\]</div>
+<div class="arithmatex">\[\bar{x}_2=\frac{5+6+4}{3}=5,\]</div>
+<p>and</p>
+<div class="arithmatex">\[\bar{x}_3=\frac{7+8+6}{3}=7.\]</div>
+<p>The grand mean is</p>
+<div class="arithmatex">\[\bar{x}
+=
+\frac{
+8+9+7+5+6+4+7+8+6
+}{
+9
+}
+=
+\frac{60}{9}
+=
+\frac{20}{3}.\]</div>
+<p>The between-group sum of squares is</p>
+<div class="arithmatex">\[\begin{aligned}
+SS_{\mathrm{Between}}
+={}&amp;
+3\left(8-\frac{20}{3}\right)^2
++
+3\left(5-\frac{20}{3}\right)^2\\
+&amp;+
+3\left(7-\frac{20}{3}\right)^2.
+\end{aligned}\]</div>
+<p>Therefore,</p>
+<div class="arithmatex">\[SS_{\mathrm{Between}}=14.\]</div>
+<p>The within-group sum of squares is</p>
+<div class="arithmatex">\[\begin{aligned}
+SS_{\mathrm{Within}}
+={}&amp;
+\left[(8-8)^2+(9-8)^2+(7-8)^2\right]\\
+&amp;+
+\left[(5-5)^2+(6-5)^2+(4-5)^2\right]\\
+&amp;+
+\left[(7-7)^2+(8-7)^2+(6-7)^2\right].
+\end{aligned}\]</div>
+<p>Thus,</p>
+<div class="arithmatex">\[SS_{\mathrm{Within}}=6.\]</div>
+<p>The degrees of freedom are</p>
+<div class="arithmatex">\[df_{\mathrm{Between}}=k-1=2,\]</div>
+<p>and</p>
+<div class="arithmatex">\[df_{\mathrm{Within}}=N-k=6.\]</div>
+<p>The mean squares are</p>
+<div class="arithmatex">\[MS_{\mathrm{Between}}
+=
+\frac{14}{2}
+=
+7,\]</div>
+<p>and</p>
+<div class="arithmatex">\[MS_{\mathrm{Within}}
+=
+\frac{6}{6}
+=
+1.\]</div>
+<p>Therefore, the observed <span class="arithmatex">\(F\)</span>-statistic is</p>
+<div class="arithmatex">\[\boxed{
+F_{\mathrm{obs}}
+=
+\frac{7}{1}
+=
+7.
+}\]</div>
+<p>Under <span class="arithmatex">\(H_0\)</span>,</p>
+<div class="arithmatex">\[F\sim F_{2,6}.\]</div>
+<p>The <span class="arithmatex">\(p\)</span>-value is</p>
+<div class="arithmatex">\[p=P(F_{2,6}\geq7).\]</div>
+<p>A small right-tail probability provides evidence that not all three population means are equal.</p>
+<h2 id="anova-table">ANOVA Table<a class="headerlink" href="#anova-table" title="Permanent link">&para;</a></h2>
+<p>The calculations are commonly summarized using an ANOVA table:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Source</th>
+<th style="text-align: center;">Sum of squares</th>
+<th style="text-align: center;">Degrees of freedom</th>
+<th style="text-align: center;">Mean square</th>
+<th style="text-align: center;"><span class="arithmatex">\(F\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Between groups</td>
+<td style="text-align: center;"><span class="arithmatex">\(SS_{\mathrm{Between}}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(k-1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(MS_{\mathrm{Between}}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(F_{\mathrm{obs}}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Within groups</td>
+<td style="text-align: center;"><span class="arithmatex">\(SS_{\mathrm{Within}}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(N-k\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(MS_{\mathrm{Within}}\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Total</td>
+<td style="text-align: center;"><span class="arithmatex">\(SS_{\mathrm{Total}}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(N-1\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>For the numerical example:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Source</th>
+<th style="text-align: center;">Sum of squares</th>
+<th style="text-align: center;">Degrees of freedom</th>
+<th style="text-align: center;">Mean square</th>
+<th style="text-align: center;"><span class="arithmatex">\(F\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Between groups</td>
+<td style="text-align: center;"><span class="arithmatex">\(14\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(7\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(7\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Within groups</td>
+<td style="text-align: center;"><span class="arithmatex">\(6\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(6\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Total</td>
+<td style="text-align: center;"><span class="arithmatex">\(20\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(8\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="interpreting-a-significant-result">Interpreting a Significant Result<a class="headerlink" href="#interpreting-a-significant-result" title="Permanent link">&para;</a></h2>
+<p>A significant ANOVA result supports the conclusion that</p>
+<div class="arithmatex">\[\text{not all population means are equal}.\]</div>
+<p>It does not identify which specific groups differ.</p>
+<p>For example, rejecting</p>
+<div class="arithmatex">\[H_0:\mu_1=\mu_2=\mu_3\]</div>
+<p>does not directly tell us whether:</p>
+<div class="arithmatex">\[\mu_1\neq\mu_2,\]</div>
+<div class="arithmatex">\[\mu_1\neq\mu_3,\]</div>
+<p>or</p>
+<div class="arithmatex">\[\mu_2\neq\mu_3.\]</div>
+<p>Post-hoc comparisons are required to determine which group pairs differ.</p>
+<p>A common post-hoc procedure for the equal-variance one-way ANOVA is Tukey’s honestly significant difference procedure.</p>
+<p>When performing many pairwise tests, multiplicity must be controlled to avoid increasing the probability of a false positive.</p>
+<h2 id="effect-size">Effect Size<a class="headerlink" href="#effect-size" title="Permanent link">&para;</a></h2>
+<p>A small <span class="arithmatex">\(p\)</span>-value indicates evidence that the population means are not all equal, but it does not measure the size of the group effect.</p>
+<p>One effect-size measure is eta squared:</p>
+<div class="arithmatex">\[\boxed{
+\eta^2
+=
+\frac{
+SS_{\mathrm{Between}}
+}{
+SS_{\mathrm{Total}}
+}.
+}\]</div>
+<p>Eta squared represents the proportion of total sample variability associated with group membership.</p>
+<p>Another measure is omega squared:</p>
+<div class="arithmatex">\[\boxed{
+\omega^2
+=
+\frac{
+SS_{\mathrm{Between}}
+-
+(k-1)MS_{\mathrm{Within}}
+}{
+SS_{\mathrm{Total}}
++
+MS_{\mathrm{Within}}
+}.
+}\]</div>
+<p>Omega squared includes a correction intended to reduce the upward bias of sample eta squared.</p>
+<h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
+<p>Classical one-way ANOVA generally assumes:</p>
+<ol>
+<li>
+<p>observations are independent;</p>
+</li>
+<li>
+<p>the outcome variable is numerical;</p>
+</li>
+<li>
+<p>observations within each group are approximately normally distributed, particularly for small samples;</p>
+</li>
+<li>
+<p>the population variances are equal across groups;</p>
+</li>
+<li>
+<p>extreme outliers do not dominate the group means and variances.</p>
+</li>
+</ol>
+<p>The equal-variance assumption can be written as</p>
+<div class="arithmatex">\[\sigma_1^2
+=
+\sigma_2^2
+=
+\cdots
+=
+\sigma_k^2.\]</div>
+<p>If equal variances are doubtful, Welch’s ANOVA is generally more appropriate because it does not require equal population variances.</p>
+<h2 id="independent-versus-repeated-measures-anova">Independent Versus Repeated-Measures ANOVA<a class="headerlink" href="#independent-versus-repeated-measures-anova" title="Permanent link">&para;</a></h2>
+<p>Ordinary one-way ANOVA assumes that the groups are independent.</p>
+<p>If the same datasets, subjects, or experimental units are evaluated under every method, the observations are paired rather than independent.</p>
+<p>For example, if Methods A, B, C, and D are all evaluated on the same ten datasets, ordinary one-way ANOVA is not appropriate because the scores within each dataset are related.</p>
+<p>In that case, an appropriate method may be:</p>
+<ul>
+<li>
+<p>repeated-measures ANOVA, under suitable parametric assumptions; or</p>
+</li>
+<li>
+<p>the Friedman test, as a rank-based nonparametric alternative.</p>
+</li>
+</ul>
+<p>For comparing several machine-learning methods over the same datasets, the repeated-measures structure must therefore be considered.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+      
+    
+  </body>
+</html>

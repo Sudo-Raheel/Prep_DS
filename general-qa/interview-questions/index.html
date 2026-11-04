@@ -1,0 +1,1664 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Data Science interview prep notes">
+      
+      
+      
+      
+        <link rel="prev" href="../../puzzles/fermi/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>General Q&A - Prep DS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#probability-and-descriptive-statistics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Prep DS" class="md-header__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Prep DS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              General Q&A
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Prep DS" class="md-nav__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Prep DS
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/logit-multiclass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logistic & multiclass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/auc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AUC & ROC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Statistical inference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Statistical inference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    p-values and tests
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    p-values and tests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/t-distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    t-distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/one-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/two-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/paired-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paired t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/z-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    z-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/wilcoxon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wilcoxon signed-rank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/chi-square/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chi-square independence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/anova/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-way ANOVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Probability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/expectation-first-step/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First-step expectation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/mle-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLE and MAP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model evaluation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model evaluation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-evaluation/drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data drift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sql/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-design/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System design roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../puzzles/fermi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Puzzles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><strong>Data Science, Statistics &amp; Machine Learning</strong>\
+Interview Question Bank — Deduplicated\
+Edited from the supplied notes; repeated questions merged and technical inaccuracies corrected.\</p>
+<h1 id="probability-and-descriptive-statistics">Probability and Descriptive Statistics<a class="headerlink" href="#probability-and-descriptive-statistics" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is the difference between a population and a sample?</strong></p>
+<p>A <em>population</em> contains every unit about which we want to draw conclusions. A <em>sample</em> is the subset actually observed. Population quantities (such as the mean <span class="arithmatex">\(\mu\)</span> or variance <span class="arithmatex">\(\sigma^2\)</span>) are <em>parameters</em>; sample quantities (such as <span class="arithmatex">\(\bar{x}\)</span> or <span class="arithmatex">\(s^2\)</span>) are <em>statistics</em>. We usually analyze a sample because measuring the entire population is impractical. Representativeness depends on the sampling design, not merely on sample size.</p>
+<p><strong>Q.What is sampling, and what are the main sampling methods?</strong></p>
+<p>Sampling means selecting observations from a target population to estimate its characteristics. <strong>Probability sampling</strong> includes simple random, systematic (every <span class="arithmatex">\(k\)</span>th eligible unit after a random start), stratified (sample within defined subgroups), cluster (sample groups, then their members), and multistage sampling. <strong>Non-probability sampling</strong> includes convenience, purposive/judgmental, quota, snowball, and voluntary-response sampling. Probability designs support design-based inference when selection probabilities are known; convenience samples can suffer substantial selection bias. Sampling with replacement is useful in bootstrapping but is not a universal requirement for the central limit theorem.</p>
+<p><strong>Q.What is the Central Limit Theorem (CLT), and why does it matter?</strong></p>
+<p>For independent and identically distributed observations with finite population mean <span class="arithmatex">\(\mu\)</span> and finite, nonzero variance <span class="arithmatex">\(\sigma^2\)</span>, the <em>standardized sample mean</em> converges in distribution to a standard normal variable: </p>
+<div class="arithmatex">\[\frac{\sqrt{n}(\bar X_n-\mu)}{\sigma}\xrightarrow{d}N(0,1).\]</div>
+<p>Consequently <span class="arithmatex">\(\bar X_n\)</span> is approximately <span class="arithmatex">\(N(\mu,\sigma^2/n)\)</span> for sufficiently large <span class="arithmatex">\(n\)</span>. The original observations do <em>not</em> become normal; it is the sampling distribution of their mean that does. This enables approximate confidence intervals and tests without requiring a normally distributed population. The often-quoted <span class="arithmatex">\(n\geq30\)</span> is only a rough heuristic; severe skewness, heavy tails, dependence, or infinite variance can demand different methods.</p>
+<p><strong>Q.What is the Law of Large Numbers (LLN), and how is it different from the CLT?</strong></p>
+<p>The LLN says that the sample mean converges to the population mean as sample size increases under appropriate assumptions. The <em>weak</em> LLN gives convergence in probability; the <em>strong</em> LLN gives almost-sure convergence. The LLN describes <em>where</em> <span class="arithmatex">\(\bar X_n\)</span> converges; the CLT describes the approximate <em>shape and scale of its sampling fluctuations</em>. Neither theorem removes bias arising from a systematically unrepresentative sample.</p>
+<p><strong>Q.How do population means and sample means differ, and when can a sample mean mislead?</strong></p>
+<p>The population mean <span class="arithmatex">\(\mu=E[X]\)</span> is a fixed characteristic of a population or probability distribution; the sample mean <span class="arithmatex">\(\bar X=(1/n)\sum_i X_i\)</span> varies with the observed sample. Under simple random sampling, <span class="arithmatex">\(\bar X\)</span> is often unbiased for <span class="arithmatex">\(\mu\)</span>. It can nevertheless mislead when the sampling frame excludes relevant units, selection or nonresponse is outcome-dependent, observations are dependent in unaccounted ways, or the distribution is extremely heavy-tailed. A larger biased sample can be worse than a smaller representative one.</p>
+<p><strong>Q.What is the difference between a parameter, statistic, estimator, and estimate?</strong></p>
+<p>A <em>parameter</em> is a population quantity (e.g., <span class="arithmatex">\(\mu\)</span>). A <em>statistic</em> is a function of observed data (e.g., <span class="arithmatex">\(\bar X\)</span>). An <em>estimator</em> is the data-dependent rule intended to estimate a parameter, while an <em>estimate</em> is the resulting number for a particular sample. For example, <span class="arithmatex">\(\bar X\)</span> is an estimator of <span class="arithmatex">\(\mu\)</span>; <span class="arithmatex">\(\bar x=12.4\)</span> is an estimate.</p>
+<p><strong>Q.What are variance and standard deviation?</strong></p>
+<p>Variance measures expected squared deviations from the mean: <span class="arithmatex">\(\operatorname{Var}(X)=E[(X-\mu)^2]\)</span>. Standard deviation is <span class="arithmatex">\(\sigma=\sqrt{\operatorname{Var}(X)}\)</span>. Variance has squared units; standard deviation has the same units as the original variable. Large variance indicates greater dispersion, not necessarily a poorer predictive model. For an independent sample, the usual unbiased sample variance is <span class="arithmatex">\(s^2=\sum_i(x_i-\bar x)^2/(n-1)\)</span>; the population variance divides by the population size <span class="arithmatex">\(N\)</span>.</p>
+<p><strong>Q.What are mean, median, and mode, and when would you use each?</strong></p>
+<p>The <em>mean</em> is the arithmetic average and uses all values but is sensitive to extreme observations. The <em>median</em> is the central ordered value and is robust to isolated outliers. The <em>mode</em> is the most frequently occurring value or category and is meaningful for categorical data. In an exactly normal distribution, mean, median, and mode coincide; with heavily right-skewed data, the mean often exceeds the median.</p>
+<p><strong>Q.What is skewness?</strong></p>
+<p>Skewness summarizes distributional asymmetry. Positive skewness generally indicates a longer right tail, while negative skewness indicates a longer left tail. A common standardized population definition is <span class="arithmatex">\(E[(X-\mu)^3]/\sigma^3\)</span>. Zero skewness does not guarantee symmetry or normality.</p>
+<p><strong>Q.What is the difference between a uniform and a normal distribution?</strong></p>
+<p>A continuous uniform distribution has constant density on a specified interval. A normal distribution has a bell-shaped density determined by its mean and variance, with highest density near its mean. For discrete uniform data, such as a fair die, every allowed value has equal probability. Both are useful models, but their shapes and tail behavior differ.</p>
+<p><strong>Q.Give examples of non-Gaussian distributions and suitable datasets.</strong></p>
+<ul>
+<li>
+<p><strong>Binomial:</strong> number of heads in 20 independent coin flips.</p>
+</li>
+<li>
+<p><strong>Discrete uniform:</strong> result of rolling a fair six-sided die.</p>
+</li>
+<li>
+<p><strong>Exponential:</strong> waiting time to the next event in a homogeneous Poisson process.</p>
+</li>
+<li>
+<p><strong>Poisson:</strong> number of calls reaching a call center per hour if arrivals follow a constant-rate Poisson process.</p>
+</li>
+<li>
+<p><strong>Log-normal:</strong> a plausible model for some positively skewed income or transaction-size measurements.</p>
+</li>
+</ul>
+<p>Human heights are sometimes approximately Gaussian within a sufficiently homogeneous group, but need not be exactly normal.</p>
+<p><strong>Q.What are univariate, bivariate, and multivariate analyses?</strong></p>
+<p><em>Univariate</em> analysis studies one variable (such as a histogram of sales). <em>Bivariate</em> analysis studies the joint behavior of two variables (such as advertising spend versus sales). <em>Multivariate</em> analysis jointly examines more than two variables (such as sales versus price, promotions, and seasonality). Choice of method depends on data type, research objective, and dependence structure.</p>
+<p><strong>Q.What is covariance, and how is it different from correlation?</strong></p>
+<p>Covariance measures joint linear variation: <span class="arithmatex">\(\operatorname{Cov}(X,Y)=E[(X-\mu_X)(Y-\mu_Y)]\)</span>. Pearson correlation standardizes it: </p>
+<div class="arithmatex">\[\rho_{XY}=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}, \qquad -1\leq\rho_{XY}\leq1.\]</div>
+<p>Covariance depends on the measurement scales and has product units; correlation is dimensionless. Positive and negative values indicate directions of linear association. Correlation is invariant under positive rescaling (a negative rescaling changes its sign), and neither metric by itself establishes causality.</p>
+<p><strong>Q.What is the difference between correlation and causation?</strong></p>
+<p>Correlation means variables exhibit statistical association; causation means intervening on one variable would change another under the relevant causal assumptions. Confounding, reverse causation, and selection effects can all produce correlations without the proposed causal effect. Randomized experiments, appropriate causal designs, or explicit causal assumptions are usually needed for causal claims.</p>
+<p><strong>Q.What is statistical interaction?</strong></p>
+<p>An interaction occurs when the effect of predictor <span class="arithmatex">\(X_1\)</span> on outcome <span class="arithmatex">\(Y\)</span> depends on another predictor <span class="arithmatex">\(X_2\)</span>. A simple regression representation is </p>
+<div class="arithmatex">\[E[Y\mid X_1,X_2]=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_1X_2.\]</div>
+<p>The marginal effect of <span class="arithmatex">\(X_1\)</span> is <span class="arithmatex">\(\beta_1+\beta_3X_2\)</span>. For example, the effect of medication dosage may depend on age or another clinically relevant characteristic. An interaction is different from a confounder.</p>
+<p><strong>Q.What are confounding variables?</strong></p>
+<p>A confounder is a common cause (or, more generally, a variable creating a backdoor association) of both the putative exposure and outcome. For example, age may affect both physical activity and weight change, thereby distorting the observed activity–weight association. Depending on the causal structure, randomization, stratification, regression adjustment, matching, or weighting can address confounding. Not every predictor associated with the outcome should automatically be adjusted for.</p>
+<p><strong>Q.What is an outlier? How does it differ from noise?</strong></p>
+<p>An <em>outlier</em> is an observation unusually far from the main pattern. <em>Noise</em> is ordinary unexplained variation or measurement error, which may or may not produce outliers. Investigate anomalies before removal: they might be data-entry errors, genuine rare events, or useful signals. Appropriate responses include correction, robust losses, transformations, sensitivity analysis, or documented exclusion rules.</p>
+<p><strong>Q.What is a scatter plot? How is it different from a box plot or histogram?</strong></p>
+<p>A <em>scatter plot</em> displays paired observations of two numerical variables to assess relationships, clusters, and anomalies. A <em>histogram</em> bins one numerical variable to show frequency or density. A <em>box plot</em> summarizes median, quartiles, spread, and potential outliers, often facilitating comparison across groups. They answer different questions and are complementary.</p>
+<p><strong>Q.How does a histogram differ from a density plot?</strong></p>
+<p>A histogram divides observations into bins and plots frequency or normalized density; its appearance depends on bin width and boundaries. A density plot, often computed using kernel density estimation, gives a smooth estimate of the underlying density and depends on smoothing bandwidth. For small datasets, smoothing can hide multimodality or create misleading apparent structure.</p>
+<p><strong>Q.What is the curse of dimensionality?</strong></p>
+<p>As the number of features grows, observations become sparse relative to the volume of feature space. Distance-based methods can lose discrimination, the sample size required to cover the space increases, and models may overfit. Remedies include feature selection, domain-guided representations, regularization, dimensionality reduction, and collecting more informative data. Not every high-dimensional problem is difficult when data lie near a low-dimensional structure.</p>
+<p><strong>Q.What do eigenvalues and eigenvectors of a covariance matrix mean in PCA?</strong></p>
+<p>Principal component analysis diagonalizes a covariance (or appropriately standardized correlation) matrix. Each eigenvector supplies an orthogonal direction of variance; its eigenvalue quantifies the variance along that direction. Components are ordered by decreasing eigenvalue. PCA is unsupervised and maximizes variance, which need not be the variance relevant to predicting a target.</p>
+<p><strong>Q.How is a covariance matrix used in portfolio optimization?</strong></p>
+<p>For portfolio weights <span class="arithmatex">\(w\)</span> and an asset-return covariance matrix <span class="arithmatex">\(\Sigma\)</span>, portfolio variance is <span class="arithmatex">\(w^\top\Sigma w\)</span>. Off-diagonal terms measure co-movement and determine diversification benefits or risks. Optimization may minimize variance subject to return, risk, budget, and other constraints. Estimated covariances can be unstable, so regularization or shrinkage is common.</p>
+<p><strong>Q.What is expected value in probability and decision theory?</strong></p>
+<p>Expected value is the probability-weighted average of possible outcomes: <span class="arithmatex">\(E[X]=\sum_x xP(X=x)\)</span> for a discrete variable (or an integral for continuous variables). In decision theory, select an action by comparing expected <em>utility</em> or expected cost under a specified loss function, rather than blindly maximizing average monetary return when risk preferences matter.</p>
+<p><strong>Q.What is the difference between deterministic and probabilistic models?</strong></p>
+<p>A deterministic model returns a fixed output for specified inputs and parameters. A probabilistic model explicitly represents uncertainty through distributions over outcomes, states, or parameters. Deterministic predictions can still have uncertain accuracy, while probabilistic outputs can be summarized by means, intervals, or event probabilities.</p>
+<p><strong>Q.What is a Markov chain or Markov process?</strong></p>
+<p>The Markov property says that, conditional on the present state, the future is independent of the earlier past. For a discrete-time Markov chain, </p>
+<div class="arithmatex">\[P(X_{t+1}\mid X_t,X_{t-1},\ldots)=P(X_{t+1}\mid X_t).\]</div>
+<p>Applications include customer state transitions, credit-rating migration, and some finance models. Markov models are assumptions about chosen states; real processes may require richer states or longer memory.</p>
+<h1 id="sampling-bias-and-data-preparation">Sampling, Bias, and Data Preparation<a class="headerlink" href="#sampling-bias-and-data-preparation" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is selection bias, and how does it differ from random sampling error?</strong></p>
+<p>Selection bias occurs when inclusion in the analyzed sample depends systematically on variables related to the estimand or outcome. For example, a drug study recruiting only young healthy adults may not generalize to older patients. Random sampling error shrinks as a representative sample grows; selection bias does not necessarily shrink with sample size. Sampling bias is one important form of selection bias.</p>
+<p><strong>Q.What biases can arise during sampling or study participation?</strong></p>
+<p>Important examples include <strong>undercoverage</strong> (eligible groups missing from the sampling frame), <strong>overcoverage</strong> (ineligible or duplicated units), <strong>self-selection/voluntary-response bias</strong> (participation correlated with opinion), <strong>nonresponse bias</strong> (selected units do not respond in outcome-related ways), <strong>attrition bias</strong> (differential dropout), <strong>survivorship bias</strong> (analyzing only those remaining after a filter), and <strong>response bias</strong> (inaccurate answers due to wording or social pressure). Selective reporting or data-dependent stopping can introduce additional bias. Prevention requires careful design, monitoring, and sensitivity analysis.</p>
+<p><strong>Q.Why is data cleaning important?</strong></p>
+<p>Data cleaning identifies and resolves errors, inconsistent units, duplicates, invalid categories, impossible timestamps, missing values, and leakage-prone records. It improves reliability of analysis and deployment, but cleaning choices must be documented to avoid selectively removing inconvenient data. In machine learning, fit learned transformations (for example, imputers or scalers) on training data only and apply them unchanged to validation/test data.</p>
+<p><strong>Q.What is data imputation, and what options are available?</strong></p>
+<p>Imputation fills missing values using simple statistics (median/mode), conditional models, <span class="arithmatex">\(k\)</span>-nearest neighbors, multiple imputation, or model-based methods. Choice depends on whether missingness is MCAR, MAR, or MNAR and on the intended inferential objective. Missing-indicator features can be useful for prediction; simple single imputation can understate uncertainty for inference. Avoid estimating imputation parameters using the test set.</p>
+<p><strong>Q.What is the difference between long and wide data formats?</strong></p>
+<p>In <em>wide</em> format, one entity typically occupies one row and repeated measurements appear in separate columns (e.g., <code>sales_Jan</code>, <code>sales_Feb</code>). In <em>long</em> format, each entity–time combination occupies a row, with a <code>month</code> column and a <code>sales</code> column. Long format often simplifies grouping, plotting, and longitudinal modeling; wide format can be convenient for feature matrices. Reshape with <code>pandas.melt</code> and <code>pivot</code>/<code>pivot_table</code>.</p>
+<p><strong>Q.What are the components commonly found in a dataset?</strong></p>
+<p>A tabular dataset generally contains observations (rows) and variables/features (columns). It may additionally contain a target label (supervised learning), identifiers, timestamps, categorical metadata, missing values, or weights. No target label is guaranteed to exist: unsupervised data have features but no required outcome label. For time series, order and the time index are especially important.</p>
+<p><strong>Q.What is resampling, and why is it used?</strong></p>
+<p>Resampling reuses observed data to quantify uncertainty, evaluate prediction methods, or construct significance tests. <strong>Bootstrapping</strong> samples observations (or suitable blocks) with replacement to approximate a statistic’s sampling distribution. <strong>Cross-validation</strong> holds out folds to estimate out-of-sample predictive performance. <strong>Permutation tests</strong> relabel or rearrange observations under an appropriate null exchangeability assumption. Each answers a different statistical question.</p>
+<p><strong>Q.What is bootstrapping, and what are its limitations?</strong></p>
+<p>Ordinary nonparametric bootstrap draws <span class="arithmatex">\(n\)</span> observations with replacement from an observed sample of size <span class="arithmatex">\(n\)</span>, computes a statistic, and repeats to estimate uncertainty or confidence intervals. It performs well for many smooth statistics under representative, approximately independent sampling. It can fail for strong dependence, extreme tail quantities, rare classes, or unsuitable statistics; dependent time series typically need a block or model-based bootstrap.</p>
+<p><strong>Q.How does sample size affect precision?</strong></p>
+<p>For independent observations with fixed finite variance, the standard error of the sample mean is <span class="arithmatex">\(\sigma/\sqrt{n}\)</span>; doubling <span class="arithmatex">\(n\)</span> reduces it by a factor of <span class="arithmatex">\(1/\sqrt{2}\)</span>. Approximate confidence-interval width therefore shrinks like <span class="arithmatex">\(1/\sqrt{n}\)</span>. Reaching half the standard error generally needs about four times as many observations. Selection bias and systematic measurement error are not solved by increasing <span class="arithmatex">\(n\)</span>.</p>
+<h1 id="hypothesis-testing-and-statistical-inference">Hypothesis Testing and Statistical Inference<a class="headerlink" href="#hypothesis-testing-and-statistical-inference" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What are Type I and Type II errors?</strong></p>
+<p>A <strong>Type I error</strong> is rejecting a true null hypothesis (false positive), with probability <span class="arithmatex">\(\alpha\)</span> when the test has the stipulated level. A <strong>Type II error</strong> is failing to reject a false null hypothesis (false negative), with probability <span class="arithmatex">\(\beta\)</span> for a specified alternative. Statistical power is <span class="arithmatex">\(1-\beta\)</span>. A result that is not statistically significant is <em>not</em> proof of no effect.</p>
+<p><strong>Q.What is a <span class="arithmatex">\(p\)</span>-value?</strong></p>
+<p>A <span class="arithmatex">\(p\)</span>-value is the probability, <em>assuming the null hypothesis and test assumptions</em>, of obtaining a test statistic at least as extreme as the observed statistic (as defined by the test). It is not the probability that the null hypothesis is true, not the probability that results arose “by chance,” and not an effect-size measure. A small <span class="arithmatex">\(p\)</span>-value provides evidence against the null model, but practical importance requires an effect estimate, uncertainty, and context.</p>
+<p><strong>Q.What is a significance level <span class="arithmatex">\(\alpha\)</span>, and how is it different from a <span class="arithmatex">\(p\)</span>-value?</strong></p>
+<p>The significance level <span class="arithmatex">\(\alpha\)</span> is a threshold chosen before interpreting data that controls a test’s long-run Type I error rate under its assumptions (commonly 0.05). The <span class="arithmatex">\(p\)</span>-value is computed from observed evidence. A conventional decision rule rejects <span class="arithmatex">\(H_0\)</span> if <span class="arithmatex">\(p\leq\alpha\)</span>. Multiple testing, optional stopping, and model misspecification may invalidate nominal error-rate guarantees.</p>
+<p><strong>Q.What is statistical power, and how does it differ from sensitivity?</strong></p>
+<p><strong>Power</strong> is <span class="arithmatex">\(P(\text{reject }H_0\mid H_1\text{ is true})=1-\beta\)</span>, defined for a specified effect and testing procedure. It generally increases with larger effects, larger samples, lower noise, and sometimes a higher <span class="arithmatex">\(\alpha\)</span>. <strong>Sensitivity</strong> (recall or true-positive rate) evaluates a binary classifier: <span class="arithmatex">\(\mathrm{TP}/(\mathrm{TP}+\mathrm{FN})\)</span>. Both involve detecting true signals, but one refers to hypothesis tests and the other to diagnostic/classification outcomes; they should not be conflated.</p>
+<p><strong>Q.When are false positives or false negatives more costly?</strong></p>
+<p>The answer depends on downstream consequences. In many cancer-screening settings, <em>false negatives</em> can be especially costly because disease may be missed; a higher false-positive rate may be tolerated, subject to the harm of unnecessary testing. In airport threat screening, missed threats (false negatives) may likewise be especially costly. In other contexts, such as automatically denying legitimate financial transactions, false positives can cause serious disruption. Select operating thresholds by considering prevalence and explicit costs, not by assuming that one error type is always worse.</p>
+<p><strong>Q.What is a point estimate versus a confidence interval?</strong></p>
+<p>A <em>point estimate</em> is one number, such as <span class="arithmatex">\(\bar x\)</span> for <span class="arithmatex">\(\mu\)</span>. A <em>confidence interval</em> provides a range built by a procedure designed to cover the fixed population parameter in a specified fraction of hypothetical repeated samples. A frequentist 95% interval does <em>not</em> assign 95% posterior probability to the already fixed parameter being inside the observed interval; that interpretation would require a Bayesian credible interval with an explicit prior.</p>
+<p><strong>Q.How do you interpret a 95% confidence interval?</strong></p>
+<p>If the sampling and interval procedure were repeated indefinitely under the same assumptions, roughly 95% of the resulting intervals would contain the true parameter. For a single realized interval, frequentist coverage pertains to the construction procedure. The interpretation relies on the underlying sampling and model assumptions.</p>
+<p><strong>Q.What is a confidence interval versus a prediction interval?</strong></p>
+<p>A confidence interval estimates a population characteristic (such as a conditional mean). A prediction interval aims to cover a future individual observation and incorporates both parameter uncertainty and irreducible observation-level variation. Consequently, a prediction interval for an individual response is generally wider than a confidence interval for its expected value at the same predictor settings.</p>
+<p><strong>Q.What is a confidence interval for a proportion?</strong></p>
+<p>For independent Bernoulli observations, <span class="arithmatex">\(\hat p=k/n\)</span> estimates the population proportion <span class="arithmatex">\(p\)</span>. A large-sample Wald interval is <span class="arithmatex">\(\hat p\pm z_{1-\alpha/2}\sqrt{\hat p(1-\hat p)/n}\)</span>, but its coverage can be poor near 0, 1, or for small <span class="arithmatex">\(n\)</span>. A <em>Wilson score interval</em> is often a better default for binomial proportions. Clustered observations require adjusted uncertainty estimates.</p>
+<p><strong>Q.What is the difference between parametric and nonparametric methods?</strong></p>
+<p><em>Parametric</em> models specify a distributional family with a finite-dimensional parameter, such as a normal model with mean and variance. <em>Nonparametric</em> methods use more flexible models or tests without committing to a particular finite-dimensional distributional family. Nonparametric does not mean <em>assumption-free</em>: independence, exchangeability, smoothness, or distributional conditions may still be essential. Examples include rank-based tests and kernel density estimation.</p>
+<p><strong>Q.How do parametric and nonparametric confidence intervals differ?</strong></p>
+<p>A parametric interval uses an assumed model family to derive a sampling distribution or approximation (e.g., a <span class="arithmatex">\(t\)</span>-interval for a mean). A nonparametric interval often uses bootstrap resampling, ranks, or distribution-free bounds. Neither is automatically superior; coverage depends on the method’s assumptions and sample characteristics. For skewed small samples, consider suitable bootstrap intervals and robust alternatives rather than generic normal formulas.</p>
+<p><strong>Q.What are one-tailed and two-tailed tests?</strong></p>
+<p>A one-sided test targets an effect in a pre-specified direction, such as <span class="arithmatex">\(H_1:\mu&gt;\mu_0\)</span>. A two-sided test targets deviations in either direction, such as <span class="arithmatex">\(H_1:\mu\ne\mu_0\)</span>. Choosing a one-sided test after observing the direction of an effect inflates false-positive risk. Choose the alternative before inspecting outcomes.</p>
+<p><strong>Q.What is the difference between a <span class="arithmatex">\(z\)</span>-test and a <span class="arithmatex">\(t\)</span>-test or <span class="arithmatex">\(z\)</span>-score and <span class="arithmatex">\(t\)</span>-statistic?</strong></p>
+<p>A <span class="arithmatex">\(z\)</span>-statistic uses a standard-normal reference distribution when its null standardization is justified (for example, a mean with known <span class="arithmatex">\(\sigma\)</span> under a normal model). A one-sample <span class="arithmatex">\(t\)</span>-statistic replaces unknown <span class="arithmatex">\(\sigma\)</span> with sample <span class="arithmatex">\(s\)</span>: <span class="arithmatex">\(t=(\bar X-\mu_0)/(s/\sqrt n)\)</span>, which follows a <span class="arithmatex">\(t_{n-1}\)</span> distribution for independent normal observations. A <span class="arithmatex">\(z\)</span>-score can simply be a standardized individual observation; the terms should be tied to their contexts. It is misleading to decide between <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(z\)</span> solely by the rule <span class="arithmatex">\(n&lt;30\)</span>.</p>
+<p><strong>Q.What is the Student <span class="arithmatex">\(t\)</span>-distribution?</strong></p>
+<p>A <span class="arithmatex">\(t\)</span>-distribution is symmetric and bell-shaped, with heavier tails than a normal distribution. It is indexed by degrees of freedom and approaches the standard normal as degrees of freedom grow. In normal-sample inference for a mean with unknown variance, replacing the population standard deviation with a sample estimate produces the <span class="arithmatex">\(t\)</span> statistic.</p>
+<p><strong>Q.What are degrees of freedom?</strong></p>
+<p>Degrees of freedom quantify independently varying pieces of information after accounting for constraints or estimated parameters. Sample variance uses <span class="arithmatex">\(n-1\)</span> degrees of freedom because deviations from the sample mean sum to zero. In ordinary least squares with a full-rank design and <span class="arithmatex">\(p\)</span> estimated coefficients (including intercept), residual degrees of freedom are <span class="arithmatex">\(n-p\)</span>.</p>
+<p><strong>Q.What is a paired <span class="arithmatex">\(t\)</span>-test versus an independent-samples <span class="arithmatex">\(t\)</span>-test?</strong></p>
+<p>A paired <span class="arithmatex">\(t\)</span>-test performs a one-sample test on within-pair differences (e.g., before versus after intervention for the same subject). An independent-samples <span class="arithmatex">\(t\)</span>-test compares means from unrelated groups. Welch’s <span class="arithmatex">\(t\)</span>-test is usually preferred when variances may differ. The dependency structure determines which test is appropriate.</p>
+<p><strong>Q.What is an <span class="arithmatex">\(F\)</span>-test and how is it used in ANOVA?</strong></p>
+<p>An <span class="arithmatex">\(F\)</span>-statistic is a ratio of appropriately scaled variance estimates. In one-way ANOVA it compares between-group and within-group mean squares to test the null hypothesis that population group means are equal. In regression it can compare nested linear models. The classical exact reference distribution relies on model assumptions, including suitable independent errors; Welch ANOVA or robust alternatives may be appropriate when variances differ.</p>
+<p><strong>Q.What are chi-squared tests of independence and goodness of fit?</strong></p>
+<p>A chi-squared <em>test of independence</em> assesses association between categorical variables in a contingency table. A <em>goodness-of-fit</em> test compares observed category counts with expected counts under a specified distribution. A common statistic is <span class="arithmatex">\(\chi^2=\sum_j(O_j-E_j)^2/E_j\)</span>. Interpretation requires sufficiently appropriate expected counts and a valid sampling model; Fisher’s exact test can help for small contingency tables.</p>
+<p><strong>Q.What are Levene’s test and Bartlett’s test?</strong></p>
+<p>Both test equality of population variances across groups. <em>Levene’s test</em> assesses variability using deviations from group centers; its median-centered Brown–Forsythe variation is relatively robust to departures from normality. <em>Bartlett’s test</em> is powerful under normality but sensitive to non-normal distributions. A small <span class="arithmatex">\(p\)</span>-value suggests unequal variances, but graphical and substantive assessment also matter.</p>
+<p><strong>Q.What are the Shapiro–Wilk, Kolmogorov–Smirnov, and Q–Q methods for normality?</strong></p>
+<p>Shapiro–Wilk tests the null hypothesis that data arise from a normal distribution. A normal Q–Q plot compares sample quantiles with theoretical normal quantiles and reveals skewness or tail departures. A one-sample Kolmogorov–Smirnov test compares the empirical CDF with a <em>fully specified</em> reference CDF; estimating normal parameters from the data changes its null calibration (e.g., Lilliefors adjustment). Normality tests can overreact to trivial departures in huge samples and lack power in tiny ones.</p>
+<p><strong>Q.What is the Mann–Whitney <span class="arithmatex">\(U\)</span> test?</strong></p>
+<p>The Mann–Whitney <span class="arithmatex">\(U\)</span> test (Wilcoxon rank-sum) compares the relative ranks of two independent groups. Broadly, it tests whether values from one group tend to be larger than values from the other, with exchangeability assumptions for its null calibration. It is <em>not</em> a generic test of median differences unless additional shape assumptions hold.</p>
+<p><strong>Q.What is the Wilcoxon signed-rank test?</strong></p>
+<p>The Wilcoxon signed-rank test uses the magnitudes and signs of paired differences to assess whether their distribution is symmetric about zero (or another hypothesized location). It is useful for paired, non-normal data when this symmetry assumption is reasonable. A sign test makes weaker assumptions but may have less power.</p>
+<p><strong>Q.What is the Kruskal–Wallis test?</strong></p>
+<p>Kruskal–Wallis is a rank-based test for comparing multiple independent groups. Its general null concerns equality of their distributions (under appropriate assumptions), not automatically equality of medians. When shapes and spreads are comparable, rejection may be interpreted as a location difference. Follow significant results with multiplicity-adjusted post-hoc comparisons.</p>
+<p><strong>Q.What is Tukey’s honestly significant difference (HSD) procedure?</strong></p>
+<p>Tukey HSD performs pairwise comparisons of group means while controlling the family-wise error rate, typically following a classical ANOVA with appropriate variance assumptions. Unequal sample sizes can be handled with Tukey–Kramer; unequal variances may call for alternatives such as Games–Howell.</p>
+<p><strong>Q.What is the Bonferroni correction?</strong></p>
+<p>When conducting <span class="arithmatex">\(m\)</span> tests, Bonferroni controls the family-wise error rate at or below <span class="arithmatex">\(\alpha\)</span> by testing each at significance level <span class="arithmatex">\(\alpha/m\)</span> (or multiplying each <span class="arithmatex">\(p\)</span>-value by <span class="arithmatex">\(m\)</span> and truncating at 1). It remains valid under arbitrary dependence but may be conservative. Holm’s step-down procedure is often more powerful while retaining family-wise error control.</p>
+<p><strong>Q.What is a likelihood function? How is likelihood different from probability?</strong></p>
+<p>For observed data <span class="arithmatex">\(x\)</span> and parameter <span class="arithmatex">\(\theta\)</span>, a model supplies probability mass or density <span class="arithmatex">\(f(x\mid\theta)\)</span>. Viewing it as a function of <em>data</em> for fixed <span class="arithmatex">\(\theta\)</span> describes outcome probabilities/densities; viewing the same expression as a function of <em><span class="arithmatex">\(\theta\)</span></em> with <span class="arithmatex">\(x\)</span> fixed gives the likelihood <span class="arithmatex">\(L(\theta;x)\)</span>. Likelihood values are not probabilities assigned to parameter values and need not integrate to one over parameters.</p>
+<p><strong>Q.What is maximum likelihood estimation (MLE)?</strong></p>
+<p>MLE chooses parameters maximizing the observed-data likelihood: <span class="arithmatex">\(\hat\theta_{\mathrm{MLE}}=\arg\max_\theta L(\theta;x)\)</span>. For independent observations it is often convenient to maximize <span class="arithmatex">\(\sum_i\log f(x_i\mid\theta)\)</span>. Under regularity conditions, MLEs have favorable asymptotic properties, but small-sample bias, model misspecification, and non-identifiability can cause problems.</p>
+<p><strong>Q.How does MLE differ from the method of moments?</strong></p>
+<p>MLE selects parameters that make observed data most likely under a model. The <em>method of moments</em> equates sample moments to their corresponding model expectations and solves for parameters. Moment estimators may be simpler but less statistically efficient than well-behaved MLEs, depending on the model and the moments used.</p>
+<p><strong>Q.What is a likelihood-ratio test?</strong></p>
+<p>A likelihood-ratio test compares nested models using <span class="arithmatex">\(\Lambda=2(\ell_{\mathrm{full}}-\ell_{\mathrm{restricted}})\)</span>, where <span class="arithmatex">\(\ell\)</span> is maximized log likelihood. Under regularity conditions and a null hypothesis away from parameter-space boundaries, <span class="arithmatex">\(\Lambda\)</span> is approximately chi-squared with degrees of freedom equal to the difference in free parameter counts. Boundary cases and small samples may require special calibration.</p>
+<p><strong>Q.What is the Cram’er–Rao lower bound?</strong></p>
+<p>Under regularity conditions, the variance of an unbiased estimator <span class="arithmatex">\(\hat\theta\)</span> of a scalar parameter is bounded below by <span class="arithmatex">\(1/I(\theta)\)</span>, where <span class="arithmatex">\(I(\theta)\)</span> is the Fisher information from the data. The bound describes a theoretical efficiency limit for unbiased estimation; not every estimator achieves it, and its assumptions matter.</p>
+<p><strong>Q.What is a Bayesian approach and how does Bayesian updating work?</strong></p>
+<p>Bayesian inference represents uncertainty about parameters with probability distributions. Bayes’ rule updates a prior <span class="arithmatex">\(p(\theta)\)</span> using likelihood <span class="arithmatex">\(p(D\mid\theta)\)</span> to form </p>
+<div class="arithmatex">\[p(\theta\mid D)=\frac{p(D\mid\theta)p(\theta)}{p(D)}.\]</div>
+<p>The posterior can be summarized through credible intervals, predictions, or decisions. Priors should be chosen transparently and tested for sensitivity when appropriate.</p>
+<p><strong>Q.What is a conjugate prior?</strong></p>
+<p>A conjugate prior produces a posterior in the same distributional family as the prior for a particular likelihood model. For binomial data, a Beta<span class="arithmatex">\((a,b)\)</span> prior combined with <span class="arithmatex">\(k\)</span> successes in <span class="arithmatex">\(n\)</span> trials yields a Beta<span class="arithmatex">\((a+k,b+n-k)\)</span> posterior. Conjugacy makes calculations convenient but does not ensure the prior is substantively appropriate.</p>
+<p><strong>Q.What is the difference between a credible interval and a confidence interval?</strong></p>
+<p>A Bayesian 95% <em>credible interval</em> contains 95% posterior probability for the parameter under a stated prior and model. A frequentist 95% <em>confidence interval</em> is obtained through a construction with 95% long-run coverage under repeated sampling. They can numerically coincide in some models, but their interpretations differ.</p>
+<p><strong>Q.What is a Kaplan–Meier estimator?</strong></p>
+<p>The Kaplan–Meier estimator is a nonparametric estimator of the survival function <span class="arithmatex">\(S(t)=P(T&gt;t)\)</span> from time-to-event data, accommodating right censoring under appropriate independent-censoring assumptions. It updates estimated survival multiplicatively at observed event times. It does not directly adjust for arbitrary covariates; methods such as Cox regression can address that need.</p>
+<h1 id="regression-and-statistical-models">Regression and Statistical Models<a class="headerlink" href="#regression-and-statistical-models" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is linear regression, and how should coefficients, <span class="arithmatex">\(p\)</span>-values, and <span class="arithmatex">\(R^2\)</span> be interpreted?</strong></p>
+<p>Linear regression models the conditional mean as <span class="arithmatex">\(E[Y\mid X]=\beta_0+\sum_j\beta_j X_j\)</span>. A coefficient <span class="arithmatex">\(\beta_j\)</span> is the change in modeled mean response per unit increase in <span class="arithmatex">\(X_j\)</span> when other included covariates are held constant; it is not automatically causal. A coefficient <span class="arithmatex">\(p\)</span>-value tests an appropriate null such as <span class="arithmatex">\(H_0:\beta_j=0\)</span> under the model and standard-error assumptions. The in-sample quantity <span class="arithmatex">\(R^2=1-\mathrm{SSE}/\mathrm{SST}\)</span> measures the fraction of sample outcome variation explained relative to an intercept-only baseline. High <span class="arithmatex">\(R^2\)</span> does not ensure valid inference, causality, or good out-of-sample predictions.</p>
+<p><strong>Q.What assumptions are relevant to ordinary least squares (OLS)?</strong></p>
+<p>Important distinctions are:</p>
+<ul>
+<li>
+<p><strong>Correct conditional-mean specification:</strong> <span class="arithmatex">\(E[Y\mid X]\)</span> has the specified linear form in coefficients (polynomial features can still be used).</p>
+</li>
+<li>
+<p><strong>Exogeneity:</strong> <span class="arithmatex">\(E[\varepsilon\mid X]=0\)</span> for standard unbiasedness under suitable sampling conditions; unaddressed confounding or simultaneity can violate it.</p>
+</li>
+<li>
+<p><strong>No perfect multicollinearity:</strong> the design matrix has full column rank.</p>
+</li>
+<li>
+<p><strong>Appropriate error dependence and variance:</strong> independent/uncorrelated homoscedastic errors are important for the classical Gauss–Markov efficiency result and usual simple standard errors.</p>
+</li>
+<li>
+<p><strong>Normality:</strong> not required for OLS point-estimate unbiasedness; it supports certain exact small-sample <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(F\)</span> inference.</p>
+</li>
+</ul>
+<p>Use residual diagnostics and data-generating knowledge. Robust standard errors can correct some variance misspecification but do not cure omitted-variable bias or reverse causation.</p>
+<p><strong>Q.What are underfitting and overfitting?</strong></p>
+<p>Underfitting arises when a model is too restrictive to capture real signal, producing poor training and test performance (high bias). Overfitting occurs when it captures noise or idiosyncrasies of training data and generalizes poorly (often high variance). Compare training and validation learning curves, select complexity by suitable cross-validation, and protect a held-out final test set.</p>
+<p><strong>Q.What is homoscedasticity versus heteroscedasticity?</strong></p>
+<p>Homoscedasticity means the conditional error variance is constant: <span class="arithmatex">\(\operatorname{Var}(\varepsilon\mid X)=\sigma^2\)</span>. Heteroscedasticity means it changes with predictors or fitted levels. Under exogeneity, heteroscedasticity does not by itself make OLS coefficients biased, but classical standard errors and efficiency claims can fail. Diagnostics include residual plots and Breusch–Pagan/White tests; potential remedies include heteroscedasticity-robust standard errors, weighted least squares, or re-specifying the variance model.</p>
+<p><strong>Q.What is autocorrelation of regression errors?</strong></p>
+<p>Autocorrelation occurs when errors at different times are statistically dependent. It can distort usual uncertainty estimates and forecasting assessment. Inspect residual time plots, autocorrelation functions, and suitable tests such as Durbin–Watson for certain first-order correlation settings. Depending on the problem, use HAC standard errors, GLS, or explicit autoregressive/error models.</p>
+<p><strong>Q.What is multicollinearity, and what does VIF measure?</strong></p>
+<p>Multicollinearity occurs when predictors are highly linearly related; <em>perfect</em> multicollinearity prevents unique OLS coefficient estimation. Near-collinearity inflates coefficient uncertainty and can make estimates unstable even when predictions remain good. For predictor <span class="arithmatex">\(j\)</span>, <span class="arithmatex">\(\mathrm{VIF}_j=1/(1-R_j^2)\)</span>, where <span class="arithmatex">\(R_j^2\)</span> comes from regressing it on the other predictors. Values above 5 or 10 are rough prompts for investigation, not universal failure thresholds. Domain-guided removal, centering, combining features, or ridge regularization may help.</p>
+<p><strong>Q.What is endogeneity or omitted-variable bias?</strong></p>
+<p>Endogeneity means an included regressor is correlated with the error term, violating exogeneity. It can arise from confounders omitted from the model, simultaneity, measurement error, or sample selection. Adding an omitted variable helps only when it is correctly identified and observed. Depending on context, randomized designs, instrumental variables, natural experiments, panel methods, or causal modeling may be required.</p>
+<p><strong>Q.Which alternative approaches help when standard OLS assumptions fail?</strong></p>
+<p>For misspecified mean structure, consider transformations, splines, feature interactions, or nonlinear models. For heteroscedasticity, use robust standard errors or WLS. For autocorrelation, consider GLS, HAC inference, or time-series models. For outliers/heavy tails, consider robust or quantile regression. For correlated predictors, use ridge/lasso or domain-guided feature engineering. For endogeneity, consider a valid instrumental-variable or causal identification strategy. Changing the algorithm alone does not fix a causal design problem.</p>
+<p><strong>Q.What is nonlinear regression and how is it different from polynomial regression?</strong></p>
+<p>A model is <em>linear in parameters</em> if its fitted mean is a linear combination of unknown coefficients, even if features include <span class="arithmatex">\(X^2\)</span>, splines, or interactions. Thus ordinary polynomial regression can be fitted by OLS. <em>Nonlinear regression</em> in the strict parametric sense has coefficients entering nonlinearly, such as <span class="arithmatex">\(Y=a\exp(bX)+\varepsilon\)</span>, and typically requires nonlinear optimization.</p>
+<p><strong>Q.What is regularization, and why is it useful?</strong></p>
+<p>Regularization penalizes model complexity during fitting, often reducing variance and improving generalization. A common objective is </p>
+<div class="arithmatex">\[\min_\beta\;\sum_i (y_i-x_i^\top\beta)^2+\lambda\,\mathcal R(\beta).\]</div>
+<p>For ridge, <span class="arithmatex">\(\mathcal R(\beta)=\|\beta\|_2^2\)</span>; for lasso, <span class="arithmatex">\(\mathcal R(\beta)=\|\beta\|_1\)</span>. The intercept is typically left unpenalized after appropriate feature preprocessing. <span class="arithmatex">\(\lambda\)</span> is tuned on validation data, and regularization can introduce bias while lowering overall prediction error.</p>
+<p><strong>Q.What is the difference between L1 and L2 regularization?</strong></p>
+<p><strong>L1 (lasso)</strong> penalizes <span class="arithmatex">\(\sum_j|\beta_j|\)</span> and can drive coefficients exactly to zero, making it useful for feature selection. <strong>L2 (ridge)</strong> penalizes <span class="arithmatex">\(\sum_j\beta_j^2\)</span> and typically shrinks correlated coefficients smoothly without making them exactly zero. Elastic net mixes both penalties. Scale numerical predictors before comparing penalties, and tune strength on training/validation data.</p>
+<p><strong>Q.What is Huber loss, and when would you use it?</strong></p>
+<p>Huber loss is quadratic for small residuals and grows linearly for large residuals: </p>
+<div class="arithmatex">\[L_\delta(r)=\begin{cases}\tfrac12r^2,&amp;|r|\leq\delta,\\\delta(|r|-\tfrac12\delta),&amp;|r|&gt;\delta.\end{cases}\]</div>
+<p>It reduces the impact of large residuals compared with squared loss while retaining smooth behavior near zero. Choose <span class="arithmatex">\(\delta\)</span> according to residual scale and validate performance against relevant metrics.</p>
+<p><strong>Q.What is adjusted <span class="arithmatex">\(R^2\)</span>, and why can ordinary <span class="arithmatex">\(R^2\)</span> be misleading?</strong></p>
+<p>Ordinary training <span class="arithmatex">\(R^2\)</span> generally does not decrease when extra regressors are added to an OLS model with an intercept, even if they are irrelevant. Adjusted <span class="arithmatex">\(R^2=1-(1-R^2)(n-1)/(n-p)\)</span>, where <span class="arithmatex">\(p\)</span> counts estimated coefficients including the intercept, penalizes the number of model terms. Neither metric replaces held-out predictive evaluation or assumption checks.</p>
+<p><strong>Q.What is the Akaike Information Criterion (AIC)?</strong></p>
+<p>AIC is an in-sample model-selection criterion balancing fit and parameter count: <span class="arithmatex">\(\mathrm{AIC}=2k-2\log\hat L\)</span>, where <span class="arithmatex">\(k\)</span> is the number of estimated parameters and <span class="arithmatex">\(\hat L\)</span> is maximum likelihood. Lower AIC favors a model within a comparable candidate set fitted to the same response data. It is not an absolute goodness-of-fit guarantee or a replacement for validation.</p>
+<p><strong>Q.What is logistic regression, and what assumptions matter?</strong></p>
+<p>Logistic regression models a binary outcome’s conditional probability via <span class="arithmatex">\(\log\frac{p(X)}{1-p(X)}=\beta_0+\beta^\top X\)</span>. Assumptions include suitable independent (or correctly modeled dependent) observations, correct logit-scale functional form, no perfect separation when using ordinary finite MLE, and adequately controlled collinearity. Predictor effects are interpreted as changes in log odds, not direct changes in probability. Assess discrimination, calibration, and decision-specific thresholds.</p>
+<p><strong>Q.What is Poisson regression and when should you consider negative binomial regression?</strong></p>
+<p>Poisson regression models nonnegative count outcomes, often with <span class="arithmatex">\(\log E[Y\mid X]=\beta_0+\beta^\top X\)</span> and optionally an exposure offset. The Poisson distribution equates conditional mean and variance. Strong overdispersion may motivate negative binomial regression, quasi-Poisson variance adjustments, or alternative data-generating models. Check excess zeros and dependence when relevant.</p>
+<p><strong>Q.What is quantile regression?</strong></p>
+<p>Quantile regression models a conditional quantile such as the median rather than the conditional mean. It minimizes an asymmetric absolute-error (pinball) loss. It is useful for skewed outcomes, distributional heterogeneity, or robust conditional-median predictions. It still requires appropriate sampling and model specification; it is not entirely assumption-free.</p>
+<p><strong>Q.What is the Cox proportional hazards model?</strong></p>
+<p>The Cox model relates a time-to-event hazard to covariates as <span class="arithmatex">\(h(t\mid X)=h_0(t)\exp(\beta^\top X)\)</span>, leaving baseline hazard <span class="arithmatex">\(h_0(t)\)</span> unspecified. The key proportional-hazards assumption is that hazard ratios are constant over time for fixed covariates unless the model explicitly incorporates time-varying effects. Censoring and model diagnostics must be handled appropriately.</p>
+<p><strong>Q.What is the relationship between Pearson correlation and <span class="arithmatex">\(R^2\)</span> in regression?</strong></p>
+<p>For <em>simple</em> OLS regression with one predictor and an intercept, the in-sample <span class="arithmatex">\(R^2\)</span> equals the squared sample Pearson correlation between <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span>. This equality does not apply in the same way to arbitrary multivariable regressions. A correlation coefficient alone does not identify causal effects.</p>
+<p><strong>Q.What is the Breusch–Pagan test?</strong></p>
+<p>The Breusch–Pagan test checks whether error variance changes systematically with specified regressors. It typically regresses squared residuals on covariates and uses an asymptotic reference distribution. A small <span class="arithmatex">\(p\)</span>-value suggests heteroscedasticity; its interpretation depends on model assumptions and test variant. Use it alongside residual plots and robust inference.</p>
+<h1 id="core-machine-learning">Core Machine Learning<a class="headerlink" href="#core-machine-learning" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is data science? How do supervised and unsupervised learning differ?</strong></p>
+<p>Data science combines data acquisition, domain understanding, statistics, computation, modeling, experimentation, and communication to generate actionable evidence. In <strong>supervised learning</strong>, labeled examples <span class="arithmatex">\((X,Y)\)</span> guide prediction of an observed target (classification or regression). In <strong>unsupervised learning</strong>, algorithms seek patterns in features <span class="arithmatex">\(X\)</span> without required target labels (clustering, dimensionality reduction, density estimation). Neither automatically implies causal inference.</p>
+<p><strong>Q.When should you use classification instead of regression?</strong></p>
+<p>Use classification when the target is categorical, such as fraud versus non-fraud. Use regression when the target is numerical and its magnitude matters, such as revenue or temperature. For binary outcomes, a classifier may estimate <span class="arithmatex">\(P(Y=1\mid X)\)</span>; thresholds convert probabilities into actions. Count and time-to-event outcomes may require specialized predictive models.</p>
+<p><strong>Q.What is a confusion matrix?</strong></p>
+<p>A binary confusion matrix summarizes actual versus predicted labels as true positives (TP), false positives (FP), true negatives (TN), and false negatives (FN). From these counts calculate precision <span class="arithmatex">\(\mathrm{TP}/(\mathrm{TP}+\mathrm{FP})\)</span>, recall <span class="arithmatex">\(\mathrm{TP}/(\mathrm{TP}+\mathrm{FN})\)</span>, specificity <span class="arithmatex">\(\mathrm{TN}/(\mathrm{TN}+\mathrm{FP})\)</span>, and accuracy <span class="arithmatex">\((\mathrm{TP}+\mathrm{TN})/N\)</span>. When a denominator is zero, the metric requires a specified convention.</p>
+<p><strong>Q.What are precision, recall, specificity, and F1-score?</strong></p>
+<div class="arithmatex">\[\mathrm{Precision}=\frac{TP}{TP+FP},\quad
+\mathrm{Recall}=\frac{TP}{TP+FN},\quad
+\mathrm{Specificity}=\frac{TN}{TN+FP}.\]</div>
+<p>Precision measures reliability of positive predictions; recall (sensitivity) measures coverage of actual positives; specificity measures coverage of actual negatives. Their harmonic mean <span class="arithmatex">\(F_1=2PR/(P+R)\)</span> balances precision and recall but ignores true negatives and may be unsuitable when costs are asymmetric.</p>
+<p><strong>Q.How does an ROC curve work?</strong></p>
+<p>A receiver operating characteristic (ROC) curve plots true-positive rate (recall) against false-positive rate (<span class="arithmatex">\(FP/(FP+TN)\)</span>) over classification thresholds. ROC–AUC summarizes ranking discrimination: it can be interpreted as the probability that a randomly chosen positive scores higher than a randomly chosen negative, with tie handling. On severely imbalanced data, a precision–recall curve may expose positive-class performance more clearly. Neither curve alone assesses calibration.</p>
+<p><strong>Q.How would you evaluate a logistic regression classifier?</strong></p>
+<p>Evaluate discrimination using ROC–AUC and often PR–AUC, probability quality using log loss or Brier score, calibration using reliability plots, and thresholded decisions using confusion-matrix metrics. Compare against relevant baselines on validation and genuinely held-out test data. Check prevalence shifts, subgroup reliability, and whether features leak future information.</p>
+<p><strong>Q.Is model accuracy the same as model performance?</strong></p>
+<p>No. Accuracy is only one metric and can conceal failure on rare but important cases. In fraud detection with 0.1% prevalence, a model that always predicts “not fraud” can reach 99.9% accuracy while detecting none of the fraud. Choose metrics based on task costs: PR–AUC, recall at fixed precision, expected financial cost, calibration, latency, and robustness may matter more than raw accuracy.</p>
+<p><strong>Q.How do you handle class imbalance?</strong></p>
+<p>Begin with stratified splits (unless ordering or groups require another scheme), a representative test set, and relevant metrics such as PR–AUC or recall at fixed false-positive rate. Consider class weights, threshold tuning, targeted undersampling/oversampling, SMOTE (on training folds only), focal loss, and probability calibration. Ensure synthetic samples or duplicated minority cases never leak across train/test boundaries. Optimizing precision–recall trade-offs is ultimately a decision-cost question.</p>
+<p><strong>Q.How do you evaluate machine-learning models reliably?</strong></p>
+<p>Define the target population, business metric, and leakage risks first. Create development and untouched test partitions; use suitable cross-validation on the development set for model and hyperparameter selection. Select metrics based on prediction task and operating costs, inspect calibration, confidence intervals, subgroup performance, drift sensitivity, and learning curves, then report final performance once on the held-out set.</p>
+<p><strong>Q.What is cross-validation, and when should it be used?</strong></p>
+<p>In <span class="arithmatex">\(k\)</span>-fold cross-validation, data are split into <span class="arithmatex">\(k\)</span> folds; each fold becomes validation once while the model fits on the other <span class="arithmatex">\(k-1\)</span>. Repeated or stratified variants can reduce sensitivity to splits. For groups or time series, keep correlated entities or future timestamps from leaking into training. All feature selection, imputation, and scaling must occur inside each training fold.</p>
+<p><strong>Q.What are the major methods for preventing overfitting?</strong></p>
+<p>Use a sufficiently representative dataset, validation-based complexity selection, regularization, early stopping, feature selection, pruning, augmentation when valid, and simpler architectures where suitable. Diagnose the generalization gap using learning curves. Do not tune repeatedly on the final test set; doing so converts it into a de facto validation set.</p>
+<p><strong>Q.How is <span class="arithmatex">\(k\)</span>-nearest neighbors (KNN) different from <span class="arithmatex">\(k\)</span>-means?</strong></p>
+<p><strong>KNN</strong> is a supervised, instance-based algorithm that predicts a label or numerical target from nearby labeled examples. <strong><span class="arithmatex">\(k\)</span>-means</strong> is an unsupervised clustering algorithm that assigns points to <span class="arithmatex">\(k\)</span> clusters while iteratively minimizing within-cluster squared Euclidean distances to centroids. The symbol <span class="arithmatex">\(k\)</span> means neighbor count in KNN and cluster count in <span class="arithmatex">\(k\)</span>-means. Scaling and the chosen distance metric strongly affect both methods.</p>
+<p><strong>Q.What is Bayes’ theorem and how is it used in machine learning?</strong></p>
+<p>Bayes’ theorem is <span class="arithmatex">\(P(A\mid B)=P(B\mid A)P(A)/P(B)\)</span> when <span class="arithmatex">\(P(B)&gt;0\)</span>. It converts prior probabilities into posterior probabilities using observed evidence. Applications include probabilistic classification, Bayesian parameter estimation, filtering, and uncertainty-aware predictions. Posterior estimates depend on both the likelihood model and prior assumptions.</p>
+<p><strong>Q.Why is Naive Bayes called <em>naive</em>?</strong></p>
+<p>Naive Bayes assumes predictors are conditionally independent given the class: <span class="arithmatex">\(P(X_1,\ldots,X_d\mid Y)=\prod_j P(X_j\mid Y)\)</span>. This assumption is often unrealistic (words in a document, for example, are dependent) but yields fast, competitive classifiers in tasks such as text classification. Its raw probabilities can be poorly calibrated when dependence is strong.</p>
+<p><strong>Q.What is the difference between generative and discriminative models?</strong></p>
+<p>A <strong>generative classifier</strong> models a joint distribution <span class="arithmatex">\(P(X,Y)\)</span>, often via <span class="arithmatex">\(P(X\mid Y)P(Y)\)</span>, and can use Bayes’ rule for classification (e.g., Naive Bayes, LDA, QDA). A <strong>discriminative classifier</strong> models <span class="arithmatex">\(P(Y\mid X)\)</span> or learns a decision boundary directly (e.g., logistic regression, SVM). Modern generative models can also learn <span class="arithmatex">\(P(X)\)</span> without class labels. Neither family is universally better: compare predictive requirements, assumptions, dataset size, and whether data generation is needed.</p>
+<p><strong>Q.What is deep learning compared with other machine-learning methods?</strong></p>
+<p>Deep learning uses neural networks with multiple learned representation layers. It is especially effective for high-dimensional modalities such as images, speech, and text, often reducing the need for manual feature construction. Compared with simpler tabular algorithms, deep models can require more data, compute, tuning, and interpretability safeguards. Model choice should follow task requirements rather than architectural fashion.</p>
+<p><strong>Q.How do you prune a decision tree?</strong></p>
+<p>Pruning reduces model complexity to improve generalization. <em>Pre-pruning</em> stops growth using maximum depth, minimum leaf size, or minimum impurity decrease. <em>Post-pruning</em> first grows a tree and then removes branches, often using cost-complexity pruning with penalty <span class="arithmatex">\(\alpha\)</span> per terminal leaf. Select pruning strength through validation rather than only training fit.</p>
+<p><strong>Q.When are ensembles useful?</strong></p>
+<p>Ensembles combine models to improve robustness or predictive performance. Bagging and random forests average unstable learners to reduce variance; boosting (such as gradient-boosted trees) builds learners sequentially to reduce an objective; stacking learns how to combine base predictions without leakage. Ensembles are valuable for complex tabular prediction but increase runtime, maintenance complexity, and explanation burden.</p>
+<p><strong>Q.What is the kernel trick?</strong></p>
+<p>A kernel <span class="arithmatex">\(K(x,z)=\langle\phi(x),\phi(z)\rangle\)</span> computes inner products in an implicit feature space without constructing <span class="arithmatex">\(\phi\)</span> explicitly. Kernel SVMs can therefore learn nonlinear decision boundaries using linear operations in that feature space. Kernel choice, regularization, scaling, and compute cost are crucial; kernel methods can become expensive as sample count grows.</p>
+<p><strong>Q.What is the bias–variance trade-off?</strong></p>
+<p>Prediction error can reflect systematic approximation error (bias), sensitivity to data fluctuations (variance), and irreducible noise. More flexible models often reduce approximation bias but risk higher variance; regularization may increase bias while reducing variance. This decomposition is cleanest for squared-error prediction in a specified setting. Validation helps select the useful complexity level.</p>
+<p><strong>Q.What is the difference between model discrimination and calibration?</strong></p>
+<p>Discrimination asks whether a model ranks positive cases above negative ones, as measured by ROC–AUC. Calibration asks whether predicted probabilities match empirical event frequencies: among observations assigned risk 0.2, about 20% should experience the event under good calibration. A model can have good AUC but poor calibration. Reliability diagrams, Brier score, and log loss help assess probability quality.</p>
+<p><strong>Q.What is the role of train, validation, and test sets?</strong></p>
+<p>The training set fits parameters. The validation set (or development cross-validation) supports model choice, hyperparameter tuning, and threshold selection. The untouched test set estimates final generalization after these choices are frozen. When data have groups, sites, or chronology, split according to the intended deployment scenario; random splitting may substantially overestimate generalization.</p>
+<p><strong>Q.How does XGBoost handle missing values?</strong></p>
+<p>For tree-based boosting, XGBoost can learn a default direction at a split for observations with missing feature values, choosing the direction that improves the training objective. Thus explicit imputation may not be required for supported tree boosters, although missingness mechanisms and feature meaning still matter. It is <em>not</em> accurate to claim that missing observations necessarily receive zero leaf weights or that XGBoost uses a fixed number of splits for missing values.</p>
+<p><strong>Q.How can XGBoost address highly imbalanced classes?</strong></p>
+<p>XGBoost supports observation weights and, for binary objectives, <code>scale_pos_weight</code> to increase the influence of positive cases. It also supports evaluation metrics such as <code>aucpr</code> and tunable decision thresholds (outside model fitting). A starting heuristic is <span class="arithmatex">\(N_{\mathrm{negative}}/N_{\mathrm{positive}}\)</span>, but this is not universally optimal and can worsen probability calibration. Standard XGBoost does not automatically perform stratified sampling at every boosting round. Validate against the true deployment distribution and tune hyperparameters/thresholds without test leakage.</p>
+<p><strong>Q.How do you choose a favorite ML algorithm and explain it in under a minute?</strong></p>
+<p>A strong interview answer names the algorithm, its core mechanism, when it works well, one limitation, and an evaluation strategy. Example: “Gradient-boosted trees build trees sequentially, with each tree correcting the current model’s objective via gradient information. They perform very well on heterogeneous tabular datasets and capture nonlinear interactions. I control overfitting using learning rate, tree depth, subsampling, and early stopping, and validate using a leakage-safe split. Their limitations include tuning complexity and potentially poor extrapolation.</p>
+<h1 id="neural-networks-and-optimization">Neural Networks and Optimization<a class="headerlink" href="#neural-networks-and-optimization" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is the vanishing-gradient problem, and how can it be mitigated?</strong></p>
+<p>In backpropagation, gradients are multiplied by successive Jacobians. If their relevant singular values are repeatedly small, early-layer gradients can become tiny, slowing learning. Saturating sigmoid/tanh activations can aggravate this, as can poor initialization or deep recurrent dependencies. Common remedies include ReLU-family activations where suitable, appropriate initialization, residual/skip connections, normalization, gated recurrent architectures, and careful architecture/optimizer design. Adaptive optimizers can help optimization but do not universally eliminate vanishing gradients.</p>
+<p><strong>Q.How does a residual connection help optimization?</strong></p>
+<p>A residual block learns <span class="arithmatex">\(y=F(x)+x\)</span> (or a projected skip connection). The identity path gives information and gradients a direct route through depth, helping train much deeper networks. It does not literally skip all computations in backpropagation: both the residual branch and skip path contribute to derivatives.</p>
+<p><strong>Q.What is batch normalization, and when might it be less suitable?</strong></p>
+<p>Batch normalization standardizes intermediate activations using batch statistics during training and learned running statistics or equivalent estimates at inference, with trainable scale and shift. It can stabilize and accelerate training in many architectures. Very small batch sizes, distribution shifts, or particular sequence models can make alternatives such as layer or group normalization preferable.</p>
+<p><strong>Q.How do Adam and RMSProp differ from plain gradient descent?</strong></p>
+<p>Plain gradient descent uses a fixed (or scheduled) global learning rate on gradients. RMSProp scales updates using an exponential moving average of squared gradients. Adam additionally tracks a first-moment estimate and applies bias correction. These adaptive methods often improve practical convergence but are not guaranteed to produce better generalization; learning-rate schedules and decoupled weight decay can matter.</p>
+<h1 id="time-series-analysis-and-forecasting">Time-Series Analysis and Forecasting<a class="headerlink" href="#time-series-analysis-and-forecasting" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is forecasting, and how is it different from prediction?</strong></p>
+<p><em>Prediction</em> broadly means estimating an unknown outcome, present or future. <em>Forecasting</em> specifically estimates future values, commonly respecting time order and using past observations plus available covariates. Forecasts can be generated by statistical models, machine learning, or expert judgment; the distinction is not simply that forecasts are quantitative while predictions are informal.</p>
+<p><strong>Q.What are the key components of a time series?</strong></p>
+<p>Common descriptive components are <strong>trend</strong> (long-run level movement), <strong>seasonality</strong> (regular periodic variation), <strong>cycles</strong> (longer or less regular oscillations), and <strong>irregular variation/noise</strong>. An additive decomposition is <span class="arithmatex">\(Y_t=T_t+S_t+R_t\)</span>, while a multiplicative form may be appropriate when fluctuations scale with the series level. Not every series contains every component.</p>
+<p><strong>Q.What is time-series analysis versus cross-sectional analysis?</strong></p>
+<p>Time-series observations are indexed by time, often with serial dependence and nonstationarity. Cross-sectional observations represent different units at a given time or period. Time-series analyses must account for chronology, autocorrelation, regime changes, and leakage from future information. Panel data combine cross-sectional units observed repeatedly through time.</p>
+<p><strong>Q.What is stationarity, and how can nonstationarity be addressed?</strong></p>
+<p>A weakly stationary series has constant mean, constant finite variance, and autocovariance depending on lag rather than calendar time. Trends, unit roots, changes in variance, and structural breaks can violate this. Remedies may include detrending, differencing, transforms, or models that explicitly account for changing regimes. Not all forecasting approaches require stationarity, and blindly differencing a stable series can be harmful.</p>
+<p><strong>Q.What is the Augmented Dickey–Fuller (ADF) test?</strong></p>
+<p>The ADF test investigates a unit-root null hypothesis against an alternative such as stationarity around a specified deterministic component. It adds lagged difference terms to account for serial correlation. The result depends on lag selection, inclusion of a constant/trend, and sample size. Failure to reject a unit root is not proof of nonstationarity, and structural breaks can complicate the test.</p>
+<p><strong>Q.What cross-validation procedure should be used for time-series forecasting?</strong></p>
+<p>Use <em>rolling-origin</em> or <em>forward-chaining</em> evaluation that trains only on observations preceding each validation horizon. For example, train on periods <span class="arithmatex">\(1\)</span>–<span class="arithmatex">\(4\)</span>, validate on <span class="arithmatex">\(5\)</span>; then train on <span class="arithmatex">\(1\)</span>–<span class="arithmatex">\(5\)</span>, validate on <span class="arithmatex">\(6\)</span>. A sliding window can be used when older data become irrelevant. Respect forecast horizon, data-release delays, entity grouping, and any needed gap to prevent feature leakage.</p>
+<p><strong>Q.How should missing values in a time series be handled?</strong></p>
+<p>First identify whether missingness reflects sensor failure, genuine absence of events, or irregular sampling. Options include forward filling when justified, interpolation, seasonal imputation, Kalman smoothing/filtering, or model-based estimates. Offline smoothing may use future observations, so it is invalid for a real-time forecasting pipeline if those observations would not yet be available. Validate the impact of imputation on a chronological holdout.</p>
+<p><strong>Q.How can bootstrapping be performed on time-series data?</strong></p>
+<p>Ordinary independent-row bootstrap destroys temporal dependence and can underestimate uncertainty. <em>Moving-block</em>, circular-block, stationary-block, or model-based residual bootstrap methods resample data in a way that retains relevant dependence. Block length should reflect the series’ dependence structure and uncertainty objective. For nonstationary series, specialized designs or modeling may be required.</p>
+<p><strong>Q.What is the difference between noise and outliers in a time series?</strong></p>
+<p>Noise is routine unexplained stochastic variation; outliers are unusually large or atypical observations relative to a temporal model. A seasonal spike may look extreme in a raw plot yet be expected after conditioning on day of week or holidays. Investigate anomalies using residuals from a suitable temporal baseline before excluding them.</p>
+<p><strong>Q.What is cointegration?</strong></p>
+<p>Two or more integrated, typically <span class="arithmatex">\(I(1)\)</span>, time series are cointegrated if a nontrivial linear combination is stationary. This indicates a statistically stable long-run equilibrium relationship despite individual stochastic trends. Error-correction models represent both short-run changes and adjustments toward that equilibrium. Cointegration alone does not establish causation.</p>
+<p><strong>Q.What is a GARCH model, and when is it useful?</strong></p>
+<p>GARCH models time-varying conditional variance, widely used for volatility clustering in financial returns. A basic GARCH(1,1) model specifies <span class="arithmatex">\(\sigma_t^2=\omega+\alpha\varepsilon_{t-1}^2+\beta\sigma_{t-1}^2\)</span>. Parameter constraints ensure nonnegative variance; stationarity often additionally requires <span class="arithmatex">\(\alpha+\beta&lt;1\)</span>. It forecasts conditional volatility rather than automatically forecasting the return mean.</p>
+<p><strong>Q.What is a multivariate time series and how can it be forecast?</strong></p>
+<p>A multivariate time series contains several variables observed over time whose past values may help predict one another. A vector autoregression (VAR) uses lagged values of all variables to predict each component, under appropriate stationarity or other modeling conditions. VARMA, vector error-correction models, state-space models, and machine-learning methods are alternatives. Carefully assess leakage, dimensionality, and forecast-horizon stability.</p>
+<p><strong>Q.What is a Markov model’s role in finance?</strong></p>
+<p>Markov chains can describe transitions among credit ratings or market regimes, while continuous-state Markov processes are used in some interest-rate and asset-price models. The next-state distribution depends on the current state under the modeled Markov property. This is a modeling simplification; financial series may exhibit longer memory, latent states, or regime instability.</p>
+<p><strong>Q.What are common forecasting errors and ways to measure them?</strong></p>
+<p>MAE measures mean absolute error, RMSE emphasizes large squared errors, and MASE scales forecast error relative to a naive reference. MAPE can explode or become undefined near zero actual values. For probabilistic forecasts, use coverage and sharpness of prediction intervals, pinball loss for quantiles, or proper scoring rules. Always compare against seasonal-naive and simple baselines appropriate to the forecast horizon.</p>
+<h1 id="applied-questions-experiments-and-coding">Applied Questions, Experiments, and Coding<a class="headerlink" href="#applied-questions-experiments-and-coding" title="Permanent link">&para;</a></h1>
+<p><strong>Q.What is the goal of A/B testing?</strong></p>
+<p>A/B testing estimates the causal effect of assigning users or other experimental units to two variants under randomization. Define a primary outcome, guardrail metrics, eligible population, unit of randomization, duration, and decision rule <em>before</em> starting. Compare conversion rates or other estimands, report effect size and uncertainty, and account for interference, repeated exposure, multiple comparisons, and sequential monitoring. The best variant is the one that improves relevant utility, not automatically the one with the smallest <span class="arithmatex">\(p\)</span>-value.</p>
+<p><strong>Q.How do you uniformly generate an integer from 1 to 7 using a fair six-sided die?</strong></p>
+<p>Roll the die twice and let <span class="arithmatex">\(a,b\in\{1,\ldots,6\}\)</span>. Map the outcome to <span class="arithmatex">\(k=6(a-1)+(b-1)\)</span>, which is uniform on <span class="arithmatex">\(\{0,\ldots,35\}\)</span>. If <span class="arithmatex">\(k=35\)</span>, discard both rolls and repeat. Otherwise return <span class="arithmatex">\(1+(k\bmod 7)\)</span>. Because <span class="arithmatex">\(35=5\times7\)</span>, each output occurs exactly five times among accepted outcomes and therefore has probability <span class="arithmatex">\(1/7\)</span>. The acceptance probability per two-roll attempt is <span class="arithmatex">\(35/36\)</span>.</p>
+<p><strong>Q.How could you design a recommender system for a company?</strong></p>
+<p>Define the objective (relevance, retention, conversion, revenue, or long-term user utility) and interaction logging. Establish popularity and content-based baselines, then consider collaborative filtering or embeddings for candidate generation followed by a ranking model. Address cold starts using content and contextual signals. Use offline ranking metrics (Recall@<span class="arithmatex">\(K\)</span>, NDCG@<span class="arithmatex">\(K\)</span>), exposure-aware evaluation, diversity/fairness checks, and randomized online tests. Production design also needs latency budgets, feedback loops, filtering, privacy controls, and monitoring.</p>
+<p><strong>Q.How would you approach the Netflix Prize-style recommendation problem?</strong></p>
+<p>Start with explicit-rating baselines incorporating global, user, and item biases. Train latent-factor matrix factorization with regularization, explore neighborhood models and temporal dynamics, and compare through user-aware held-out ratings using RMSE if that is the competition metric. Blend complementary models only if they improve validation performance. In a live product, supplement RMSE with top-<span class="arithmatex">\(K\)</span> usefulness, coverage, cold-start performance, novelty, and online experiments.</p>
+<p><strong>Q.Give pseudocode for a parallel algorithm.</strong></p>
+<p>For a parallel reduction of <span class="arithmatex">\(n\)</span> values across <span class="arithmatex">\(P\)</span> workers:</p>
+<ol>
+<li>
+<p>Partition input indices into <span class="arithmatex">\(P\)</span> disjoint chunks.</p>
+</li>
+<li>
+<p>On each worker, calculate a local partial sum <span class="arithmatex">\(s_p\)</span> using only its chunk.</p>
+</li>
+<li>
+<p>Combine <span class="arithmatex">\(s_1,\ldots,s_P\)</span> with a tree reduction to obtain the global sum.</p>
+</li>
+<li>
+<p>Return the global sum (and divide by <span class="arithmatex">\(n\)</span> if a mean is required).</p>
+</li>
+</ol>
+<p>The computational work is <span class="arithmatex">\(O(n/P)\)</span> per worker plus communication overhead; tree-reduction depth is <span class="arithmatex">\(O(\log P)\)</span>. For floating-point values, reduction order can cause minor reproducibility differences. This template also generalizes to counts, extrema, and associative summary statistics.</p>
+<p><strong>Q.What should you investigate before deploying an ML model?</strong></p>
+<p>Confirm target definition, leakage-safe validation, data and model versioning, latency, throughput, monitoring, rollback, access controls, security, and reproducibility. Validate calibration, subgroup behavior, drift detection, failure behavior, and retraining triggers. Shadow deployments or staged rollouts reduce release risk. For consequential uses, document how human oversight and error costs affect action thresholds.</p>
+<p><strong>Q.How can you evaluate whether a data-cleaning or feature-engineering change helped?</strong></p>
+<p>Treat the change as a controlled model-pipeline modification. Apply it only within training folds, keep downstream modeling and evaluation procedures comparable, and quantify effects on holdout metrics, uncertainty, runtime, and subgroup performance. Where feasible use paired predictions or repeated validation to reduce comparison noise. Changes to measurement or cohort definitions should also be checked for shifts in the estimand.</p>
+<h1 id="additional-time-series-interview-resources">Additional Time-Series Interview Resources<a class="headerlink" href="#additional-time-series-interview-resources" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p><a href="https://devinterview.io/questions/machine-learning-and-data-science/time-series-interview-questions/">DevInterview: Time-Series Interview Questions</a></p>
+</li>
+<li>
+<p><a href="https://qfeuniversity.com/30-time-series-analysis-interview-qa/">QFE University: 30 Time-Series Analysis Interview Q&amp;A</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+      
+    
+  </body>
+</html>

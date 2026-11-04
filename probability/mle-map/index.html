@@ -1,0 +1,2011 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Data Science interview prep notes">
+      
+      
+      
+      
+        <link rel="prev" href="../expectation-first-step/">
+      
+      
+        <link rel="next" href="../../model-evaluation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>MLE and MAP - Prep DS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mle-and-map" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Prep DS" class="md-header__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Prep DS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MLE and MAP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Prep DS" class="md-nav__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Prep DS
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/logit-multiclass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logistic & multiclass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/auc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AUC & ROC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Statistical inference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Statistical inference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    p-values and tests
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    p-values and tests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/t-distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    t-distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/one-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/two-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/paired-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paired t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/z-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    z-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/wilcoxon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wilcoxon signed-rank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/chi-square/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chi-square independence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/anova/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-way ANOVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Probability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../expectation-first-step/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First-step expectation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLE and MAP
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLE and MAP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-quick-mental-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites (quick mental check)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-the-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE: the core idea
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLE: the core idea">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-maximize-the-log-likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why maximize the log-likelihood
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-for-the-bernoulli-coin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE for the Bernoulli (coin)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-for-the-gaussian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE for the Gaussian
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLE for the Gaussian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bias-why-the-sample-variance-uses-n-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bias: why the sample variance uses \(n-1\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-and-loss-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE and loss functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLE and loss functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gaussian-noise-rightarrow-mse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gaussian noise \(\Rightarrow\) MSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laplace-noise-rightarrow-mae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace noise \(\Rightarrow\) MAE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#location-estimate-mean-vs-median" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location estimate: mean vs median
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bernoulli-rightarrow-binary-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli \(\Rightarrow\) binary cross-entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#categorical-rightarrow-multi-class-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorical \(\Rightarrow\) multi-class cross-entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-summary-and-weakness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE summary and weakness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-the-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAP: the core idea
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-for-the-coin-with-a-beta-prior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAP for the coin with a Beta prior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#still-to-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Still to cover
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model evaluation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model evaluation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-evaluation/drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data drift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sql/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-design/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System design roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../puzzles/fermi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Puzzles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general-qa/interview-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-quick-mental-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites (quick mental check)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-the-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE: the core idea
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLE: the core idea">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-maximize-the-log-likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why maximize the log-likelihood
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-for-the-bernoulli-coin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE for the Bernoulli (coin)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-for-the-gaussian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE for the Gaussian
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLE for the Gaussian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bias-why-the-sample-variance-uses-n-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bias: why the sample variance uses \(n-1\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-and-loss-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE and loss functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLE and loss functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gaussian-noise-rightarrow-mse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gaussian noise \(\Rightarrow\) MSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laplace-noise-rightarrow-mae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace noise \(\Rightarrow\) MAE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#location-estimate-mean-vs-median" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location estimate: mean vs median
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bernoulli-rightarrow-binary-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bernoulli \(\Rightarrow\) binary cross-entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#categorical-rightarrow-multi-class-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorical \(\Rightarrow\) multi-class cross-entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mle-summary-and-weakness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLE summary and weakness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-the-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAP: the core idea
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-for-the-coin-with-a-beta-prior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAP for the coin with a Beta prior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#still-to-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Still to cover
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mle-and-map">MLE and MAP<a class="headerlink" href="#mle-and-map" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">At a glance</p>
+<div class="arithmatex">\[\boxed{
+\hat\theta_{\text{MLE}}=\arg\max_\theta \log p(D\mid\theta)
+\qquad
+\hat\theta_{\text{MAP}}=\arg\max_\theta \big[\log p(D\mid\theta)+\log p(\theta)\big]
+}\]</div>
+<p>MLE asks which parameter makes the observed data least surprising. MAP adds a log-prior, so it is the same objective plus a regularizer. A flat prior makes them identical, and as <span class="arithmatex">\(n\to\infty\)</span> the prior washes out.</p>
+</div>
+<h2 id="prerequisites-quick-mental-check">Prerequisites (quick mental check)<a class="headerlink" href="#prerequisites-quick-mental-check" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Probability basics:</strong> random variables, PDFs/PMFs, independence. The i.i.d. assumption lets the likelihood factor into a product.</li>
+<li><strong>Common distributions:</strong> Bernoulli, Binomial, Gaussian, (Poisson).</li>
+<li><strong>Logs and calculus:</strong> product <span class="arithmatex">\(\to\)</span> sum, derivative set to zero.</li>
+<li><strong>Likelihood vs probability:</strong> <span class="arithmatex">\(p(\text{data}\mid\theta)\)</span> viewed as a function of <span class="arithmatex">\(\theta\)</span> with data fixed; <em>not</em> a distribution over <span class="arithmatex">\(\theta\)</span>.</li>
+<li><strong>Expectation and variance:</strong> needed for the bias discussion.</li>
+</ul>
+<p>Optional later: KL divergence (MLE <span class="arithmatex">\(\equiv\)</span> minimizing KL between the empirical distribution and the model), Fisher information (asymptotic normality, Cramér–Rao).</p>
+<h2 id="notation">Notation<a class="headerlink" href="#notation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(x_1,\dots,x_n\)</span></td>
+<td>the <span class="arithmatex">\(n\)</span> observed data points</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\theta\)</span></td>
+<td>unknown model parameter</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(p(x\mid\theta)\)</span></td>
+<td>probability (or density) of <span class="arithmatex">\(x\)</span> when the parameter is <span class="arithmatex">\(\theta\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(L(\theta)\)</span></td>
+<td>likelihood, <span class="arithmatex">\(L(\theta)=p(x_1,\dots,x_n\mid\theta)\)</span>, as a function of <span class="arithmatex">\(\theta\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\prod\)</span></td>
+<td>product, <span class="arithmatex">\(\prod_{i=1}^n a_i = a_1 a_2\cdots a_n\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\arg\max_\theta f(\theta)\)</span></td>
+<td>the <em>value</em> of <span class="arithmatex">\(\theta\)</span> that maximizes <span class="arithmatex">\(f\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\hat\theta\)</span></td>
+<td>an estimate of <span class="arithmatex">\(\theta\)</span> computed from data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>i.i.d.</strong> <em>Independent</em>: one point tells nothing about another, so the joint factors into a product (<span class="arithmatex">\(P(A\cap B)=P(A)P(B)\)</span>). <em>Identically distributed</em>: all points share the same distribution and the same <span class="arithmatex">\(\theta\)</span>.</p>
+<h2 id="mle-the-core-idea">MLE: the core idea<a class="headerlink" href="#mle-the-core-idea" title="Permanent link">&para;</a></h2>
+<p>MLE asks: <em>which parameter value makes the data I actually saw least surprising?</em> For i.i.d. data,</p>
+<div class="arithmatex">\[L(\theta)=\prod_{i=1}^n p(x_i\mid\theta),\qquad
+\hat\theta_{\text{MLE}}=\arg\max_\theta L(\theta).\]</div>
+<div class="admonition tip">
+<p class="admonition-title">Key idea: likelihood vs probability</p>
+<p><span class="arithmatex">\(L(\theta)\)</span> has the same formula as the probability of the data, but <span class="arithmatex">\(\theta\)</span> varies and the data is fixed. It does <strong>not</strong> integrate to 1 over <span class="arithmatex">\(\theta\)</span> and is <strong>not</strong> "the probability that <span class="arithmatex">\(\theta=0.7\)</span>". That statement needs a prior (MAP/Bayes).</p>
+</div>
+<h3 id="why-maximize-the-log-likelihood">Why maximize the log-likelihood<a class="headerlink" href="#why-maximize-the-log-likelihood" title="Permanent link">&para;</a></h3>
+<p>Since <span class="arithmatex">\(\log\)</span> is strictly increasing, <span class="arithmatex">\(\arg\max_\theta \log L(\theta)=\arg\max_\theta L(\theta)\)</span> (the maximizer keeps the same location in <span class="arithmatex">\(\theta\)</span>). Reasons to use it:</p>
+<ul>
+<li><strong>Product <span class="arithmatex">\(\to\)</span> sum:</strong> <span class="arithmatex">\(\log\prod_i p(x_i\mid\theta)=\sum_i\log p(x_i\mid\theta)\)</span>, easier to differentiate.</li>
+<li><strong>Numerical stability:</strong> a product of many numbers <span class="arithmatex">\(&lt;1\)</span> underflows to <span class="arithmatex">\(0\)</span>; a sum of logs does not.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Common mistake</p>
+<p>Taking the log does <em>not</em> create uniqueness of the maximizer; <span class="arithmatex">\(L\)</span> and <span class="arithmatex">\(\log L\)</span> have identical maximizers. (Log-concavity of a model can help, but it is a separate property.)</p>
+</div>
+<h3 id="recipe">Recipe<a class="headerlink" href="#recipe" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Write <span class="arithmatex">\(L(\theta)=\prod_i p(x_i\mid\theta)\)</span>.</li>
+<li>Take the log; drop any terms without <span class="arithmatex">\(\theta\)</span>.</li>
+<li>Differentiate, set to <span class="arithmatex">\(0\)</span>, solve.</li>
+<li>Check the second derivative is negative (a max, not a min), and that the answer lies in the valid parameter range.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Sanity check</p>
+<p>If <span class="arithmatex">\(\theta\)</span> is a probability and you get <span class="arithmatex">\(\hat\theta=2\)</span>, there is an algebra slip. Re-check the chain rule: <span class="arithmatex">\(\frac{d}{d\theta}\log(1-\theta)=-\frac{1}{1-\theta}\)</span>.</p>
+</div>
+<h2 id="mle-for-the-bernoulli-coin">MLE for the Bernoulli (coin)<a class="headerlink" href="#mle-for-the-bernoulli-coin" title="Permanent link">&para;</a></h2>
+<p>Sequence H,H,T with <span class="arithmatex">\(\theta=P(\text{heads})\)</span>: <span class="arithmatex">\(L(\theta)=\theta^2(1-\theta)\)</span>, so <span class="arithmatex">\(\log L=2\log\theta+\log(1-\theta)\)</span> and</p>
+<div class="arithmatex">\[\frac{2}{\theta}-\frac{1}{1-\theta}=0\;\Rightarrow\;2(1-\theta)=\theta\;\Rightarrow\;\hat\theta=\tfrac23 .\]</div>
+<p>Second derivative <span class="arithmatex">\(-\frac{2}{\theta^2}-\frac{1}{(1-\theta)^2}&lt;0\)</span>, so <span class="arithmatex">\(\log L\)</span> is concave and <span class="arithmatex">\(2/3\)</span> is the unique maximum.</p>
+<p><strong>General case: <span class="arithmatex">\(k\)</span> heads in <span class="arithmatex">\(n\)</span> flips.</strong></p>
+<div class="arithmatex">\[\log L(\theta)=k\log\theta+(n-k)\log(1-\theta)
+\;\Rightarrow\;
+\frac{k}{\theta}=\frac{n-k}{1-\theta}
+\;\Rightarrow\;
+\boxed{\hat\theta_{\text{MLE}}=\frac{k}{n}}\]</div>
+<p><strong>Where is <span class="arithmatex">\(\binom{n}{k}\)</span>?</strong> If you record only the count <span class="arithmatex">\(k\)</span>, <span class="arithmatex">\(P(k\mid\theta)=\binom nk\theta^k(1-\theta)^{n-k}\)</span> and <span class="arithmatex">\(\log L=\log\binom nk+k\log\theta+(n-k)\log(1-\theta)\)</span>. The term <span class="arithmatex">\(\log\binom nk\)</span> does not contain <span class="arithmatex">\(\theta\)</span>, so it vanishes on differentiation. This is exact (no Stirling approximation). Likewise, for a specific sequence there is no coefficient at all. <strong>General rule:</strong> any factor of <span class="arithmatex">\(L(\theta)\)</span> independent of <span class="arithmatex">\(\theta\)</span> can be dropped.</p>
+<h2 id="mle-for-the-gaussian">MLE for the Gaussian<a class="headerlink" href="#mle-for-the-gaussian" title="Permanent link">&para;</a></h2>
+<p>For i.i.d. <span class="arithmatex">\(x_i\sim\mathcal N(\mu,\sigma^2)\)</span>,</p>
+<div class="arithmatex">\[p(x\mid\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\Big(-\frac{(x-\mu)^2}{2\sigma^2}\Big),\]</div>
+<div class="arithmatex">\[\log L(\mu,\sigma^2)=-\frac n2\log(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2 .\]</div>
+<p><strong>Mean.</strong> <span class="arithmatex">\(\mu\)</span> appears only in the last term, so maximizing over <span class="arithmatex">\(\mu\)</span> means minimizing the <strong>sum of squared errors</strong> <span class="arithmatex">\(\sum_i(x_i-\mu)^2\)</span>. Differentiating: <span class="arithmatex">\(-2\sum_i(x_i-\mu)=0\)</span>, so</p>
+<div class="arithmatex">\[\hat\mu_{\text{MLE}}=\frac1n\sum_i x_i\quad\text{(the sample mean).}\]</div>
+<p>It is the mean of the <em>sample</em>, an estimate of the unknown true <span class="arithmatex">\(\mu\)</span>.</p>
+<p><strong>Variance.</strong> With <span class="arithmatex">\(v=\sigma^2\)</span> and <span class="arithmatex">\(\mu=\hat\mu\)</span>:</p>
+<div class="arithmatex">\[-\frac{n}{2v}+\frac{1}{2v^2}\sum_i(x_i-\hat\mu)^2=0
+\;\Rightarrow\;
+\boxed{\hat\sigma^2_{\text{MLE}}=\frac1n\sum_i(x_i-\hat\mu)^2}\]</div>
+<h3 id="bias-why-the-sample-variance-uses-n-1">Bias: why the sample variance uses <span class="arithmatex">\(n-1\)</span><a class="headerlink" href="#bias-why-the-sample-variance-uses-n-1" title="Permanent link">&para;</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">Intuition (lead with this in interviews)</p>
+<p>You used the data to compute <span class="arithmatex">\(\bar x\)</span>, so the deviations are forced to satisfy <span class="arithmatex">\(\sum_i(x_i-\bar x)=0\)</span>. Only <span class="arithmatex">\(n-1\)</span> of them are free: <span class="arithmatex">\(n-1\)</span> degrees of freedom. Also, <span class="arithmatex">\(\bar x\)</span> minimizes <span class="arithmatex">\(\sum_i(x_i-c)^2\)</span> over <span class="arithmatex">\(c\)</span>, so <span class="arithmatex">\(\sum_i(x_i-\bar x)^2\le\sum_i(x_i-\mu)^2\)</span>, which makes dividing by <span class="arithmatex">\(n\)</span> underestimate <span class="arithmatex">\(\sigma^2\)</span>.</p>
+</div>
+<p><strong>Exact calculation.</strong> Using <span class="arithmatex">\(\sum_i(x_i-\mu)^2=\sum_i(x_i-\bar x)^2+n(\bar x-\mu)^2\)</span>:</p>
+<div class="arithmatex">\[\mathbb{E}\Big[\sum_i(x_i-\mu)^2\Big]=n\sigma^2,\qquad
+\mathbb{E}\big[n(\bar x-\mu)^2\big]=n\,\mathrm{Var}(\bar x)=\sigma^2,\]</div>
+<div class="arithmatex">\[\Rightarrow\;\mathbb{E}\Big[\sum_i(x_i-\bar x)^2\Big]=(n-1)\sigma^2 .\]</div>
+<p>Hence dividing by <span class="arithmatex">\(n-1\)</span> is unbiased, while <span class="arithmatex">\(\mathbb{E}[\hat\sigma^2_{\text{MLE}}]=\frac{n-1}{n}\sigma^2\)</span>.</p>
+<ul>
+<li>The MLE is biased but <strong>consistent</strong>: the bias <span class="arithmatex">\(\to0\)</span> as <span class="arithmatex">\(n\to\infty\)</span>.</li>
+<li>The <span class="arithmatex">\(n-1\)</span> estimate is the larger of the two. For <span class="arithmatex">\(n=100\)</span> the ratio is <span class="arithmatex">\(100/99\approx1\%\)</span> (small); for <span class="arithmatex">\(n=5\)</span> it is <span class="arithmatex">\(25\%\)</span>.</li>
+<li>The sample <em>standard deviation</em> is still slightly biased (concavity of <span class="arithmatex">\(\sqrt{\cdot}\)</span>, Jensen).</li>
+</ul>
+<h2 id="mle-and-loss-functions">MLE and loss functions<a class="headerlink" href="#mle-and-loss-functions" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Core principle</p>
+<p><strong>Minimizing a loss = maximizing a log-likelihood under some noise assumption.</strong> Loss <span class="arithmatex">\(=\)</span> negative log-likelihood (NLL), purely because optimizers are conventionally written to <em>minimize</em>.</p>
+</div>
+<h3 id="gaussian-noise-rightarrow-mse">Gaussian noise <span class="arithmatex">\(\Rightarrow\)</span> MSE<a class="headerlink" href="#gaussian-noise-rightarrow-mse" title="Permanent link">&para;</a></h3>
+<p>For <span class="arithmatex">\(y_i=f(x_i;\theta)+\varepsilon_i\)</span>, <span class="arithmatex">\(\varepsilon_i\sim\mathcal N(0,\sigma^2)\)</span>:</p>
+<div class="arithmatex">\[\log L(\theta)=\text{const}-\frac{1}{2\sigma^2}\sum_i\big(y_i-f(x_i;\theta)\big)^2,\]</div>
+<p>so maximizing <span class="arithmatex">\(\log L\)</span> <span class="arithmatex">\(\Leftrightarrow\)</span> minimizing the squared error (MSE up to the factor <span class="arithmatex">\(1/n\)</span>).</p>
+<h3 id="laplace-noise-rightarrow-mae">Laplace noise <span class="arithmatex">\(\Rightarrow\)</span> MAE<a class="headerlink" href="#laplace-noise-rightarrow-mae" title="Permanent link">&para;</a></h3>
+<p>Density <span class="arithmatex">\(p(y\mid f)=\frac{1}{2b}\exp(-|y-f|/b)\)</span>:</p>
+<div class="arithmatex">\[\log L(\theta)=-n\log(2b)-\frac1b\sum_i|y_i-f(x_i;\theta)| ,\]</div>
+<p>so MLE minimizes <span class="arithmatex">\(\sum_i|y_i-f(x_i;\theta)|\)</span>, the absolute-error (L1) loss.</p>
+<h3 id="location-estimate-mean-vs-median">Location estimate: mean vs median<a class="headerlink" href="#location-estimate-mean-vs-median" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Noise</th>
+<th>Loss</th>
+<th>Location estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gaussian</td>
+<td>squared</td>
+<td>mean</td>
+</tr>
+<tr>
+<td>Laplace</td>
+<td>absolute</td>
+<td>median</td>
+</tr>
+</tbody>
+</table>
+<p><em>Why median:</em> nudging <span class="arithmatex">\(m\)</span> right increases the distance to points on the left and decreases it to points on the right; <span class="arithmatex">\(\sum_i|x_i-m|\)</span> stops improving when half the points lie on each side. Example: <span class="arithmatex">\(\{1,2,3,4,100\}\)</span> has mean <span class="arithmatex">\(22\)</span> but median <span class="arithmatex">\(3\)</span>. The Laplace density has heavier tails than the Gaussian, so a far point is less surprising and pulls the fit less (linear vs quadratic penalty): MAE is robust to outliers.</p>
+<h3 id="bernoulli-rightarrow-binary-cross-entropy">Bernoulli <span class="arithmatex">\(\Rightarrow\)</span> binary cross-entropy<a class="headerlink" href="#bernoulli-rightarrow-binary-cross-entropy" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(y_i\in\{0,1\}\)</span> and <span class="arithmatex">\(p_i=f(x_i;\theta)=P(y_i=1\mid x_i)\)</span>.</p>
+<ol>
+<li>One point (exponents act as a switch): <span class="arithmatex">\(P(y_i\mid x_i;\theta)=p_i^{\,y_i}(1-p_i)^{1-y_i}\)</span>. Check: <span class="arithmatex">\(y_i=1\to p_i\)</span>, <span class="arithmatex">\(y_i=0\to1-p_i\)</span>.</li>
+<li>Dataset (independence): <span class="arithmatex">\(L(\theta)=\prod_i p_i^{\,y_i}(1-p_i)^{1-y_i}\)</span>.</li>
+<li>Log: <span class="arithmatex">\(\log L=\sum_i\big[y_i\log p_i+(1-y_i)\log(1-p_i)\big]\)</span>.</li>
+<li>Negate and average (dividing by <span class="arithmatex">\(n\)</span> does not change the argmin):</li>
+</ol>
+<div class="arithmatex">\[\boxed{\mathrm{BCE}(\theta)=-\frac1n\sum_i\big[y_i\log p_i+(1-y_i)\log(1-p_i)\big]}\]</div>
+<p>With a constant <span class="arithmatex">\(p_i=\theta\)</span> this reduces to the coin formula <span class="arithmatex">\(k\log\theta+(n-k)\log(1-\theta)\)</span>.</p>
+<h3 id="categorical-rightarrow-multi-class-cross-entropy">Categorical <span class="arithmatex">\(\Rightarrow\)</span> multi-class cross-entropy<a class="headerlink" href="#categorical-rightarrow-multi-class-cross-entropy" title="Permanent link">&para;</a></h3>
+<p>Labels are one-hot <span class="arithmatex">\(y_{ik}\in\{0,1\}\)</span>, <span class="arithmatex">\(\sum_k y_{ik}=1\)</span>; the model gives <span class="arithmatex">\(p_{ik}=P(\text{class }k\mid x_i)\)</span> (typically via softmax), <span class="arithmatex">\(\sum_k p_{ik}=1\)</span>.</p>
+<div class="arithmatex">\[P(y_i\mid x_i;\theta)=\prod_{k=1}^K p_{ik}^{\,y_{ik}},\quad
+L(\theta)=\prod_i\prod_k p_{ik}^{\,y_{ik}},\quad
+\log L=\sum_i\sum_k y_{ik}\log p_{ik},\]</div>
+<div class="arithmatex">\[\boxed{\mathrm{CE}(\theta)=-\frac1n\sum_i\sum_{k=1}^K y_{ik}\log p_{ik}}\]</div>
+<p>With one-hot labels the inner sum collapses to <span class="arithmatex">\(-\log p_{i,c}\)</span> (<span class="arithmatex">\(c\)</span> = true class). Binary cross-entropy is the <span class="arithmatex">\(K=2\)</span> special case. Examples: assigned probability <span class="arithmatex">\(0.25\Rightarrow\)</span> loss <span class="arithmatex">\(-\log0.25=\log4\approx1.386\)</span>; probability <span class="arithmatex">\(1\Rightarrow\)</span> loss <span class="arithmatex">\(0\)</span>; probability <span class="arithmatex">\(\to0\Rightarrow\)</span> loss <span class="arithmatex">\(\to\infty\)</span> (confident wrong answers are punished very harshly).</p>
+<div class="admonition example">
+<p class="admonition-title">Interview: why cross-entropy and not MSE for logistic regression?</p>
+<ul>
+<li>BCE is exactly the NLL of a Bernoulli model, which matches a <span class="arithmatex">\(0/1\)</span> label; MSE assumes Gaussian noise, which does not.</li>
+<li>With a sigmoid output, the MSE gradient vanishes when the model is confidently wrong (saturation), so learning stalls. For softmax/sigmoid + CE, the gradient with respect to the logits is simply <span class="arithmatex">\(p-y\)</span>, which stays large exactly when the model is wrong.</li>
+</ul>
+</div>
+<h2 id="mle-summary-and-weakness">MLE summary and weakness<a class="headerlink" href="#mle-summary-and-weakness" title="Permanent link">&para;</a></h2>
+<ol>
+<li><span class="arithmatex">\(L(\theta)=p(\text{data}\mid\theta)\)</span> as a function of <span class="arithmatex">\(\theta\)</span>; a product for i.i.d. data.</li>
+<li>Take the log (product <span class="arithmatex">\(\to\)</span> sum, stable), maximize, drop terms without <span class="arithmatex">\(\theta\)</span>.</li>
+<li>Bernoulli: <span class="arithmatex">\(\hat\theta=k/n\)</span>. Gaussian: sample mean; <span class="arithmatex">\(\hat\sigma^2\)</span> with <span class="arithmatex">\(1/n\)</span> (biased, consistent).</li>
+<li>Loss = NLL: Gaussian <span class="arithmatex">\(\to\)</span> MSE, Laplace <span class="arithmatex">\(\to\)</span> MAE, Bernoulli <span class="arithmatex">\(\to\)</span> BCE, categorical <span class="arithmatex">\(\to\)</span> CE.</li>
+<li>Properties: consistent, asymptotically normal, invariant under reparametrization.</li>
+</ol>
+<p><strong>Weakness: overfitting to small data.</strong> Three flips, three heads: <span class="arithmatex">\(L=\theta^3\)</span>, <span class="arithmatex">\(\log L=3\log\theta\)</span>, derivative <span class="arithmatex">\(3/\theta\)</span> has no zero. Since <span class="arithmatex">\(\theta\in[0,1]\)</span>, the maximum is at the boundary, <span class="arithmatex">\(\hat\theta_{\text{MLE}}=1\)</span> (agrees with <span class="arithmatex">\(k/n\)</span>). This says tails are impossible, though a fair coin gives 3 heads with probability <span class="arithmatex">\(1/8\)</span>. MLE trusts the data completely and cannot express prior knowledge. <strong>MAP fixes this.</strong></p>
+<h2 id="map-the-core-idea">MAP: the core idea<a class="headerlink" href="#map-the-core-idea" title="Permanent link">&para;</a></h2>
+<p>Bayes' rule:</p>
+<div class="arithmatex">\[\underbrace{p(\theta\mid D)}_{\text{posterior}}=\frac{\overbrace{p(D\mid\theta)}^{\text{likelihood}}\;\overbrace{p(\theta)}^{\text{prior}}}{p(D)},\]</div>
+<p>where <span class="arithmatex">\(p(D)\)</span> does not depend on <span class="arithmatex">\(\theta\)</span>. Then</p>
+<div class="arithmatex">\[\hat\theta_{\text{MAP}}=\arg\max_\theta p(\theta\mid D)=\arg\max_\theta\big[\log p(D\mid\theta)+\log p(\theta)\big].\]</div>
+<p>So <strong>MAP = MLE objective + log-prior</strong>.</p>
+<ul>
+<li>Flat prior <span class="arithmatex">\(\Rightarrow\)</span> <span class="arithmatex">\(\log p(\theta)\)</span> is constant <span class="arithmatex">\(\Rightarrow\)</span> MAP <span class="arithmatex">\(=\)</span> MLE.</li>
+<li><strong>Framing:</strong> MLE (frequentist): <span class="arithmatex">\(\theta\)</span> is a fixed unknown constant, the data is random. MAP (Bayesian): <span class="arithmatex">\(\theta\)</span> is a random variable with a distribution (prior <span class="arithmatex">\(\to\)</span> posterior), the data is observed.</li>
+<li>MAP is only "half Bayesian": it uses a prior but reports a single point (the posterior peak) instead of the full distribution.</li>
+</ul>
+<h2 id="map-for-the-coin-with-a-beta-prior">MAP for the coin with a Beta prior<a class="headerlink" href="#map-for-the-coin-with-a-beta-prior" title="Permanent link">&para;</a></h2>
+<p>Prior: <span class="arithmatex">\(p(\theta)\propto\theta^{\alpha-1}(1-\theta)^{\beta-1}\)</span>, with hyperparameters <span class="arithmatex">\(\alpha,\beta&gt;0\)</span>. (<span class="arithmatex">\(\alpha=\beta=1\)</span> is flat; <span class="arithmatex">\(\alpha=\beta=2\)</span> is a mild belief that the coin is roughly fair.)</p>
+<p>Log-posterior (constants dropped):</p>
+<div class="arithmatex">\[J(\theta)=(k+\alpha-1)\log\theta+(n-k+\beta-1)\log(1-\theta).\]</div>
+<p>Let <span class="arithmatex">\(A=k+\alpha-1\)</span>, <span class="arithmatex">\(B=n-k+\beta-1\)</span>, so <span class="arithmatex">\(J=A\log\theta+B\log(1-\theta)\)</span>.</p>
+<div class="arithmatex">\[\frac{dJ}{d\theta}=\frac A\theta-\frac B{1-\theta}=0
+\;\Rightarrow\;A(1-\theta)=B\theta
+\;\Rightarrow\;\theta=\frac{A}{A+B},\]</div>
+<p>and <span class="arithmatex">\(A+B=n+\alpha+\beta-2\)</span>. Hence</p>
+<div class="arithmatex">\[\boxed{\hat\theta_{\text{MAP}}=\frac{k+\alpha-1}{n+\alpha+\beta-2}}\]</div>
+<p>Second derivative <span class="arithmatex">\(-\frac{A}{\theta^2}-\frac{B}{(1-\theta)^2}&lt;0\)</span> when <span class="arithmatex">\(A,B&gt;0\)</span>, so it is a maximum.</p>
+<ul>
+<li><strong>Check:</strong> <span class="arithmatex">\(\alpha=\beta=1\)</span> gives <span class="arithmatex">\(k/n\)</span> (MLE).</li>
+<li><strong>Example:</strong> <span class="arithmatex">\(k=n=3\)</span>, <span class="arithmatex">\(\alpha=\beta=2\)</span>: <span class="arithmatex">\(\hat\theta_{\text{MAP}}=\frac{3+2-1}{3+2+2-2}=\frac45=0.8\)</span>, versus <span class="arithmatex">\(\hat\theta_{\text{MLE}}=1\)</span>.</li>
+<li><strong>Pseudo-counts:</strong> the prior acts like <span class="arithmatex">\((\alpha-1)\)</span> imaginary heads and <span class="arithmatex">\((\beta-1)\)</span> imaginary tails added before the real data. With <span class="arithmatex">\(\alpha=\beta=2\)</span>: <span class="arithmatex">\((3+1)/(3+2)=4/5\)</span>.</li>
+<li><strong>Washing out:</strong> as <span class="arithmatex">\(n\to\infty\)</span>, <span class="arithmatex">\(k\)</span> and <span class="arithmatex">\(n\)</span> dominate <span class="arithmatex">\(\alpha,\beta\)</span>, so <span class="arithmatex">\(\hat\theta_{\text{MAP}}\to k/n=\hat\theta_{\text{MLE}}\)</span>.</li>
+</ul>
+<h2 id="still-to-cover">Still to cover<a class="headerlink" href="#still-to-cover" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Regularization link:</strong> Gaussian prior on weights <span class="arithmatex">\(\to\)</span> L2 (ridge); Laplace prior <span class="arithmatex">\(\to\)</span> L1 (lasso), derived like MSE/MAE from MLE.</li>
+<li><strong>MAP vs MLE vs full Bayesian:</strong> when MAP helps (small data, overfitting, high dimension); limits (point estimate; not invariant under reparametrization, unlike MLE).</li>
+<li><strong>Rapid-fire interview questions</strong> on MLE and MAP together.</li>
+<li>Open question: with <span class="arithmatex">\(\alpha=\beta=2\)</span> and 30 heads in 30 flips, what is <span class="arithmatex">\(\hat\theta_{\text{MAP}}\)</span>? (Use the boxed formula; compare with the 3-flip case.)</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+      
+    
+  </body>
+</html>

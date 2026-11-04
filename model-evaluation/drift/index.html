@@ -1,0 +1,1888 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Data Science interview prep notes">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../optimization/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Data drift - Prep DS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-drift-is" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Prep DS" class="md-header__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Prep DS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data drift
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Prep DS" class="md-nav__button md-logo" aria-label="Prep DS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Prep DS
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/logit-multiclass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logistic & multiclass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/auc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AUC & ROC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Statistical inference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Statistical inference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    p-values and tests
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    p-values and tests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/t-distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    t-distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/one-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/two-sample-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-sample t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/paired-t/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paired t-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/z-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    z-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/wilcoxon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wilcoxon signed-rank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/chi-square/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chi-square independence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/p-value/anova/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One-way ANOVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistical-inference/qa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Probability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Probability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/expectation-first-step/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First-step expectation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/mle-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLE and MAP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model evaluation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model evaluation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data drift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sql/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-design/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System design roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../puzzles/fermi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Puzzles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general-qa/interview-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="what-drift-is">What drift is<a class="headerlink" href="#what-drift-is" title="Permanent link">&para;</a></h1>
+<p>A model is trained on historical data with joint distribution <span class="arithmatex">\(P_{\text{train}}(X,Y)\)</span> and then applied to new data with joint distribution <span class="arithmatex">\(P_{\text{serve}}(X,Y)\)</span>. <strong>Drift is the gap between the two growing over time</strong>: </p>
+<div class="arithmatex">\[P_{\text{train}}(X,Y)\neq P_{\text{serve}}(X,Y).\]</div>
+<p>The result is <em>silent degradation</em>: the model keeps producing scores and no error is raised, but the scores become less reliable.</p>
+<p>Two related ideas are often both called “drift”:</p>
+<ul>
+<li>
+<p><strong>Data drift:</strong> the inputs <span class="arithmatex">\(X\)</span> change.</p>
+</li>
+<li>
+<p><strong>Concept drift:</strong> the meaning of the inputs changes, i.e. the relationship between <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> changes.</p>
+</li>
+</ul>
+<p><strong>In one sentence</strong></p>
+<p>Drift is when production data stops matching training data, so performance decays without any error being raised.</p>
+<hr />
+<h1 id="the-three-types-of-drift">The three types of drift<a class="headerlink" href="#the-three-types-of-drift" title="Permanent link">&para;</a></h1>
+<p>The joint distribution can be factorised in two ways: </p>
+<div class="arithmatex">\[P(X,Y)=P(Y\mid X)\,P(X)=P(X\mid Y)\,P(Y).\]</div>
+<p>Each type of drift corresponds to one factor changing while the others (ideally) stay fixed.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Type</strong></th>
+<th style="text-align: left;"><strong>What changes</strong></th>
+<th style="text-align: left;"><strong>Fraud example</strong></th>
+<th style="text-align: left;"><strong>Main effect</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Covariate shift</td>
+<td style="text-align: left;"><span class="arithmatex">\(P(X)\)</span> (the inputs)</td>
+<td style="text-align: left;">Festival-season volume, a new payment channel, a new user segment</td>
+<td style="text-align: left;">Model faces unfamiliar inputs and extrapolates badly</td>
+</tr>
+<tr>
+<td style="text-align: left;">Prior / label shift</td>
+<td style="text-align: left;"><span class="arithmatex">\(P(Y)\)</span> (the fraud rate)</td>
+<td style="text-align: left;">An attack wave raises prevalence from <span class="arithmatex">\(0.1\%\)</span> to <span class="arithmatex">\(0.5\%\)</span></td>
+<td style="text-align: left;">Probabilities are miscalibrated and the threshold is no longer optimal</td>
+</tr>
+<tr>
+<td style="text-align: left;">Concept drift</td>
+<td style="text-align: left;"><span class="arithmatex">\(P(Y\mid X)\)</span> (the relationship)</td>
+<td style="text-align: left;">Fraudsters change tactics, so a pattern that used to mean fraud now looks normal</td>
+<td style="text-align: left;">The model’s learned logic is wrong; the most damaging type</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Covariate shift.</strong> <span class="arithmatex">\(P(X)\)</span> changes but <span class="arithmatex">\(P(Y\mid X)\)</span> is unchanged. The model’s rule is still correct, but it is being applied in regions of input space where it saw little training data.</p>
+<p><strong>Prior (label) shift.</strong> <span class="arithmatex">\(P(Y)\)</span> changes but <span class="arithmatex">\(P(X\mid Y)\)</span> is unchanged. Even with a perfect, unchanged classifier, precision changes. With fixed true positive rate (TPR) and false positive rate (FPR), and prevalence <span class="arithmatex">\(\pi=P(Y=1)\)</span>, </p>
+<div class="arithmatex">\[\text{Precision}=\frac{\text{TPR}\cdot\pi}{\text{TPR}\cdot\pi+\text{FPR}\cdot(1-\pi)}.\]</div>
+<p><em>Example:</em> with <span class="arithmatex">\(\text{TPR}=0.8\)</span> and <span class="arithmatex">\(\text{FPR}=0.001\)</span>, </p>
+<div class="arithmatex">\[\begin{aligned}
+\pi=0.001:&amp;\quad \text{Precision}=\frac{0.0008}{0.0008+0.000999}\approx 0.44,\\[2pt]
+\pi=0.005:&amp;\quad \text{Precision}=\frac{0.004}{0.004+0.000995}\approx 0.80.
+\end{aligned}\]</div>
+<p>The same classifier looks twice as good purely because the fraud rate changed. This is also why precision-based metrics such as AUCPR depend on prevalence.</p>
+<p><strong>Concept drift.</strong> <span class="arithmatex">\(P(Y\mid X)\)</span> changes. The same input now has a different probability of being fraud, so the model’s learned decision boundary is simply wrong. Because input distributions can look unchanged, this type cannot be seen from the inputs alone and requires labels.</p>
+<p><strong>In one sentence</strong></p>
+<p>Covariate shift is inputs changing, prior shift is the base rate changing, and concept drift is the input-to-label relationship changing; fraud mostly suffers concept drift.</p>
+<hr />
+<h1 id="how-drift-unfolds-over-time">How drift unfolds over time<a class="headerlink" href="#how-drift-unfolds-over-time" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p><strong>Sudden:</strong> an abrupt change, such as a new attack or a pipeline or schema change.</p>
+</li>
+<li>
+<p><strong>Gradual:</strong> the old pattern slowly gives way to a new one.</p>
+</li>
+<li>
+<p><strong>Incremental:</strong> a series of small steps that add up.</p>
+</li>
+<li>
+<p><strong>Recurring / seasonal:</strong> patterns that return, such as festivals, month-end and salary cycles.</p>
+</li>
+</ul>
+<p><strong>Why it matters.</strong> Sudden drift needs fast alerts and rollback, gradual drift needs trend monitoring, and seasonal drift needs seasonality-aware baselines so that we do not retrain in a panic every year.</p>
+<hr />
+<h1 id="why-fraud-is-special">Why fraud is special<a class="headerlink" href="#why-fraud-is-special" title="Permanent link">&para;</a></h1>
+<ol>
+<li>
+<p><strong>Adversarial adaptation.</strong> Fraudsters probe and adapt to avoid blocks, so the drift is caused by an opponent.</p>
+</li>
+<li>
+<p><strong>Feedback loop and selection bias.</strong> Blocked fraud disappears from our data, so future training data under-represents the fraud we already catch.</p>
+</li>
+<li>
+<p><strong>Delayed labels.</strong> Chargebacks and investigations take weeks, so recent data looks cleaner than it really is.</p>
+</li>
+<li>
+<p><strong>Non-malicious change.</strong> App releases, logging changes, upstream bugs and new products shift features without any change in fraud.</p>
+</li>
+<li>
+<p><strong>Asymmetric cost.</strong> Missed fraud and false alarms both cost money, and drift can hurt each differently.</p>
+</li>
+</ol>
+<p><strong>In one sentence</strong></p>
+<p>In fraud, drift is expected, not exceptional, because the adversary adapts and our own blocking changes the data we see.</p>
+<hr />
+<h1 id="detecting-drift">Detecting drift<a class="headerlink" href="#detecting-drift" title="Permanent link">&para;</a></h1>
+<h2 id="the-core-idea">The core idea<a class="headerlink" href="#the-core-idea" title="Permanent link">&para;</a></h2>
+<p>Every drift check does the same thing. We take two samples of data:</p>
+<ul>
+<li>
+<p>the <strong>reference sample</strong>: data from the baseline period (usually the training set, or a recent stable month), containing <span class="arithmatex">\(n_{\text{ref}}\)</span> rows;</p>
+</li>
+<li>
+<p>the <strong>current sample</strong>: data from the window we are monitoring (e.g. the last day or week), containing <span class="arithmatex">\(n_{\text{cur}}\)</span> rows;</p>
+</li>
+</ul>
+<p>and we ask <em>how different are they?</em> This question has two distinct parts, and different tools answer different parts.</p>
+<p><strong>Part 1: how big is the difference? (effect size).</strong> PSI, KL divergence, JS divergence and the KS statistic <span class="arithmatex">\(D\)</span> each condense the gap between the two samples into one number.</p>
+<p><strong>Part 2: could the difference be just luck? (hypothesis test).</strong> Two samples drawn from exactly the same distribution never look identical, because proportions and averages wobble from sample to sample. A hypothesis test starts from </p>
+<div class="arithmatex">\[H_0:\ \text{both samples come from the same distribution (no drift)},\]</div>
+<p>and computes the <strong>p-value</strong>: the probability, <em>if <span class="arithmatex">\(H_0\)</span> were true</em>, of seeing a gap at least as large as the one observed. A small p-value means luck alone is an unlikely explanation. The KS test and the chi-square test are of this type.</p>
+<p>Both parts are needed. With millions of rows, a test will flag gaps that are real but too small to matter; with a few hundred rows, a large and important gap may fail to reach significance. So we read the <em>size</em> of the difference and the <em>evidence</em> that it is real together.</p>
+<p>Detection is organised in three layers, depending on what we can observe:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Layer</strong></th>
+<th style="text-align: left;"><strong>What is compared</strong></th>
+<th style="text-align: left;"><strong>Typical tools</strong></th>
+<th style="text-align: left;"><strong>Needs labels?</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Input</td>
+<td style="text-align: left;">Distribution of each feature (and combinations of features)</td>
+<td style="text-align: left;">PSI, KS, <span class="arithmatex">\(\chi^2\)</span>, KL, JS, adversarial validation</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Output</td>
+<td style="text-align: left;">Distribution of the model’s scores and the alert rate</td>
+<td style="text-align: left;">PSI, KS on the score</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Performance</td>
+<td style="text-align: left;">Precision, recall, PR-AUC</td>
+<td style="text-align: left;">Matured cohorts, proxies, audit sample</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="input-layer-needs-no-labels">Input layer (needs no labels)<a class="headerlink" href="#input-layer-needs-no-labels" title="Permanent link">&para;</a></h2>
+<h3 id="setup-and-notation">Setup and notation<a class="headerlink" href="#setup-and-notation" title="Permanent link">&para;</a></h3>
+<p>Pick one feature, for example the transaction amount. To compare two samples of a continuous feature, we first cut its range into <span class="arithmatex">\(B\)</span> bins using edges <span class="arithmatex">\(b_0&lt;b_1&lt;\dots&lt;b_B\)</span>.</p>
+<ul>
+<li>
+<p>The edges are computed <strong>from the reference sample only</strong> (e.g. its deciles, so each reference bin holds <span class="arithmatex">\(10\%\)</span> of the rows) and then <strong>reused unchanged</strong> for the current sample. If the edges were recomputed on the current data, the bins would silently move with the data and the comparison would be meaningless.</p>
+</li>
+<li>
+<p>For a categorical feature, the bins are simply the categories. Missing values get their own bin.</p>
+</li>
+</ul>
+<p>Then, for each bin <span class="arithmatex">\(i=1,\dots,B\)</span>: </p>
+<div class="arithmatex">\[e_i=\frac{\text{number of reference rows in bin } i}{n_{\text{ref}}}
+\quad\text{(\emph{expected} share: training-time data)},\]</div>
+<div class="arithmatex">\[a_i=\frac{\text{number of current rows in bin } i}{n_{\text{cur}}}
+\quad\text{(\emph{actual} share: data now)}.\]</div>
+<p>Both are proportions, so <span class="arithmatex">\(\sum_i e_i=1\)</span> and <span class="arithmatex">\(\sum_i a_i=1\)</span>. If there is no drift, <span class="arithmatex">\(a_i\approx e_i\)</span> for every bin. With decile bins, <span class="arithmatex">\(e_i=0.1\)</span> for all <span class="arithmatex">\(i\)</span>, and the <span class="arithmatex">\(a_i\)</span> simply tell us how the current rows are spread across the training deciles.</p>
+<p>These two vectors, <span class="arithmatex">\(e=(e_1,\dots,e_B)\)</span> and <span class="arithmatex">\(a=(a_1,\dots,a_B)\)</span>, are the inputs to everything below.</p>
+<h3 id="population-stability-index-psi">Population Stability Index (PSI)<a class="headerlink" href="#population-stability-index-psi" title="Permanent link">&para;</a></h3>
+<p><strong>Definition.</strong> </p>
+<div class="arithmatex">\[\boxed{
+\mathrm{PSI}=\sum_{i=1}^{B}(a_i-e_i)\,\ln\frac{a_i}{e_i}
+}\]</div>
+<p><strong>What each piece means.</strong> For every bin we multiply two quantities:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(a_i-e_i\)</span>: the <em>absolute shift</em>, i.e. by how many percentage points the share of this bin moved.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\ln(a_i/e_i)\)</span>: the <em>relative shift on a log scale</em>. It is <span class="arithmatex">\(0\)</span> if the share did not change, positive if the bin grew, negative if it shrank, and it treats doubling (<span class="arithmatex">\(\ln2\approx0.69\)</span>) and halving (<span class="arithmatex">\(-\ln2\)</span>) symmetrically.</p>
+</li>
+</ul>
+<p><strong>Why multiply them?</strong> The absolute shift alone ignores context: moving from <span class="arithmatex">\(0.01\)</span> to <span class="arithmatex">\(0.02\)</span> is a doubling, whereas moving from <span class="arithmatex">\(0.40\)</span> to <span class="arithmatex">\(0.41\)</span> is barely a change, yet both are a shift of <span class="arithmatex">\(0.01\)</span>. The log-ratio alone would over-react to bins containing almost no data. The product weighs both: </p>
+<div class="arithmatex">\[\begin{aligned}
+\text{rare bin: } e=0.01,\ a=0.02:&amp;\quad 0.01\cdot\ln 2\approx 0.00693,\\
+\text{common bin: } e=0.40,\ a=0.41:&amp;\quad 0.01\cdot\ln 1.025\approx 0.00025.
+\end{aligned}\]</div>
+<p>The same absolute shift counts about <span class="arithmatex">\(28\)</span> times more in the rare bin. For fraud this is desirable, since risky behaviour usually lives in sparsely populated bins.</p>
+<p><strong>Each term is non-negative.</strong> If <span class="arithmatex">\(a_i&gt;e_i\)</span>, both factors are positive; if <span class="arithmatex">\(a_i&lt;e_i\)</span>, both are negative, and their product is again positive. So shifts in different bins add up and cannot cancel each other. Consequently <span class="arithmatex">\(\mathrm{PSI}\ge 0\)</span>, with <span class="arithmatex">\(\mathrm{PSI}=0\)</span> exactly when <span class="arithmatex">\(a=e\)</span>. Swapping <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(e\)</span> leaves the value unchanged, so PSI is symmetric.</p>
+<p><strong>Worked example.</strong> Reference shares <span class="arithmatex">\(e=(0.5,0.3,0.2)\)</span>; current shares <span class="arithmatex">\(a=(0.4,0.3,0.3)\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Bin <span class="arithmatex">\(i\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(e_i\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(a_i\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(\ln(a_i/e_i)\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\((a_i-e_i)\ln(a_i/e_i)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">−0.2231</td>
+<td style="text-align: center;"><span class="arithmatex">\((-0.1)(-0.2231)=0.0223\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.3</td>
+<td style="text-align: center;">0.3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0.2</td>
+<td style="text-align: center;">0.3</td>
+<td style="text-align: center;">0.4055</td>
+<td style="text-align: center;"><span class="arithmatex">\((0.1)(0.4055)=0.0406\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PSI</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>0.063</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A larger shift, <span class="arithmatex">\(a=(0.2,0.3,0.5)\)</span>, gives <span class="arithmatex">\((-0.3)\ln0.4+0+(0.3)\ln2.5\approx0.275+0.275=0.550\)</span>.</p>
+<p><strong>How to read the value.</strong> The common rule of thumb is: </p>
+<div class="arithmatex">\[\begin{aligned}
+\mathrm{PSI}&lt;0.1&amp;:\ \text{stable},\\
+0.1\le\mathrm{PSI}\le0.25&amp;:\ \text{moderate shift, investigate},\\
+\mathrm{PSI}&gt;0.25&amp;:\ \text{significant shift}.
+\end{aligned}\]</div>
+<p>By this rule the first example (<span class="arithmatex">\(0.063\)</span>) is stable and the second (<span class="arithmatex">\(0.550\)</span>) is a significant shift. These thresholds are conventions that originated in credit scoring; they are <em>not</em> a hypothesis test and carry no p-value.</p>
+<p><strong>Noise floor.</strong> Even with no drift at all, sampling noise gives PSI a positive value. For small differences, <span class="arithmatex">\(\ln(a_i/e_i)\approx(a_i-e_i)/e_i\)</span>, so <span class="arithmatex">\(\mathrm{PSI}\approx\sum_i(a_i-e_i)^2/e_i\)</span>, and one can show that under no drift </p>
+<div class="arithmatex">\[\mathbb{E}[\mathrm{PSI}]\approx(B-1)\left(\frac{1}{n_{\text{ref}}}+\frac{1}{n_{\text{cur}}}\right).\]</div>
+<p>For example, with <span class="arithmatex">\(B=10\)</span> and <span class="arithmatex">\(n_{\text{ref}}=n_{\text{cur}}=1000\)</span>, the noise floor is <span class="arithmatex">\(9\times0.002=0.018\)</span>. PSI computed on small windows or with many bins is therefore noisy, and a value near this floor means nothing.</p>
+<p><strong>Practical caveat.</strong> If some bin has <span class="arithmatex">\(e_i=0\)</span> or <span class="arithmatex">\(a_i=0\)</span>, the logarithm is undefined. Fix this by merging sparse bins or replacing zeros with a tiny constant (e.g. <span class="arithmatex">\(10^{-4}\)</span>). A bin that is empty in the reference but populated now (a brand-new category) is itself an important drift signal.</p>
+<h3 id="kl-divergence">KL divergence<a class="headerlink" href="#kl-divergence" title="Permanent link">&para;</a></h3>
+<p>PSI works, but where does it come from? It is built from the <strong>Kullback–Leibler (KL) divergence</strong>, which measures how badly one distribution describes data that actually come from another.</p>
+<p><strong>Definition.</strong> For two distributions <span class="arithmatex">\(P\)</span> and <span class="arithmatex">\(Q\)</span> over the same bins (or categories), </p>
+<div class="arithmatex">\[\boxed{
+D_{\mathrm{KL}}(P\,\|\,Q)=\sum_{i}P_i\ln\frac{P_i}{Q_i}
+}\]</div>
+<p>where <span class="arithmatex">\(P_i\)</span> and <span class="arithmatex">\(Q_i\)</span> are the probabilities of bin <span class="arithmatex">\(i\)</span> under <span class="arithmatex">\(P\)</span> and <span class="arithmatex">\(Q\)</span>. The result is in <em>nats</em> (natural logarithm). For drift monitoring, we take <span class="arithmatex">\(P=a\)</span> (current) and <span class="arithmatex">\(Q=e\)</span> (reference).</p>
+<p><strong>Intuition: accumulated evidence.</strong> Suppose one observation falls in bin <span class="arithmatex">\(i\)</span>. The quantity <span class="arithmatex">\(\ln(P_i/Q_i)\)</span> is the log-likelihood ratio: how much more strongly this observation supports “the data follow <span class="arithmatex">\(P\)</span>” than “the data follow <span class="arithmatex">\(Q\)</span>”. If the data <em>really</em> follow <span class="arithmatex">\(P\)</span>, the bins occur with frequencies <span class="arithmatex">\(P_i\)</span>, so the average evidence per observation is <span class="arithmatex">\(\sum_iP_i\ln(P_i/Q_i)\)</span>, which is exactly the KL divergence. Hence <span class="arithmatex">\(D_{\mathrm{KL}}(P\|Q)\)</span> is the average amount of evidence, per observation, with which we could tell the current data apart from the reference. After <span class="arithmatex">\(n\)</span> observations we have accumulated about <span class="arithmatex">\(n\,D_{\mathrm{KL}}\)</span> nats of evidence, a fact that reappears in the chi-square test below.</p>
+<p><strong>Properties.</strong></p>
+<ul>
+<li><strong>Non-negative, zero only if identical.</strong> Using <span class="arithmatex">\(\ln x\le x-1\)</span>, </li>
+</ul>
+<div class="arithmatex">\[-D_{\mathrm{KL}}(P\|Q)=\sum_iP_i\ln\frac{Q_i}{P_i}\le\sum_iP_i\Big(\frac{Q_i}{P_i}-1\Big)=\sum_iQ_i-\sum_iP_i=0,\]</div>
+<p>so <span class="arithmatex">\(D_{\mathrm{KL}}\ge0\)</span>, with equality iff <span class="arithmatex">\(P=Q\)</span>.</p>
+<ul>
+<li>
+<p><strong>Asymmetric.</strong> <span class="arithmatex">\(D_{\mathrm{KL}}(P\|Q)\neq D_{\mathrm{KL}}(Q\|P)\)</span> in general, so it is not a distance. <span class="arithmatex">\(D_{\mathrm{KL}}(a\|e)\)</span> weights bins by how common they are in the <em>current</em> data.</p>
+</li>
+<li>
+<p><strong>Can be infinite.</strong> If <span class="arithmatex">\(Q_i=0\)</span> while <span class="arithmatex">\(P_i&gt;0\)</span> (e.g. a new device type that never appeared in the reference), the term <span class="arithmatex">\(\ln(P_i/0)\)</span> is infinite. The reverse direction blows up if a reference category vanishes.</p>
+</li>
+</ul>
+<p><strong>Link to PSI.</strong> Adding the two directions, </p>
+<div class="arithmatex">\[D_{\mathrm{KL}}(a\|e)+D_{\mathrm{KL}}(e\|a)=\sum_ia_i\ln\frac{a_i}{e_i}+\sum_ie_i\ln\frac{e_i}{a_i}=\sum_i(a_i-e_i)\ln\frac{a_i}{e_i}=\mathrm{PSI}.\]</div>
+<p>So <strong>PSI is the symmetrised KL divergence</strong>, which explains why it is symmetric and non-negative.</p>
+<p><strong>Check on the example</strong> (<span class="arithmatex">\(a=(0.4,0.3,0.3)\)</span>, <span class="arithmatex">\(e=(0.5,0.3,0.2)\)</span>): </p>
+<div class="arithmatex">\[D_{\mathrm{KL}}(a\|e)=0.4\ln0.8+0.3\ln1.5\approx-0.0893+0.1216=0.0324,\]</div>
+<div class="arithmatex">\[D_{\mathrm{KL}}(e\|a)=0.5\ln1.25+0.2\ln\tfrac{2}{3}\approx0.1116-0.0811=0.0305,\]</div>
+<p>and the sum <span class="arithmatex">\(0.0629\)</span> matches the PSI computed above.</p>
+<h3 id="jensenshannon-js-divergence">Jensen–Shannon (JS) divergence<a class="headerlink" href="#jensenshannon-js-divergence" title="Permanent link">&para;</a></h3>
+<p>KL has two awkward features: it is asymmetric and it can be infinite. JS divergence removes both.</p>
+<p><strong>Definition.</strong> Let <span class="arithmatex">\(M\)</span> be the average of the two distributions, <span class="arithmatex">\(M_i=\tfrac12(P_i+Q_i)\)</span>. Then </p>
+<div class="arithmatex">\[\boxed{
+\mathrm{JS}(P,Q)=\tfrac12D_{\mathrm{KL}}(P\,\|\,M)+\tfrac12D_{\mathrm{KL}}(Q\,\|\,M)
+}\]</div>
+<p><strong>Intuition.</strong> Instead of comparing <span class="arithmatex">\(P\)</span> directly with <span class="arithmatex">\(Q\)</span>, compare each of them with their midpoint <span class="arithmatex">\(M\)</span>. Whenever <span class="arithmatex">\(P_i&gt;0\)</span> or <span class="arithmatex">\(Q_i&gt;0\)</span>, the midpoint satisfies <span class="arithmatex">\(M_i&gt;0\)</span>, so no logarithm ever has a zero in the denominator. A category that exists only in the current data is no longer “infinitely surprising”; it simply contributes a large but finite amount.</p>
+<p><strong>Properties.</strong></p>
+<ul>
+<li>
+<p><strong>Symmetric:</strong> <span class="arithmatex">\(\mathrm{JS}(P,Q)=\mathrm{JS}(Q,P)\)</span>.</p>
+</li>
+<li>
+<p><strong>Always finite and bounded:</strong> <span class="arithmatex">\(0\le\mathrm{JS}\le\ln2\approx0.693\)</span> nats (equivalently <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(1\)</span> bit if <span class="arithmatex">\(\log_2\)</span> is used). The maximum occurs when <span class="arithmatex">\(P\)</span> and <span class="arithmatex">\(Q\)</span> have no overlap at all. Having a fixed scale makes the number easy to interpret: <span class="arithmatex">\(0\)</span> means identical, <span class="arithmatex">\(\ln 2\)</span> means completely disjoint.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\sqrt{\mathrm{JS}}\)</span> is a true distance metric.</p>
+</li>
+</ul>
+<p><strong>Worked example</strong> (<span class="arithmatex">\(P=a=(0.4,0.3,0.3)\)</span>, <span class="arithmatex">\(Q=e=(0.5,0.3,0.2)\)</span>). The midpoint is <span class="arithmatex">\(M=(0.45,0.30,0.25)\)</span>: </p>
+<div class="arithmatex">\[D_{\mathrm{KL}}(P\|M)=0.4\ln\tfrac{0.4}{0.45}+0.3\ln\tfrac{0.3}{0.25}\approx-0.0471+0.0547=0.0076,\]</div>
+<div class="arithmatex">\[D_{\mathrm{KL}}(Q\|M)=0.5\ln\tfrac{0.5}{0.45}+0.2\ln\tfrac{0.2}{0.25}\approx0.0527-0.0446=0.0080,\]</div>
+<div class="arithmatex">\[\mathrm{JS}=\tfrac12(0.0076+0.0080)\approx0.0078,\]</div>
+<p>which on a scale whose maximum is <span class="arithmatex">\(0.693\)</span> is a very small difference.</p>
+<p><strong>When to prefer which.</strong> Use PSI when you want the familiar rule-of-thumb thresholds that risk teams already know. Use JS when bins may be empty or categories can appear and disappear, or when you want a bounded score comparable across features.</p>
+<h3 id="kolmogorovsmirnov-ks-test-continuous-features">Kolmogorov–Smirnov (KS) test (continuous features)<a class="headerlink" href="#kolmogorovsmirnov-ks-test-continuous-features" title="Permanent link">&para;</a></h3>
+<p><strong>Purpose.</strong> PSI, KL and JS need binning, and the answer can depend on how the bins were chosen. The KS test compares two samples of a continuous feature directly, with no bins, and gives a p-value.</p>
+<p><strong>Definition.</strong> For a sample, the <strong>empirical CDF</strong> is </p>
+<div class="arithmatex">\[F(x)=\frac{\text{number of rows with value}\le x}{\text{number of rows}},\]</div>
+<p>the fraction of rows at or below <span class="arithmatex">\(x\)</span>. Let <span class="arithmatex">\(F_{\text{ref}}\)</span> and <span class="arithmatex">\(F_{\text{cur}}\)</span> be the two empirical CDFs. The KS statistic is </p>
+<div class="arithmatex">\[\boxed{
+D=\sup_x\big|F_{\text{ref}}(x)-F_{\text{cur}}(x)\big|
+}\]</div>
+<p>the largest vertical gap between the two curves.</p>
+<p><strong>Intuition.</strong> If both samples come from the same distribution, their CDFs lie almost on top of each other. <span class="arithmatex">\(D\)</span> takes values in <span class="arithmatex">\([0,1]\)</span> and has a concrete reading: <span class="arithmatex">\(D=0.10\)</span> means that at some value <span class="arithmatex">\(x^\ast\)</span>, the share of transactions below <span class="arithmatex">\(x^\ast\)</span> differs by 10 percentage points between the two samples. It detects shifts in location, scale and shape, and is most sensitive near the middle of the distribution rather than the extreme tails.</p>
+<p><strong>Test.</strong> Under <span class="arithmatex">\(H_0\)</span> (same distribution), <span class="arithmatex">\(D\)</span> is of the order of <span class="arithmatex">\(1/\sqrt{n}\)</span> and shrinks as the samples grow. At the <span class="arithmatex">\(5\%\)</span> significance level we reject <span class="arithmatex">\(H_0\)</span> when </p>
+<div class="arithmatex">\[D&gt;1.358\sqrt{\frac{n_{\text{ref}}+n_{\text{cur}}}{n_{\text{ref}}\,n_{\text{cur}}}}.\]</div>
+<p><strong>Example of statistical versus practical significance.</strong></p>
+<ul>
+<li>
+<p><span class="arithmatex">\(n_{\text{ref}}=n_{\text{cur}}=1{,}000\)</span>: the threshold is <span class="arithmatex">\(1.358\sqrt{0.002}\approx0.061\)</span>, so a gap of about 6 percentage points is needed.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(n_{\text{ref}}=n_{\text{cur}}=1{,}000{,}000\)</span>: the threshold is <span class="arithmatex">\(1.358\sqrt{2\times10^{-6}}\approx0.0019\)</span>, so a gap of just <span class="arithmatex">\(0.2\)</span> percentage points is “significant”.</p>
+</li>
+</ul>
+<p>This is why, for large samples, <span class="arithmatex">\(D\)</span> (the effect size) should be read together with the p-value. Also note that KS assumes continuous data: with many tied values (e.g. amounts rounded to whole rupees), its p-values become conservative.</p>
+<h3 id="chi-square-test-categorical-features">Chi-square test (categorical features)<a class="headerlink" href="#chi-square-test-categorical-features" title="Permanent link">&para;</a></h3>
+<p><strong>Purpose.</strong> For a categorical feature (payment channel, device type, merchant category), or a binned continuous feature, we want to know whether the <em>counts</em> per category in the current sample are consistent with the reference proportions, or whether the gap is bigger than sampling luck explains. The chi-square (<span class="arithmatex">\(\chi^2\)</span>) test answers this.</p>
+<p><strong>Setup.</strong> There are <span class="arithmatex">\(K\)</span> categories. Under <span class="arithmatex">\(H_0\)</span> (no drift), each current row falls into category <span class="arithmatex">\(k\)</span> with the reference probability <span class="arithmatex">\(e_k\)</span>. Let</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(O_k\)</span>: the <em>observed</em> count in category <span class="arithmatex">\(k\)</span> in the current sample;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(E_k=n_{\text{cur}}\,e_k\)</span>: the <em>expected</em> count if there were no drift.</p>
+</li>
+</ul>
+<p><strong>Statistic.</strong> </p>
+<div class="arithmatex">\[\boxed{
+\chi^2=\sum_{k=1}^{K}\frac{(O_k-E_k)^2}{E_k}
+}\]</div>
+<p><strong>Why this form?</strong></p>
+<ul>
+<li>
+<p><span class="arithmatex">\(O_k-E_k\)</span> is the gap between what we saw and what we expected.</p>
+</li>
+<li>
+<p>We <em>square</em> it so that over-counts and under-counts both add to the total rather than cancelling.</p>
+</li>
+<li>
+<p>We <em>divide by <span class="arithmatex">\(E_k\)</span></em> because the natural noise in a count is about <span class="arithmatex">\(\sqrt{E_k}\)</span> (counts behave roughly like a Poisson variable, whose variance equals its mean). A gap of 10 on an expected count of 20 is huge, while a gap of 10 on an expected count of 10,000 is negligible. The ratio <span class="arithmatex">\(z_k=(O_k-E_k)/\sqrt{E_k}\)</span> measures the gap in units of its own noise, so each <span class="arithmatex">\(z_k\)</span> is roughly a standard normal variable under <span class="arithmatex">\(H_0\)</span>.</p>
+</li>
+</ul>
+<p>Thus <span class="arithmatex">\(\chi^2=\sum_kz_k^2\)</span> is a sum of squared (approximately) standard normal variables. Because the counts must add up to <span class="arithmatex">\(n_{\text{cur}}\)</span>, one of the <span class="arithmatex">\(K\)</span> terms is determined by the others, so under <span class="arithmatex">\(H_0\)</span> </p>
+<div class="arithmatex">\[\chi^2\sim\chi^2_{K-1}\qquad(K-1\text{ degrees of freedom}),\]</div>
+<p>a distribution whose average value is <span class="arithmatex">\(K-1\)</span>.</p>
+<p><strong>How to read it.</strong> If there is no drift, <span class="arithmatex">\(\chi^2\)</span> should be close to <span class="arithmatex">\(K-1\)</span>. A value far above that suggests drift. The p-value is <span class="arithmatex">\(P(\chi^2_{K-1}\ge\chi^2_{\text{obs}})\)</span>. For <span class="arithmatex">\(K=3\)</span> (2 degrees of freedom) the <span class="arithmatex">\(5\%\)</span> critical value is <span class="arithmatex">\(5.99\)</span>.</p>
+<p><strong>Worked example.</strong> Reference shares <span class="arithmatex">\(e=(0.5,0.3,0.2)\)</span>; current sample of <span class="arithmatex">\(n_{\text{cur}}=1000\)</span> with observed counts <span class="arithmatex">\(O=(400,300,300)\)</span>. Expected counts: <span class="arithmatex">\(E=(500,300,200)\)</span>. </p>
+<div class="arithmatex">\[\chi^2=\frac{(400-500)^2}{500}+\frac{(300-300)^2}{300}+\frac{(300-200)^2}{200}=20+0+50=70\gg5.99,\]</div>
+<p>so we reject <span class="arithmatex">\(H_0\)</span>: drift is almost certain. The same proportions with <span class="arithmatex">\(n_{\text{cur}}=100\)</span> (<span class="arithmatex">\(O=(40,30,30)\)</span>, <span class="arithmatex">\(E=(50,30,20)\)</span>) give <span class="arithmatex">\(\chi^2=2+0+5=7\)</span>, which only just exceeds <span class="arithmatex">\(5.99\)</span>.</p>
+<p><strong>Key caveats.</strong></p>
+<ul>
+<li>
+<p><strong>Size grows with sample size.</strong> For fixed proportions, <span class="arithmatex">\(\chi^2=n_{\text{cur}}\sum_k(a_k-e_k)^2/e_k\)</span> grows linearly with <span class="arithmatex">\(n_{\text{cur}}\)</span>. The same tiny shift becomes “significant” with enough data (the example above: <span class="arithmatex">\(0.07\times1000=70\)</span>). Report an effect size (PSI, or <span class="arithmatex">\(\sum_k(a_k-e_k)^2/e_k\)</span>) next to the p-value.</p>
+</li>
+<li>
+<p><strong>Needs reasonable counts.</strong> The normal approximation requires <span class="arithmatex">\(E_k\gtrsim5\)</span>; rare categories should be merged.</p>
+</li>
+<li>
+<p><strong>Connection to KL.</strong> For small shifts, <span class="arithmatex">\(\chi^2\approx2\,n_{\text{cur}}\,D_{\mathrm{KL}}(a\|e)\)</span>. In the example above, <span class="arithmatex">\(2\times1000\times0.0324\approx65\)</span>, close to <span class="arithmatex">\(70\)</span>. This is the “accumulated evidence <span class="arithmatex">\(\approx n\,D_{\mathrm{KL}}\)</span>” idea from the KL section, now turned into a formal test.</p>
+</li>
+</ul>
+<h3 id="adversarial-validation">Adversarial validation<a class="headerlink" href="#adversarial-validation" title="Permanent link">&para;</a></h3>
+<p><strong>Purpose.</strong> The tools above look at one feature at a time. Adversarial validation looks at all features together and answers: <em>can a model tell the current data apart from the reference data?</em></p>
+<p><strong>Procedure.</strong></p>
+<ol>
+<li>
+<p>Label every reference row <span class="arithmatex">\(s=0\)</span> and every current row <span class="arithmatex">\(s=1\)</span>, and stack them into one dataset.</p>
+</li>
+<li>
+<p>Train a classifier (e.g. gradient-boosted trees) to predict <span class="arithmatex">\(s\)</span> from the features <span class="arithmatex">\(X\)</span>.</p>
+</li>
+<li>
+<p>Evaluate it with <strong>cross-validated</strong> (held-out) AUC. Without held-out evaluation, a flexible model can memorise rows and look falsely good.</p>
+</li>
+</ol>
+<p><strong>Intuition.</strong> If there is no drift, the labels <span class="arithmatex">\(s\)</span> are essentially coin flips as far as <span class="arithmatex">\(X\)</span> is concerned, so no classifier can beat chance and AUC <span class="arithmatex">\(\approx0.5\)</span>. If the distributions differ, the classifier can exploit the differences, and the AUC rises towards <span class="arithmatex">\(1\)</span>. The AUC is the probability that a randomly chosen current row receives a higher “looks-current” score than a randomly chosen reference row, so it is a direct measure of how separable the two samples are. As a rough guide, AUC below about <span class="arithmatex">\(0.55\)</span> is benign, and values around <span class="arithmatex">\(0.7\)</span> or above indicate substantial drift.</p>
+<p><strong>What it gives.</strong></p>
+<ul>
+<li>
+<p><strong>Where:</strong> the classifier’s feature importances (e.g. permutation importance or SHAP) show which features drive the separation.</p>
+</li>
+<li>
+<p><strong>Multivariate sensitivity:</strong> it detects changes in the <em>relationships</em> among features, which univariate tests miss.</p>
+</li>
+<li>
+<p><strong>A by-product:</strong> its predicted probability yields the density ratio used for importance weighting in Section 7.</p>
+</li>
+</ul>
+<p><strong>Caution.</strong> Remove timestamps, row IDs and other fields that trivially identify the period, otherwise the classifier separates the samples for a meaningless reason.</p>
+<h3 id="multivariate-drift">Multivariate drift<a class="headerlink" href="#multivariate-drift" title="Permanent link">&para;</a></h3>
+<p>Checking each feature separately can miss drift entirely. <em>Example:</em> transaction amount and hour of day each have the same marginal distribution as before (so PSI and KS on each feature are quiet), but large amounts used to occur mostly in the daytime and now occur mostly at night. Only the <em>joint</em> distribution changed, and for fraud this is exactly the kind of change that matters.</p>
+<p>Ways to catch it: adversarial validation (above); comparing correlation matrices between the two periods; or reducing the data to a few dimensions (principal components, or the model’s own internal embedding) and applying the same distance and test tools there.</p>
+<h3 id="many-features-many-tests">Many features, many tests<a class="headerlink" href="#many-features-many-tests" title="Permanent link">&para;</a></h3>
+<p>A model with hundreds of features, checked daily, will produce false alarms by chance: at a <span class="arithmatex">\(5\%\)</span> significance level, about 1 in 20 features flags even when nothing has changed. Rely on effect-size thresholds (PSI, <span class="arithmatex">\(D\)</span>) and rank features by the <em>magnitude</em> of the shift rather than counting raw p-values below <span class="arithmatex">\(0.05\)</span>.</p>
+<h2 id="output-layer-needs-no-labels">Output layer (needs no labels)<a class="headerlink" href="#output-layer-needs-no-labels" title="Permanent link">&para;</a></h2>
+<p><strong>What is compared.</strong> Let <span class="arithmatex">\(s(x)\in[0,1]\)</span> be the model’s score for a transaction <span class="arithmatex">\(x\)</span>. The score is a one-number summary of all the features <em>as the model uses them</em>, so monitoring its distribution is a compact, label-free drift detector aligned with what the model actually does. We compare the reference and current score distributions with the same tools as above (PSI and KS on the score).</p>
+<p><strong>Alert rate.</strong> For a decision threshold <span class="arithmatex">\(\tau\)</span>, the alert (or block) rate is </p>
+<div class="arithmatex">\[r(\tau)=P\big(s(X)\ge\tau\big).\]</div>
+<p>It also matters operationally, since it determines review-queue workload. It also has a useful structure. If the classifier’s TPR and FPR at <span class="arithmatex">\(\tau\)</span> are unchanged and only the fraud prevalence <span class="arithmatex">\(\pi\)</span> moves, </p>
+<div class="arithmatex">\[r=\text{TPR}\cdot\pi+\text{FPR}\cdot(1-\pi).\]</div>
+<p>With <span class="arithmatex">\(\text{TPR}=0.8\)</span> and <span class="arithmatex">\(\text{FPR}=0.001\)</span>, moving <span class="arithmatex">\(\pi\)</span> from <span class="arithmatex">\(0.1\%\)</span> to <span class="arithmatex">\(0.5\%\)</span> takes the alert rate from <span class="arithmatex">\(0.0008+0.000999\approx0.18\%\)</span> to <span class="arithmatex">\(0.004+0.000995\approx0.50\%\)</span>, nearly a threefold jump from prior shift alone.</p>
+<p><strong>How to read it.</strong></p>
+<ul>
+<li>
+<p>Alert rate rises <em>and</em> features also drifted: likely covariate shift.</p>
+</li>
+<li>
+<p>Alert rate rises with stable features: likely a rise in prevalence, or a change in the fraud pattern.</p>
+</li>
+<li>
+<p>Alert rate <em>stable</em> does not prove the model is fine: under concept drift the model may keep flagging the same number of cases but the <em>wrong</em> ones.</p>
+</li>
+</ul>
+<h2 id="performance-layer-needs-labels">Performance layer (needs labels)<a class="headerlink" href="#performance-layer-needs-labels" title="Permanent link">&para;</a></h2>
+<p><strong>Metrics.</strong> At threshold <span class="arithmatex">\(\tau\)</span>, </p>
+<div class="arithmatex">\[\text{Precision}=\frac{TP}{TP+FP},\qquad\text{Recall}=\frac{TP}{TP+FN},\]</div>
+<p>where <span class="arithmatex">\(TP\)</span>, <span class="arithmatex">\(FP\)</span>, <span class="arithmatex">\(FN\)</span> are the counts of true positives, false positives and false negatives; PR-AUC is the area under the precision–recall curve.</p>
+<p><strong>The problem: labels arrive late.</strong> Chargebacks and investigations take weeks, so the most recent transactions have unreliable labels. We therefore use:</p>
+<ul>
+<li>
+<p><strong>Matured cohorts:</strong> evaluate on data old enough that its labels have settled (e.g. transactions from 60 or more days ago). This is trustworthy but always looks backwards.</p>
+</li>
+<li>
+<p><strong>Proxy metrics</strong> for the recent past: refund and dispute rates, customer complaints, review-queue precision (the share of flagged cases that human reviewers confirm).</p>
+</li>
+<li>
+<p><strong>A random audit sample:</strong> draw transactions at random, have them labelled by humans, and estimate precision and recall from them. Because it is random, it is unbiased, unlike the blocked-and-reviewed data, which is selected by the model itself. Since fraud is rare, one usually samples more heavily from high-score strata and weights each sampled case by the inverse of its sampling probability. The uncertainty of an estimated precision <span class="arithmatex">\(\hat p\)</span> from <span class="arithmatex">\(n\)</span> audited flagged cases is about <span class="arithmatex">\(\hat p\pm1.96\sqrt{\hat p(1-\hat p)/n}\)</span>.</p>
+</li>
+</ul>
+<p><strong>Interpreting a change in performance.</strong> Precision and PR-AUC depend on the prevalence <span class="arithmatex">\(\pi\)</span> (see Section 2), so a change in them does not by itself prove the classifier got worse. A rank-based metric that does not depend on <span class="arithmatex">\(\pi\)</span>, such as ROC-AUC or recall at a fixed false positive rate, helps separate the causes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Observation</strong></th>
+<th style="text-align: left;"><strong>What it points to</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Inputs drifted, but ROC-AUC and recall at fixed FPR are unchanged</td>
+<td style="text-align: left;">Covariate shift that has not hurt the model so far</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alert rate and PR-AUC changed, but ROC-AUC and recall at fixed FPR are unchanged</td>
+<td style="text-align: left;">Prior shift (prevalence changed)</td>
+</tr>
+<tr>
+<td style="text-align: left;">ROC-AUC or recall at fixed FPR dropped</td>
+<td style="text-align: left;">Concept drift (or covariate shift severe enough to hurt)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inputs, scores and rank metrics all stable, but precision from the audit dropped</td>
+<td style="text-align: left;">Check label definition and label lag before blaming the model</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Caveat.</strong> A statistically significant drift is not necessarily a performance drop. Only labels (or good proxies) tell us whether it matters.</p>
+<h2 id="summary-of-the-tools">Summary of the tools<a class="headerlink" href="#summary-of-the-tools" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Tool</strong></th>
+<th style="text-align: left;"><strong>Data type</strong></th>
+<th style="text-align: left;"><strong>What it tells us</strong></th>
+<th style="text-align: left;"><strong>Output</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">PSI</td>
+<td style="text-align: left;">Binned or categorical</td>
+<td style="text-align: left;">Size of the shift; symmetrised KL; rule-of-thumb thresholds</td>
+<td style="text-align: left;">A number <span class="arithmatex">\(\ge0\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">KL divergence</td>
+<td style="text-align: left;">Binned or categorical</td>
+<td style="text-align: left;">Average evidence per row that current differs from reference; asymmetric</td>
+<td style="text-align: left;">A number <span class="arithmatex">\(\ge0\)</span> (can be <span class="arithmatex">\(\infty\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">JS divergence</td>
+<td style="text-align: left;">Binned or categorical</td>
+<td style="text-align: left;">Bounded, symmetric, always-finite version of KL</td>
+<td style="text-align: left;">A number in <span class="arithmatex">\([0,\ln2]\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">KS test</td>
+<td style="text-align: left;">Continuous</td>
+<td style="text-align: left;">Largest gap between the two CDFs; no binning</td>
+<td style="text-align: left;"><span class="arithmatex">\(D\in[0,1]\)</span> and p-value</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chi-square test</td>
+<td style="text-align: left;">Categorical or binned</td>
+<td style="text-align: left;">Whether the count gaps exceed what luck explains</td>
+<td style="text-align: left;"><span class="arithmatex">\(\chi^2\)</span> and p-value</td>
+</tr>
+<tr>
+<td style="text-align: left;">Adversarial validation</td>
+<td style="text-align: left;">All features jointly</td>
+<td style="text-align: left;">How separable the two samples are, and which features separate them</td>
+<td style="text-align: left;">AUC and importances</td>
+</tr>
+</tbody>
+</table>
+<p><strong>In one sentence</strong></p>
+<p>I monitor inputs, outputs and performance: input and score drift give early warning without labels, effect-size measures (PSI, KL, JS, <span class="arithmatex">\(D\)</span>) say how big the shift is, tests (KS, <span class="arithmatex">\(\chi^2\)</span>) say whether it is more than luck, and audited matured cohorts confirm whether the model really degraded.</p>
+<hr />
+<h1 id="diagnosing-whether-it-is-real">Diagnosing whether it is real<a class="headerlink" href="#diagnosing-whether-it-is-real" title="Permanent link">&para;</a></h1>
+<p>Before retraining, find the cause:</p>
+<ul>
+<li>
+<p><strong>Pipeline or schema bug?</strong> Check for null spikes, unit changes, or a feature that became constant.</p>
+</li>
+<li>
+<p><strong>Seasonality?</strong> Compare with the same period last year.</p>
+</li>
+<li>
+<p><strong>Label lag?</strong> Recent precision may look wrong because labels have not settled.</p>
+</li>
+<li>
+<p><strong>Segment-specific?</strong> Slice by channel, merchant, geography and device.</p>
+</li>
+<li>
+<p><strong>Real adversarial change?</strong> Look for new clusters or behaviour patterns.</p>
+</li>
+</ul>
+<p>Retraining on a data bug simply bakes the bug into the model.</p>
+<hr />
+<h1 id="responding-to-drift">Responding to drift<a class="headerlink" href="#responding-to-drift" title="Permanent link">&para;</a></h1>
+<p><strong>Short term.</strong> Recalibrate or move the threshold (the usual fix for prior shift), add or tighten rules as a stopgap, and route more cases to human review.</p>
+<p><strong>Prior shift correction.</strong> If the classifier was trained with prevalence <span class="arithmatex">\(\pi_{\text{train}}\)</span> and is now deployed where the prevalence is <span class="arithmatex">\(\pi_{\text{new}}\)</span>, the posterior odds are rescaled by the ratio of prior odds: </p>
+<div class="arithmatex">\[\frac{p_{\text{new}}(y=1\mid x)}{p_{\text{new}}(y=0\mid x)}
+=
+\frac{p_{\text{train}}(y=1\mid x)}{p_{\text{train}}(y=0\mid x)}
+\cdot
+\frac{\pi_{\text{new}}/(1-\pi_{\text{new}})}{\pi_{\text{train}}/(1-\pi_{\text{train}})}.\]</div>
+<p>For <span class="arithmatex">\(\pi\)</span> moving from <span class="arithmatex">\(0.1\%\)</span> to <span class="arithmatex">\(0.5\%\)</span>, the odds multiplier is </p>
+<div class="arithmatex">\[\frac{0.005/0.995}{0.001/0.999}\approx 5.0.\]</div>
+<p><strong>Covariate shift: importance weighting.</strong> Reweight training examples by the density ratio </p>
+<div class="arithmatex">\[w(x)=\frac{p_{\text{serve}}(x)}{p_{\text{train}}(x)}.\]</div>
+<p>This ratio can be estimated with the adversarial classifier from Section 5. If <span class="arithmatex">\(\hat p(s=1\mid x)\)</span> is its predicted probability that <span class="arithmatex">\(x\)</span> comes from the serving data, then </p>
+<div class="arithmatex">\[w(x)\approx\frac{\hat p(s=1\mid x)}{\hat p(s=0\mid x)}\cdot\frac{n_{\text{train}}}{n_{\text{serve}}}.\]</div>
+<p>The alternative is to retrain on data that covers the new region of input space.</p>
+<p><strong>Retraining.</strong> On a schedule plus triggers (drift alarm, performance drop). Choose the window carefully: recent data tracks new patterns but is noisy, whereas older data is stable but stale. Weighting recent samples is a common compromise.</p>
+<p><strong>Safe deployment.</strong> Shadow mode, champion/challenger comparison, staged rollout and a rollback plan.</p>
+<p><strong>Online or incremental learning</strong> where the problem allows it, with care for noisy or poisoned updates.</p>
+<p><strong>Fighting the feedback loop.</strong> Keep a small randomised exploration or holdout slice, so that we still observe what we would otherwise have blocked.</p>
+<p><strong>In one sentence</strong></p>
+<p>I diagnose first and then respond proportionally: a threshold or calibration fix for prior shift, retraining for concept drift, with shadow testing and rollback.</p>
+<hr />
+<h1 id="designing-for-drift-prevention">Designing for drift (prevention)<a class="headerlink" href="#designing-for-drift-prevention" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p>Prefer <strong>stable, hard-to-game signals</strong> and diverse feature families, so that no single feature can be spoofed.</p>
+</li>
+<li>
+<p>Use <strong>time-based validation and rolling backtests</strong> to estimate how fast a model decays.</p>
+</li>
+<li>
+<p>Version features and data, and monitor feature freshness and quality.</p>
+</li>
+<li>
+<p>Build dashboards and alerts per feature and per segment.</p>
+</li>
+<li>
+<p>Plan the <strong>retraining cadence from measured decay</strong>, not from a guess.</p>
+</li>
+</ul>
+<hr />
+<h1 id="interview-qa-to-rehearse">Interview Q&amp;A to rehearse<a class="headerlink" href="#interview-qa-to-rehearse" title="Permanent link">&para;</a></h1>
+<h2 id="q1-features-look-stable-but-precision-dropped-what-happened">Q1. Features look stable but precision dropped. What happened?<a class="headerlink" href="#q1-features-look-stable-but-precision-dropped-what-happened" title="Permanent link">&para;</a></h2>
+<p>Most likely concept drift: <span class="arithmatex">\(P(Y\mid X)\)</span> changed, so the same inputs now mean something different. Other possibilities are prior shift (higher or lower prevalence changes precision even for an unchanged classifier), a threshold issue, label-lag artefacts, or a change in the label definition.</p>
+<h2 id="q2-how-would-you-detect-drift-with-delayed-labels">Q2. How would you detect drift with delayed labels?<a class="headerlink" href="#q2-how-would-you-detect-drift-with-delayed-labels" title="Permanent link">&para;</a></h2>
+<p>Monitor inputs (PSI, KS, adversarial validation) and score distributions, track proxy metrics, run a random audit sample, and evaluate on matured cohorts.</p>
+<h2 id="q3-how-often-do-you-retrain">Q3. How often do you retrain?<a class="headerlink" href="#q3-how-often-do-you-retrain" title="Permanent link">&para;</a></h2>
+<p>Based on measured decay and drift triggers, not a fixed guess, and always validated in shadow mode first.</p>
+<h2 id="q4-how-do-fraudsters-affect-your-training-data">Q4. How do fraudsters affect your training data?<a class="headerlink" href="#q4-how-do-fraudsters-affect-your-training-data" title="Permanent link">&para;</a></h2>
+<p>Through selection bias: blocked fraud disappears from the data. Keep an exploration or holdout slice so that these cases are still observed.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+      
+    
+  </body>
+</html>
