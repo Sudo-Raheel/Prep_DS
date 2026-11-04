@@ -1,0 +1,45 @@
+site_name: Prep DS
+site_description: Data Science interview prep notes
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - scheme: slate
+      toggle: {icon: material/weather-sunny, name: Light mode}
+nav:
+  - Home: index.md
+  - Cheat sheet: cheatsheet.md
+  - Classification:
+      - Logistic & multiclass: classification/logit-multiclass.md
+      - AUC & ROC: classification/auc.md
+      - Q&A: classification/qa.md
+  - Statistical inference:
+      - p-value notes: statistical-inference/p-value-notes.md
+      - Q&A: statistical-inference/qa.md
+  - Probability:
+      - First-step expectation: probability/expectation-first-step.md
+  - Model evaluation:
+      - Overview: model-evaluation/index.md
+      - Data drift: model-evaluation/drift.md
+  - Optimization: optimization.md
+  - SQL roadmap: sql/roadmap.md
+  - System design roadmap: system-design/roadmap.md
+  - Puzzles: puzzles/fermi.md
+  - General Q&A: general-qa/interview-questions.md
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.arithmatex: {generic: true}
+  - pymdownx.superfences
+  - pymdownx.tasklist: {custom_checkbox: true}
+  - tables
+  - toc: {permalink: true}
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js

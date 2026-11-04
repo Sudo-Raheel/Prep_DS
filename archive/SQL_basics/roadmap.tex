@@ -1,0 +1,175 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+% Use Latin Modern where it is installed (Overleaf, full TeX Live, MiKTeX);
+% otherwise fall back to the default Computer Modern fonts.
+\IfFileExists{lmodern.sty}{\usepackage[T1]{fontenc}\usepackage{lmodern}}{}
+\usepackage[margin=2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent]{hyperref}
+
+% ---------- Colours ----------
+\definecolor{accent}{HTML}{1F4E79}
+\definecolor{codebg}{HTML}{F5F7FA}
+\definecolor{codekw}{HTML}{1F4E79}
+\definecolor{rulegray}{HTML}{9AA5B1}
+
+% ---------- Helpers ----------
+\newcommand{\code}[1]{\texttt{#1}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcommand{\done}{$\square$}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\renewcommand{\arraystretch}{1.35}
+\setlist[itemize]{leftmargin=1.4em, itemsep=0.2em, topsep=0.3em}
+
+% ---------- SQL listings ----------
+\lstset{
+  language=SQL,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{codekw}\bfseries,
+  morekeywords={WITH, OVER, PARTITION, LAG, LEAD, ROW_NUMBER, RANK, DENSE_RANK, DATE_TRUNC, COALESCE, LIMIT},
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{rulegray},
+  framesep=6pt,
+  xleftmargin=8pt,
+  xrightmargin=8pt,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
+\begin{document}
+
+% ---------- Title ----------
+{\LARGE\bfseries\color{accent} SQL Roadmap for Data Science Interviews}\\[0.3em]
+{\large 14 days, one hour a day, for someone who already thinks in pandas}\\[-0.4em]
+{\color{rulegray}\rule{\textwidth}{0.6pt}}
+
+Week 1 covers the basics. Week 2 covers what interviewers test most: CTEs,
+window functions and dates, applied to fraud-style questions.
+
+% ---------- Setup ----------
+\section{Setup (Day 0, 20 minutes)}
+
+\begin{itemize}
+  \item \textbf{Dialect:} learn PostgreSQL syntax, which is the safest default for interviews.
+  \item \textbf{Where to practise:} install DuckDB (\code{pip install duckdb}). It runs SQL
+        directly on pandas DataFrames, so you can write a query and check it against the
+        pandas version you already know.
+  \item \textbf{Daily format:} 20 minutes on the concept, then 40 minutes typing queries yourself.
+\end{itemize}
+
+% ---------- Week 1 ----------
+\section{Week 1: the basics}
+
+{\small
+\begin{tabularx}{\textwidth}{@{}c c L L L@{}}
+\toprule
+ & \textbf{Day} & \textbf{Topic} & \textbf{pandas equivalent} & \textbf{Watch out for} \\
+\midrule
+\done & 1 & \code{SELECT}, \code{WHERE}, \code{ORDER BY}, \code{LIMIT}, \code{DISTINCT}
+      & column selection, boolean masks, \code{sort\_values}
+      & SQL describes the result, not the steps \\
+\done & 2 & \code{AND}/\code{OR}, \code{IN}, \code{BETWEEN}, \code{LIKE}, \code{IS NULL}, \code{COALESCE}
+      & \code{isin}, \code{between}, \code{str.contains}, \code{fillna}
+      & \code{col = NULL} is never true, so use \code{IS NULL} \\
+\done & 3 & \code{COUNT}, \code{SUM}, \code{AVG}, \code{MIN}/\code{MAX}, \code{GROUP BY}
+      & \code{groupby().agg()}
+      & \code{COUNT(*)}, \code{COUNT(col)} and \code{COUNT(DISTINCT col)} differ \\
+\done & 4 & \code{HAVING}, \code{CASE WHEN}, conditional aggregation
+      & filtering after \code{groupby}, \code{np.where}
+      & \code{WHERE} filters rows, \code{HAVING} filters groups \\
+\done & 5 & \code{INNER JOIN}, \code{LEFT JOIN}
+      & \code{merge(how=...)}
+      & Check the row count before and after every join \\
+\done & 6 & Self-joins, anti-joins, duplicate keys
+      & \code{merge} on the same frame, \code{indicator=True}
+      & Duplicate keys multiply rows, and NULL keys never match \\
+\done & 7 & Review with 8 to 10 easy problems
+      & ---
+      & Execution order: \code{FROM}, \code{WHERE}, \code{GROUP BY}, \code{HAVING}, \code{SELECT}, \code{ORDER BY} \\
+\bottomrule
+\end{tabularx}\par
+}
+
+\textbf{Checkpoint for day 4.} You should be able to write fraud rate by merchant from memory:
+
+\begin{lstlisting}
+SELECT merchant_id,
+       AVG(CASE WHEN is_fraud THEN 1.0 ELSE 0 END) AS fraud_rate
+FROM transactions
+GROUP BY merchant_id
+HAVING COUNT(*) >= 100;
+\end{lstlisting}
+
+% ---------- Week 2 ----------
+\section{Week 2: interview level}
+
+{\small
+\begin{tabularx}{\textwidth}{@{}c c L L L@{}}
+\toprule
+ & \textbf{Day} & \textbf{Topic} & \textbf{pandas equivalent} & \textbf{Practice question} \\
+\midrule
+\done & 8  & Subqueries and CTEs (\code{WITH})
+      & intermediate DataFrames
+      & Users whose spend is above the average \\
+\done & 9  & \code{ROW\_NUMBER}, \code{RANK}, \code{DENSE\_RANK}
+      & \code{groupby().cumcount()}, \code{rank}
+      & Each user's first transaction \\
+\done & 10 & \code{LAG}, \code{LEAD}
+      & \code{groupby().shift()}
+      & Gap since each user's previous transaction \\
+\done & 11 & Running totals and window frames
+      & \code{cumsum}, \code{rolling}
+      & Running spend per user \\
+\done & 12 & \code{DATE\_TRUNC}, \code{EXTRACT}, intervals
+      & \code{dt.floor}, \code{dt.hour}, \code{Timedelta}
+      & Fraud rate by week \\
+\done & 13 & Fraud patterns combining all of the above
+      & ---
+      & Three or more transactions within ten minutes \\
+\done & 14 & Timed mock: 5 medium problems, explained aloud
+      & ---
+      & --- \\
+\bottomrule
+\end{tabularx}\par
+}
+
+\textbf{Checkpoint for day 10.} Gap since each user's previous transaction:
+
+\begin{lstlisting}
+SELECT user_id,
+       txn_time,
+       txn_time - LAG(txn_time) OVER (
+           PARTITION BY user_id
+           ORDER BY txn_time
+       ) AS gap_since_previous
+FROM transactions;
+\end{lstlisting}
+
+% ---------- After ----------
+\section{After day 14}
+
+\begin{itemize}
+  \item Do 30 to 50 problems across LeetCode's SQL set, DataLemur and StrataScratch,
+        at 3 or 4 a day.
+  \item Redo any problem you got wrong two days later, without looking at the solution.
+  \item Prioritise fraud-style questions: transactions per user in the last 24 hours,
+        first transaction per user, bursts of activity in a short window, and fraud rate
+        by merchant or by week.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,165 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+
+\title{Classification}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Question 1}
+
+\subsection*{Question}
+
+Say we have a noisy point. It is a single point with label $y = 0$, sitting near a cluster of $y = 1$ points in feature space. Compare what generalized cross entropy (GCE), cross entropy (CE), focal loss (FL), and mean absolute error (MAE) do to this point. How does GCE reduce its effect compared to CE?
+
+\subsection*{Answer}
+
+\subsubsection*{Setup}
+
+Let $p = P(\text{class } 1 \mid x)$ be the model's predicted probability for class 1. Since the label is $y = 0$, the probability assigned to the labeled class is
+\[
+p_y = 1 - p.
+\]
+Assume the model is confident the point belongs to class 1:
+\[
+p = 0.95, \qquad p_y = 0.05.
+\]
+All gradients below are taken with respect to the logit $z_y$ of the labeled class, using $\frac{\partial p_y}{\partial z_y} = p_y(1-p_y)$.
+
+\subsubsection*{Cross entropy (CE)}
+
+\[
+\mathcal{L}_{\mathrm{CE}} = -\log p_y.
+\]
+
+With $p_y = 0.05$:
+\[
+\mathcal{L}_{\mathrm{CE}} = -\log(0.05) \approx 3.00.
+\]
+
+Gradient with respect to the logit:
+\[
+\frac{\partial \mathcal{L}_{\mathrm{CE}}}{\partial z_y} = p_y - 1 = -0.95.
+\]
+
+The gradient is close to its maximum magnitude. The noisy point pulls the decision boundary toward its wrong label as hard as a genuine misfit would.
+
+\subsubsection*{Generalized cross entropy (GCE)}
+
+Zhang and Sabuncu (2018) define
+\[
+\mathcal{L}_{\mathrm{GCE}} = \frac{1 - p_y^{\,q}}{q}, \qquad q \in (0, 1].
+\]
+As $q \to 0$ this recovers CE, and at $q = 1$ it equals MAE.
+
+With $q = 0.7$ and $p_y = 0.05$:
+\[
+\mathcal{L}_{\mathrm{GCE}} = \frac{1 - 0.05^{0.7}}{0.7} \approx \frac{1 - 0.123}{0.7} \approx 1.25.
+\]
+
+Gradient with respect to the logit:
+\[
+\frac{\partial \mathcal{L}_{\mathrm{GCE}}}{\partial z_y} = -\,p_y^{\,q}\,(1 - p_y) = -0.123 \times 0.95 \approx -0.117.
+\]
+
+The GCE gradient equals the CE gradient multiplied by $p_y^{\,q}$. This factor is the mechanism that reduces the effect of the noisy point: the more strongly the model disagrees with a label, the smaller that label's influence on training.
+
+\subsubsection*{Focal loss (FL)}
+
+Lin et al. (2017) define
+\[
+\mathcal{L}_{\mathrm{FL}} = -(1 - p_y)^{\gamma} \log p_y.
+\]
+
+With $\gamma = 2$ and $p_y = 0.05$:
+\[
+\mathcal{L}_{\mathrm{FL}} = (0.95)^2 \times 3.00 \approx 2.71.
+\]
+
+Gradient with respect to the logit:
+\[
+\frac{\partial \mathcal{L}_{\mathrm{FL}}}{\partial z_y} = (1 - p_y)^{\gamma}\bigl(\gamma\, p_y \log p_y + p_y - 1\bigr) \approx 0.9025 \times (-1.25) \approx -1.13.
+\]
+
+The gradient is about $1.2\times$ the CE gradient, not smaller. The modulating factor $(1 - p_y)^{\gamma} \approx 1$ when $p_y$ is small, so focal loss leaves confidently wrong points essentially untouched.
+
+Focal loss down-weights easy, correctly classified points (large $p_y$). That is useful for class imbalance, but it does nothing to suppress confidently wrong labels.
+
+\subsubsection*{Mean absolute error (MAE)}
+
+MAE is GCE with $q = 1$:
+\[
+\mathcal{L}_{\mathrm{MAE}} = 1 - p_y.
+\]
+
+With $p_y = 0.05$:
+\[
+\mathcal{L}_{\mathrm{MAE}} = 0.95.
+\]
+
+Gradient with respect to the logit:
+\[
+\frac{\partial \mathcal{L}_{\mathrm{MAE}}}{\partial z_y} = -\,p_y(1 - p_y) = -0.05 \times 0.95 \approx -0.05.
+\]
+
+MAE gives the smallest push from the noisy point, but it learns slowly and can underfit.
+
+\subsubsection*{Comparison}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Loss & Value & Logit gradient & Relative to CE \\
+\midrule
+CE                    & 3.00 & $-0.95$ & $1\times$ \\
+Focal ($\gamma = 2$)  & 2.71 & $-1.13$ & $\approx 1.2\times$ \\
+GCE ($q = 0.7$)       & 1.25 & $-0.12$ & $\approx 0.12\times$ \\
+MAE ($q = 1$)         & 0.95 & $-0.05$ & $\approx 0.05\times$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection*{How GCE reduces the effect compared to CE}
+
+The gradient of CE with respect to the logit is $p_y - 1$, which does not depend on how confident the model is that the label is wrong. GCE multiplies this gradient by $p_y^{\,q}$:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Confident and correct points} ($p_y \approx 0.9$): the factor is $0.9^{0.7} \approx 0.93$, so training is nearly unchanged from CE.
+  \item \textbf{Confident and wrong points} ($p_y \approx 0.05$, the noisy point): the factor is $0.05^{0.7} \approx 0.12$, so the gradient shrinks by about $8\times$.
+\end{itemize}
+
+The noisy point still contributes a small push, but the correctly labeled $y=1$ cluster now dominates the boundary.
+
+\subsubsection*{Why focal loss does not help here}
+
+Focal loss scales the gradient by $(1 - p_y)^{\gamma}$, which is small when the model \emph{agrees} with the label. GCE scales by $p_y^{\,q}$, which is small when the model \emph{disagrees} with the label. Those are opposite cases:
+\begin{itemize}[leftmargin=*]
+  \item Focal loss reduces the weight of easy examples. It helps class imbalance but not label noise.
+  \item GCE reduces the weight of confidently disagreeing examples. It helps label noise but can underfit hard, correctly labeled minority examples.
+\end{itemize}
+
+\subsubsection*{Caveats}
+
+\begin{itemize}[leftmargin=*]
+  \item GCE cannot distinguish a noisy label from a hard but correct point. Both disagree with the model, so both are down-weighted.
+  \item A single point has a small effect. Many noisy points clustered together can still move the boundary, although each contributes less than under CE.
+\end{itemize}
+
+%% ------------------------------------------------------------
+%% Template for next question (uncomment and fill in)
+%% ------------------------------------------------------------
+%\section*{Question 2}
+%
+%\subsection*{Question}
+%
+%<question text here>
+%
+%\subsection*{Answer}
+%
+%<answer text here>
+
+\end{document}

@@ -1,0 +1,187 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[a4paper,margin=1in]{geometry}
+
+\begin{document}
+
+\title{Data Science Interview Puzzles -- Questions and Answers}
+\date{}
+\maketitle
+
+\section*{Puzzle 1: Piano Tuners in Hyderabad}
+
+\textbf{Question:} Estimate the number of piano tuners in Hyderabad.
+
+\textbf{Answer:}
+This is a Fermi estimation problem. A reasonable approach is:
+\begin{enumerate}
+    \item Estimate the number of pianos in Hyderabad.
+    \item Estimate the average number of tunings per piano per year.
+    \item Estimate how many tunings a single tuner can perform annually.
+    \item Compute
+    \[
+    \text{Tuners} = \frac{\text{Total Tunings Per Year}}{\text{Tunings Per Tuner Per Year}}.
+    \]
+\end{enumerate}
+The exact number is less important than a logical decomposition and reasonable assumptions.
+
+\section*{Puzzle 2: Model Has 99.9\% Accuracy}
+
+\textbf{Question:} A model has 99.9\% accuracy on 1 million rows. Is it good?
+
+\textbf{Answer:}
+The first question should be:
+
+\textit{``What is the class distribution?''}
+
+If the dataset is highly imbalanced, accuracy can be misleading.
+For example, if 99\% of observations belong to one class, a model predicting only the majority class achieves 99\% accuracy while being useless.
+
+Additional metrics to inspect:
+\begin{itemize}
+    \item Precision
+    \item Recall
+    \item F1-score
+    \item ROC-AUC or PR-AUC
+\end{itemize}
+
+\section*{Puzzle 3: Recommendation Algorithms}
+
+\textbf{Question:}
+Algorithm A has CTR = 5.1\%. Algorithm B has CTR = 5.4\%.
+Can we conclude B is better?
+
+\textbf{Answer:}
+No.
+
+Things to check:
+\begin{itemize}
+    \item Sample size
+    \item Randomized A/B test design
+    \item Statistical significance
+    \item Confidence interval of the lift
+    \item Business significance
+\end{itemize}
+
+A small increase may simply be random variation.
+
+\section*{Puzzle 4: Expected Tosses Until First Head}
+
+\textbf{Question:}
+A fair coin is tossed until the first Head appears.
+What is the expected number of tosses?
+
+\textbf{Answer:}
+Let the expectation be $E$.
+
+\[
+E=\frac12(1)+\frac12(1+E)
+\]
+
+Solving:
+
+\[
+E=2.
+\]
+
+\[
+\boxed{E=2}
+\]
+
+This is an example of \textbf{first-step analysis}.
+
+\section*{Puzzle 5: Feature X Increased Sales}
+
+\textbf{Question:}
+A manager says:
+
+\textit{``Sales increased after Feature X launched, therefore Feature X caused the increase.''}
+
+\textbf{Answer:}
+Correlation is not causation.
+
+Potential confounders:
+\begin{itemize}
+    \item Seasonality
+    \item Marketing campaigns
+    \item Existing business trend
+    \item Competitor actions
+    \item Holidays or special events
+\end{itemize}
+
+A better approach is an A/B test or a causal inference framework.
+
+\section*{Puzzle 6: Traffic Lights in Hyderabad}
+
+\textbf{Question:}
+Estimate the number of traffic lights in Hyderabad.
+
+\textbf{Answer:}
+One possible decomposition:
+\begin{enumerate}
+    \item Estimate the number of major intersections.
+    \item Estimate the proportion that use traffic lights.
+    \item Estimate the average number of signal units per intersection.
+\end{enumerate}
+
+The focus is on assumptions and reasoning rather than the final numerical answer.
+
+\section*{Puzzle 7: Cancer Detection Metrics}
+
+\textbf{Question:}
+For a cancer detection model, which is more important: Accuracy, Precision, or Recall?
+
+\textbf{Answer:}
+Usually Recall is most important because false negatives are very costly.
+
+\[
+\text{Recall}=\frac{TP}{TP+FN}
+\]
+
+Missing a cancer patient is often worse than generating an extra false alarm.
+
+However, the correct metric depends on the business and medical costs associated with false positives and false negatives.
+
+\section*{Puzzle 8: Heavy Ball Puzzle}
+
+\textbf{Question:}
+One of eight balls is heavier than the others.
+Using a balance scale, what is the minimum number of weighings required to identify it?
+
+\textbf{Answer:}
+Two weighings.
+
+Reason:
+
+Each weighing has three outcomes:
+\begin{itemize}
+    \item Left heavier
+    \item Right heavier
+    \item Equal
+\end{itemize}
+
+Two weighings provide
+\[
+3^2=9
+\]
+possible outcome patterns, which is enough to distinguish among eight candidate balls.
+
+\section*{Puzzle 9: First Look at a CSV Dataset}
+
+\textbf{Question:}
+You receive a CSV containing 100 columns.
+What is the first thing you do?
+
+\textbf{Answer:}
+First understand the schema:
+\begin{itemize}
+    \item What is the target variable?
+    \item Classification or regression?
+    \item Data types?
+    \item Missing values?
+    \item Duplicates?
+\end{itemize}
+
+Then examine the target distribution and begin exploratory data analysis.
+
+\end{document}

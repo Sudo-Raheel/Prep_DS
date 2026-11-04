@@ -1,0 +1,211 @@
+\documentclass[9pt,a4paper]{article}
+
+\usepackage[a4paper,margin=10mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{6mm}
+\setlist[itemize]{
+    leftmargin=3.2mm,
+    itemsep=0.5pt,
+    topsep=1pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+\newcommand{\topic}[1]{%
+    \vspace{2.2mm}
+    {\large\bfseries #1}\par
+    \vspace{0.5mm}
+}
+
+\pagestyle{plain}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries Senior Data Scientist Interview Mathematics}\\[1mm]
+    {\small 2-page high-yield syllabus --- topics and subtopics only}
+\end{center}
+
+\vspace{1mm}
+
+\begin{multicols}{2}
+
+\topic{1. Probability --- Essential}
+\begin{itemize}
+    \item Conditional probability; independence; Bayes theorem; law of total probability
+    \item Permutations, combinations, complements; sampling with/without replacement
+    \item Random variables; PMF/PDF/CDF; transformations
+    \item Expectation; conditional expectation; variance; covariance; correlation
+    \item Bernoulli, Binomial, Normal, Poisson, Exponential, Beta, Hypergeometric
+    \item Law of Large Numbers; Central Limit Theorem; normal approximation
+    \item Indicator variables; linearity of expectation; probability trees
+\end{itemize}
+
+\topic{2. Statistical Inference --- Essential}
+\begin{itemize}
+    \item Estimators: bias, variance, consistency, standard error
+    \item Likelihood; log-likelihood; Maximum Likelihood Estimation
+    \item Sampling distributions: $z$, $t$, chi-square, $F$
+    \item Confidence intervals for means, proportions, and differences
+    \item Hypothesis testing; $p$-value; Type I/II errors; power; effect size; MDE
+    \item $z$-test vs.\ $t$-test; paired vs.\ independent; Welch test
+    \item Chi-square tests; ANOVA; multiple-comparison control
+    \item Bootstrap and permutation tests
+\end{itemize}
+
+\topic{3. A/B Testing and Experimentation --- Essential}
+\begin{itemize}
+    \item Estimand; randomization unit; treatment/control; intention-to-treat
+    \item Primary metric; guardrails; experiment validity
+    \item Sample size; power; MDE; effect estimate + confidence interval
+    \item Sample Ratio Mismatch; balance and instrumentation checks
+    \item Peeking / optional stopping; sequential-testing basics
+    \item Factorial design; interaction effects; multiple variants
+    \item CUPED / covariate adjustment; variance reduction
+    \item Heterogeneous treatment effects; subgroup multiplicity
+    \item Interference; SUTVA; cluster randomization; switchbacks
+\end{itemize}
+
+\topic{4. Linear Algebra --- Essential}
+\begin{itemize}
+    \item Vectors; dot product; norms; Euclidean distance; cosine similarity
+    \item Matrices; transpose; inverse; rank; trace; determinant
+    \item Linear systems; projections; least squares; pseudoinverse
+    \item Eigenvalues/eigenvectors; positive-semidefinite matrices
+    \item SVD; low-rank approximation; PCA
+    \item Covariance/correlation matrices; condition number; ill-conditioning
+\end{itemize}
+
+\topic{5. Calculus and Optimization --- Essential}
+\begin{itemize}
+    \item Partial derivatives; chain rule; gradient; Jacobian; Hessian
+    \item Convexity; local/global optimum; first/second-order conditions
+    \item Gradient descent; SGD; mini-batches; learning rate
+    \item Momentum; Newton-method intuition
+    \item Lagrange multipliers; constrained optimization
+    \item $L_1$ vs.\ $L_2$ geometry and regularization
+\end{itemize}
+
+\topic{6. Linear Regression --- Essential}
+\begin{itemize}
+    \item OLS; normal equations; projection interpretation
+    \item Assumptions: linearity, exogeneity, independence, homoscedasticity
+    \item Coefficient SEs; confidence intervals; $t$-tests
+    \item Residual analysis; heteroscedasticity; robust standard errors
+    \item Multicollinearity; VIF; unstable coefficients
+    \item Interactions; polynomial terms; coefficient interpretation
+\end{itemize}
+
+\topic{7. Regularization and Logistic Regression --- Essential}
+\begin{itemize}
+    \item Ridge: $L_2$ shrinkage; LASSO: $L_1$ sparsity; Elastic Net
+    \item Regularization strength; scaling; cross-validation; bias-variance
+    \item Logistic regression: odds, log-odds, sigmoid
+    \item Bernoulli likelihood; binary cross-entropy; gradient
+    \item Softmax regression; multiclass cross-entropy
+\end{itemize}
+
+\columnbreak
+
+\topic{8. Core ML Mathematics --- Essential}
+\begin{itemize}
+    \item Empirical risk minimization; objective and loss functions
+    \item Bias-variance trade-off; underfitting vs.\ overfitting
+    \item Train/validation/test error; leakage; generalization
+    \item Cross-validation: stratified, grouped, and time-aware
+    \item Missing data: MCAR, MAR, MNAR; imputation implications
+    \item Class imbalance; weighting/resampling; threshold choice
+\end{itemize}
+
+\topic{9. Trees, Random Forest, Boosting --- Essential}
+\begin{itemize}
+    \item Decision-tree splits; entropy; information gain; Gini impurity
+    \item Regression-tree squared-error reduction
+    \item Bagging and variance reduction
+    \item Random Forest: bootstrap; feature subsampling; OOB error
+    \item Boosting as additive/sequential learning
+    \item Gradient boosting: residual / negative-gradient fitting
+    \item XGBoost: gradient/Hessian intuition; regularized objective
+\end{itemize}
+
+\topic{10. Model Evaluation --- Essential}
+\begin{itemize}
+    \item Confusion matrix; accuracy; precision; recall; specificity; F1
+    \item ROC-AUC; Precision-Recall curve; Average Precision
+    \item MAE; MSE; RMSE; $R^2$
+    \item Log loss; Brier score; calibration
+    \item Threshold selection from asymmetric cost / expected utility
+    \item Slice/segment evaluation; offline vs.\ online metrics
+\end{itemize}
+
+\topic{11. Clustering and Dimensionality Reduction --- High Yield}
+\begin{itemize}
+    \item $k$-means objective; Lloyd algorithm; convergence; $k$-means++
+    \item Choosing $k$; elbow and silhouette
+    \item Gaussian Mixture Models; EM algorithm
+    \item DBSCAN intuition
+    \item PCA; explained variance; SVD connection
+\end{itemize}
+
+\topic{12. Time Series / Forecasting --- Senior DS Core}
+\begin{itemize}
+    \item Trend; seasonality; stationarity; differencing
+    \item Autocorrelation; partial autocorrelation
+    \item AR, MA, ARIMA; exponential smoothing / Holt-Winters
+    \item Rolling / expanding-window validation
+    \item MAE, RMSE, MAPE; quantile / pinball loss
+    \item Temporal leakage and drift
+\end{itemize}
+
+\topic{13. Causal Inference --- Senior-Level}
+\begin{itemize}
+    \item Correlation vs.\ causation; confounding; selection bias
+    \item Potential outcomes; ATE and ATT
+    \item DAG intuition; backdoor paths; collider bias
+    \item Propensity scores; matching / weighting intuition
+    \item Difference-in-Differences; parallel-trends assumption
+    \item Instrumental variables; regression discontinuity intuition
+\end{itemize}
+
+\topic{14. Bayesian Statistics --- Core Only}
+\begin{itemize}
+    \item Prior; likelihood; posterior; posterior predictive
+    \item MAP vs.\ MLE
+    \item Beta-Bernoulli / Beta-Binomial intuition
+    \item Credible interval vs.\ confidence interval
+\end{itemize}
+
+\topic{15. Deep Learning Math --- Targeted Only}
+\begin{itemize}
+    \item ReLU, sigmoid, tanh, softmax
+    \item Cross-entropy / negative log-likelihood
+    \item Chain rule; backpropagation
+    \item SGD, momentum, Adam; weight decay
+    \item Vanishing/exploding gradients; initialization
+    \item CNN: convolution, stride, padding, receptive field
+    \item Attention: queries, keys, values; scaled dot-product attention
+    \item Transformer basics; embeddings; cosine similarity
+    \item LoRA / QLoRA: low-rank adaptation concept
+\end{itemize}
+
+\topic{16. Probability / Math Interview Drills}
+\begin{itemize}
+    \item Coins, dice, cards; complements; conditional probability
+    \item Bayes posterior puzzles
+    \item Sampling without replacement; Hypergeometric reasoning
+    \item Expected value with indicator variables
+    \item Weighted / reservoir sampling
+    \item Geometric probability; simple Markov-state problems
+\end{itemize}
+
+\end{multicols}
+
+\end{document}

@@ -1,0 +1,633 @@
+# Questions and Answers
+
+## Q1. What is the Central Limit Theorem (CLT) and why is it useful?
+
+**Answer**
+
+The Central Limit Theorem states that if 
+
+$$X_1,X_2,\dots,X_n$$
+
+ are i.i.d. random variables with mean $\mu$ and variance $\sigma^2$, then the sample mean 
+
+$$\bar X=\frac{1}{n}\sum_{i=1}^{n}X_i$$
+
+ satisfies 
+
+$$\frac{\bar X-\mu}{\sigma/\sqrt n}
+\overset{d}{\longrightarrow}
+N(0,1)$$
+
+ as $n\to\infty$. Equivalently, 
+
+$$\bar X \approx N\!\left(\mu,\frac{\sigma^2}{n}\right).$$
+
+**Intuition**
+
+Even if the original data distribution is highly skewed or non-normal, the distribution of sample means becomes approximately normal as the sample size increases.
+
+**Example**
+
+Consider the population 
+
+$$\{1,1,1,1,100\}.$$
+
+ This population is clearly not normal. However, if we repeatedly draw large samples and compute their means, the distribution of those means becomes approximately normal.
+
+**Why is this useful?**
+
+The CLT allows us to replace a complicated unknown distribution with a normal distribution when working with averages. Once something is approximately normal, we can compute probabilities, confidence intervals, and p-values.
+
+**Example**
+
+Suppose a sample of 100 people has average height 
+
+$$\bar X = 171.2 \text{ cm}.$$
+
+ Without the CLT, we would need the exact distribution of $\bar X$ to quantify uncertainty. The CLT tells us that 
+
+$$\bar X \approx N\!\left(\mu,\frac{\sigma^2}{100}\right),$$
+
+ allowing confidence intervals and hypothesis tests to be constructed.
+
+**Connection to Hypothesis Testing**
+
+For the z-test, 
+
+$$Z=\frac{\bar X-\mu_0}{\sigma/\sqrt n}.$$
+
+ Under the null hypothesis 
+
+$$H_0:\mu=\mu_0,$$
+
+ 
+
+$$Z \approx N(0,1),$$
+
+ because of the CLT. This makes p-value computation possible.
+
+**Machine Learning Example**
+
+Let 
+
+$$d_i= \text{PLTE contribution} - \text{SPE contribution}.$$
+
+ Even if the individual $d_i$ values are highly non-normal, the average improvement 
+
+$$\bar d=\frac{1}{n}\sum_{i=1}^{n} d_i$$
+
+ is approximately normal for large $n$. Therefore, we can construct confidence intervals such as 
+
+$$\bar d \pm 1.96\frac{s}{\sqrt n}.$$
+
+**Key Practical Benefit**
+
+The CLT is the foundation of:
+
+- Confidence intervals
+
+- z-tests
+
+- t-tests
+
+- p-values
+
+- Sample size calculations
+
+**In one sentence**
+
+The Central Limit Theorem allows averages of large samples to be treated as normally distributed, enabling uncertainty quantification and hypothesis testing even when the original data is not normal.
+
+------------------------------------------------------------------------
+
+## Q2. What is the advantage of a z-test over a t-test?
+
+**Answer**
+
+The z-test and t-test are very similar. The main difference is that the z-test assumes the population standard deviation $\sigma$ is known, whereas the t-test uses the sample standard deviation $s$ because $\sigma$ is usually unknown.
+
+The test statistics are 
+
+$$Z=\frac{\bar X-\mu_0}{\sigma/\sqrt n}$$
+
+ and 
+
+$$T=\frac{\bar X-\mu_0}{s/\sqrt n}.$$
+
+**Advantage of the z-test**
+
+When $\sigma$ is known, the denominator contains no estimation error. As a result:
+
+- The test statistic is more precise.
+
+- The normal distribution has lighter tails than the t-distribution.
+
+- The rejection threshold is slightly smaller.
+
+- The test has slightly higher statistical power.
+
+For example, for a two-sided $5\%$ significance test, 
+
+$$|Z| > 1.96$$
+
+ whereas for a t-test with $10$ degrees of freedom, 
+
+$$|T| > 2.228.$$
+
+Because the t-test must account for the uncertainty in estimating $\sigma$, stronger evidence is required to reject the null hypothesis.
+
+**Why is the t-test used more often?**
+
+In practice, the true population standard deviation $\sigma$ is rarely known. Therefore, we typically estimate it using the sample standard deviation $s$, which leads naturally to the t-test.
+
+**Large Sample Behaviour**
+
+As the sample size increases, 
+
+$$s \approx \sigma$$
+
+ and 
+
+$$t_{n-1} \rightarrow N(0,1).$$
+
+ Thus, for large samples, the t-test and z-test become nearly identical.
+
+**Typical Usage**
+
+- **z-test:** Population standard deviation known.
+
+- **t-test:** Population standard deviation unknown.
+
+**In one sentence**
+
+A z-test is slightly more powerful than a t-test because it uses the true population standard deviation, but since this quantity is rarely known, the t-test is the method used in most real-world applications.
+
+------------------------------------------------------------------------
+
+## Q3. What is a confidence interval and why is it $\bar X \pm 1.96\,\frac{s}{\sqrt n}$ for a normal distribution?
+
+**Answer**
+
+A confidence interval (CI) is a range of values that is likely to contain the true population parameter.
+
+For example, if we estimate a population mean $\mu$ using the sample mean $\bar X$, a $95\%$ confidence interval provides a range of plausible values for $\mu$.
+
+The idea comes from the Central Limit Theorem, which states that for sufficiently large $n$, 
+
+$$\bar X \approx N\!\left(\mu,\frac{\sigma^2}{n}\right).$$
+
+Therefore, 
+
+$$\frac{\bar X-\mu}{\sigma/\sqrt n}
+\approx N(0,1).$$
+
+For a standard normal random variable $Z$, 
+
+$$P(-1.96 \le Z \le 1.96)=0.95.$$
+
+This means that $95\%$ of the probability mass lies within $1.96$ standard deviations of the mean.
+
+Substituting 
+
+$$Z=\frac{\bar X-\mu}{\sigma/\sqrt n},$$
+
+ we obtain 
+
+$$P\!\left(
+-1.96
+\le
+\frac{\bar X-\mu}{\sigma/\sqrt n}
+\le
+1.96
+\right)
+=
+0.95.$$
+
+Multiplying by $\sigma/\sqrt n$, 
+
+$$P\!\left(
+\bar X-1.96\frac{\sigma}{\sqrt n}
+\le
+\mu
+\le
+\bar X+1.96\frac{\sigma}{\sqrt n}
+\right)
+=
+0.95.$$
+
+Thus the $95\%$ confidence interval is 
+
+$$\boxed{
+\bar X \pm 1.96\frac{\sigma}{\sqrt n}
+}$$
+
+ when the population standard deviation $\sigma$ is known.
+
+Since $\sigma$ is usually unknown, we replace it with the sample standard deviation $s$, giving 
+
+$$\boxed{
+\bar X \pm 1.96\frac{s}{\sqrt n}
+}$$
+
+ for large samples.
+
+For smaller samples, the value $1.96$ is replaced by the appropriate critical value from the t-distribution: 
+
+$$\boxed{
+\bar X \pm t_{\alpha/2,n-1}\frac{s}{\sqrt n}
+}.$$
+
+**Interpretation**
+
+A common misunderstanding is that there is a $95\%$ probability that the true mean lies inside a computed confidence interval.
+
+This is not correct.
+
+The true mean $\mu$ is fixed; the interval is random.
+
+The correct interpretation is:
+
+> If we repeatedly draw samples and construct a $95\%$ confidence interval from each sample, then approximately $95\%$ of those intervals will contain the true population mean.
+
+**Example**
+
+Suppose 
+
+$$\bar X = 171.2,\qquad s=10,\qquad n=100.$$
+
+Then 
+
+$$\text{SE}
+=
+\frac{s}{\sqrt n}
+=
+\frac{10}{10}
+=
+1.$$
+
+The $95\%$ confidence interval is 
+
+$$171.2 \pm 1.96(1)
+=
+171.2 \pm 1.96,$$
+
+ or 
+
+$$[169.24,\;173.16].$$
+
+**In one sentence**
+
+A confidence interval is an estimate plus or minus a margin of error, and the factor $1.96$ appears because $95\%$ of a standard normal distribution lies between $-1.96$ and $+1.96$.
+
+------------------------------------------------------------------------
+
+## Q4. What is the coefficient of variation (CV), and is it a statistical test?
+
+**Answer**
+
+The coefficient of variation is a descriptive statistic that expresses the spread of a variable as a fraction of its average level: 
+
+$$\boxed{
+\mathrm{CV}=\frac{\sigma}{\mu}
+}
+\qquad\text{(sample version: } \mathrm{CV}=\frac{s}{\bar X}\text{)}.$$
+
+ Because the units of $\sigma$ and $\mu$ cancel, the CV is unitless and can be used to compare variability across quantities measured on different scales.
+
+**Example**
+
+Suppose we train a classifier with 100 different random seeds and record the AUCPR each time. If 
+
+$$\bar X = 0.60,\qquad s = 0.02,$$
+
+ then 
+
+$$\mathrm{CV}=\frac{0.02}{0.60}\approx 0.033,$$
+
+ i.e. a typical seed’s result deviates from the average by about $3.3\%$.
+
+**Is the CV a test?**
+
+No. The CV is a descriptive statistic, not a hypothesis test:
+
+- There is no null hypothesis.
+
+- There is no test statistic with a known sampling distribution under $H_0$.
+
+- There is no p-value.
+
+**Limitations**
+
+- **No principled threshold.** Whether a CV of $3\%$ or $10\%$ is “too large” depends on the application, and the CV itself cannot tell us.
+
+- **Unstable near zero.** If $\mu$ is small (e.g. AUCPR $\approx 0.05$), even a tiny $\sigma$ produces a large CV.
+
+- **Measures spread, not bias.** A small CV only says that results are stable; it says nothing about whether the results are close to the *correct* value.
+
+- **Only meaningful for ratio-scale, positive data** (a true zero and no negative values).
+
+**Do not confuse with cross-validation**
+
+“CV” is also the standard abbreviation for *cross-validation*, which is an entirely different idea: the data is split into $k$ folds, the model is trained on $k-1$ folds and evaluated on the held-out fold, and the procedure is rotated through all folds. Cross-validation is a method for estimating model performance; the coefficient of variation is a summary of dispersion.
+
+**In one sentence**
+
+The coefficient of variation is the standard deviation divided by the mean, a unitless descriptive measure of relative spread (not a hypothesis test), and it has no built-in threshold for deciding when variability is “too large”.
+
+------------------------------------------------------------------------
+
+## Q5. How can we statistically test whether random undersampling of the majority class is “good enough” to capture the patterns in the full data?
+
+**Setting**
+
+We have a very large, imbalanced dataset. The hypothesis is that a random undersample of the majority class is representative enough that a classifier trained on it performs essentially as well as one that has seen all of the majority data. We measure performance using AUCPR.
+
+**A common first attempt: seed variability**
+
+Draw the majority sample with $100$ different seeds, train identical classifiers, obtain $100$ AUCPR values, and judge the result by whether $s/\bar X$ (the CV from Q4) is small.
+
+This measures *stability*: how much the result depends on which sample was drawn. It does *not* measure *representativeness*. If undersampling systematically discards a rare but important part of the majority class (for example hard negatives close to the decision boundary), then every one of the $100$ samples loses it, and we obtain a tight distribution around a consistently mediocre AUCPR. Low variance can coexist with a systematic bias. In addition, there is no principled cutoff for “too large”.
+
+**Why a plain p-value test is also not the right tool**
+
+Testing 
+
+$$H_0:\ \mathrm{AUCPR}_{\text{full}}=\mathrm{AUCPR}_{\text{undersampled}}$$
+
+ has several problems:
+
+- With enough seeds or enough test data, even a trivially small difference becomes “significant”, and the result can be manufactured simply by running more seeds.
+
+- Failing to reject $H_0$ is not evidence of equivalence. “Good enough” is a claim of *no meaningful loss*, which we need to show positively.
+
+- The $100$ runs share the same test set and the same minority data, so they are not independent draws from “the population”. Their spread captures only majority-sampling noise, not test-set noise.
+
+**Why a learning curve over the majority size is confounded**
+
+Plotting AUCPR against the number of majority samples kept (1:1, 5:1, 20:1, all) changes two things at once: the amount of majority information (which should help) and the class-imbalance ratio (which hurts the learner, and adds noisy samples). A decline at larger ratios therefore cannot be attributed to the sample being unrepresentative or to the model simply struggling with imbalance. The curve cannot be interpreted as evidence either way.
+
+**Recommended procedure**
+
+1.  **Choose a reference that holds the imbalance ratio fixed.** Compare a single $1{:}1$ undersample against a balanced-bagging / EasyEnsemble model, which averages many $1{:}1$ undersamples drawn without replacement until the whole majority class is covered. Every base learner faces the same imbalance, but the ensemble has seen all of the majority data.
+
+2.  **Fix the test set at natural prevalence.** AUCPR is highly sensitive to class prevalence, so the test set must not be resampled to a different imbalance.
+
+3.  **Use a paired comparison.** Evaluate both approaches on identical folds and define the per-fold difference 
+
+$$\Delta_i=\mathrm{AUCPR}^{\text{ref}}_i-\mathrm{AUCPR}^{\text{undersampled}}_i .$$
+
+4.  **Test for equivalence or non-inferiority (TOST), not for difference.** Pre-specify a margin $\delta$ that represents the largest acceptable loss (e.g. $0.01$ AUCPR, chosen by what the business or fraud team cares about). With $\Delta=\mathbb E[\Delta_i]$, the non-inferiority hypotheses are 
+
+$$H_0:\ \Delta \ge \delta
+        \qquad\text{vs.}\qquad
+        H_1:\ \Delta < \delta .$$
+
+ Rejecting $H_0$ is positive evidence that undersampling is good enough. For a two-sided equivalence claim (TOST), both $H_0:\Delta\ge\delta$ and $H_0:\Delta\le-\delta$ must be rejected at level $\alpha$. Equivalently, the $(1-2\alpha)$ confidence interval for $\Delta$ (the $90\%$ CI when $\alpha=0.05$) must lie entirely inside $(-\delta,\delta)$.
+
+5.  **Obtain honest uncertainty.** Use repeated stratified $k$-fold cross-validation, or a bootstrap of the test set, to get a confidence interval for $\Delta$. Because cross-validation estimates are correlated (training sets overlap), use the Nadeau–Bengio corrected resampled t-test, which inflates the variance of the mean difference: 
+
+$$\widehat{\mathrm{Var}}(\bar\Delta)
+        =
+        \left(\frac{1}{J}+\frac{n_{\text{test}}}{n_{\text{train}}}\right)s_\Delta^{2},$$
+
+ where $J$ is the total number of resampling rounds and $s_\Delta^{2}$ is the sample variance of the differences. The $100$ seeds supply the majority-sampling component of the uncertainty, and the resampling supplies the test-set component.
+
+6.  **Decision rule.** If the confidence interval for $\Delta$ lies inside the pre-specified margin, conclude that random undersampling is good enough. Otherwise, it is not demonstrated to be.
+
+**Role of the seed-variance plot**
+
+The distribution of AUCPR across the $100$ seeds (and its CV) remains useful, but only as a *secondary* stability diagnostic. The *primary* evidence is the paired difference against the reference model, with a confidence interval and a pre-specified margin $\delta$.
+
+**Conceptual note**
+
+A uniform random sample of the majority class is representative of the majority *distribution* by construction. The real risk is *coverage*: rare majority points near the decision boundary (hard negatives) matter most for precision at high recall, and a small sample may drop most of them. The ensemble-versus-single-sample comparison tests exactly this, because the ensemble recovers those points across its bags.
+
+**In one sentence**
+
+To test whether random undersampling is good enough, compare a single undersample against an ensemble covering the full majority class at the same imbalance ratio, using a paired, fixed-test-set comparison with a confidence interval, and conclude “good enough” only if the entire interval for the AUCPR difference lies within a pre-specified equivalence margin $\delta$, rather than judging by the CV of seed results or a plain p-value.
+
+------------------------------------------------------------------------
+
+## Q6. What is the variance of the sample mean $\bar X=\frac{1}{n}\sum_{i=1}^{n}X_i$? Derive it from the definition of variance.
+
+**Answer**
+
+Let $X_1,\dots,X_n$ be i.i.d. with $E[X_i]=\mu$ and $\mathrm{Var}(X_i)=\sigma^2$. We start from the definition 
+
+$$\mathrm{Var}(Y)=E\big[(Y-E[Y])^2\big]$$
+
+ and apply it to $Y=\bar X$.
+
+**Step 1: the mean of $\bar X$.** 
+
+$$E[\bar X]=\frac{1}{n}\sum_{i=1}^{n}E[X_i]=\frac{1}{n}\cdot n\mu=\mu.$$
+
+**Step 2: the deviation from the mean.** 
+
+$$\bar X-E[\bar X]
+=\frac{1}{n}\sum_{i=1}^{n}X_i-\mu
+=\frac{1}{n}\sum_{i=1}^{n}(X_i-\mu),$$
+
+ where we used $\mu=\frac{1}{n}\sum_{i=1}^{n}\mu$ to bring $\mu$ inside the sum.
+
+**Step 3: substitute into the definition and square.** 
+
+$$\mathrm{Var}(\bar X)
+=E\!\left[\left(\frac{1}{n}\sum_{i=1}^{n}(X_i-\mu)\right)^{2}\right]
+=\frac{1}{n^{2}}\,E\!\left[\sum_{i=1}^{n}\sum_{j=1}^{n}(X_i-\mu)(X_j-\mu)\right].$$
+
+ Squaring a sum produces a double sum over all ordered pairs $(i,j)$.
+
+**Step 4: move the expectation inside (linearity).** 
+
+$$\mathrm{Var}(\bar X)
+=\frac{1}{n^{2}}\sum_{i=1}^{n}\sum_{j=1}^{n}E\big[(X_i-\mu)(X_j-\mu)\big]
+=\frac{1}{n^{2}}\sum_{i=1}^{n}\sum_{j=1}^{n}\mathrm{Cov}(X_i,X_j).$$
+
+**Step 5: split into diagonal and off-diagonal terms.** 
+
+$$\mathrm{Var}(\bar X)
+=\frac{1}{n^{2}}\left[
+\sum_{i=1}^{n}\underbrace{E\big[(X_i-\mu)^2\big]}_{=\,\mathrm{Var}(X_i)\,=\,\sigma^{2}}
++\sum_{i\neq j}E\big[(X_i-\mu)(X_j-\mu)\big]
+\right].$$
+
+**Step 6: use independence on the off-diagonal terms.**
+
+For $i\neq j$, independence makes the expectation of the product factor: 
+
+$$E\big[(X_i-\mu)(X_j-\mu)\big]
+=E[X_i-\mu]\;E[X_j-\mu]
+=0\cdot 0
+=0.$$
+
+ So every cross term vanishes. The justification for the factorisation is given in detail below.
+
+**Step 7: finish.** 
+
+$$\mathrm{Var}(\bar X)
+=\frac{1}{n^{2}}\sum_{i=1}^{n}\sigma^{2}
+=\frac{n\sigma^{2}}{n^{2}}
+=\boxed{\frac{\sigma^{2}}{n}}.$$
+
+**Why does independence make the expectation of the product factor?**
+
+The key fact is the following. If $U$ and $V$ are independent random variables (with finite expectations), then 
+
+$$E[UV]=E[U]\,E[V].$$
+
+*Proof (continuous case).* Independence means the joint density is the product of the marginal densities: 
+
+$$f_{U,V}(u,v)=f_U(u)\,f_V(v).$$
+
+ Then, by the definition of expectation for a function of two random variables, 
+
+$$E[UV]
+=\iint uv\,f_{U,V}(u,v)\,du\,dv
+=\iint uv\,f_U(u)\,f_V(v)\,du\,dv.$$
+
+ Because the integrand is now a product of a function of $u$ alone and a function of $v$ alone, the double integral separates into a product of two single integrals: 
+
+$$E[UV]
+=\left(\int u\,f_U(u)\,du\right)\left(\int v\,f_V(v)\,dv\right)
+=E[U]\,E[V].$$
+
+*Discrete case.* The same argument holds with sums, using $P(U=u,V=v)=P(U=u)P(V=v)$: 
+
+$$E[UV]=\sum_{u}\sum_{v}uv\,P(U=u)P(V=v)
+=\Big(\sum_u uP(U=u)\Big)\Big(\sum_v vP(V=v)\Big)=E[U]E[V].$$
+
+*Applying it to our problem.* Take $U=X_i-\mu$ and $V=X_j-\mu$ with $i\neq j$. Since $U$ is a function of $X_i$ only and $V$ is a function of $X_j$ only, and $X_i$ and $X_j$ are independent, $U$ and $V$ are also independent. Therefore 
+
+$$E[(X_i-\mu)(X_j-\mu)]=E[X_i-\mu]\,E[X_j-\mu],$$
+
+ and each factor is 
+
+$$E[X_i-\mu]=E[X_i]-\mu=\mu-\mu=0.$$
+
+ So the product is $0$. Equivalently, $\mathrm{Cov}(X_i,X_j)=0$ for $i\neq j$.
+
+*What exactly is needed?* Only the weaker condition that the $X_i$ are *uncorrelated* ($\mathrm{Cov}(X_i,X_j)=0$) is required for the result $\sigma^2/n$. Independence is a sufficient way to guarantee it. The converse does not hold: uncorrelated variables need not be independent.
+
+**What changes if the observations are correlated?**
+
+Suppose $\mathrm{Cov}(X_i,X_j)=\rho\sigma^{2}$ for all $i\neq j$. There are $n(n-1)$ ordered off-diagonal pairs, so Step 5 gives 
+
+$$\mathrm{Var}(\bar X)
+=\frac{1}{n^{2}}\Big[n\sigma^{2}+n(n-1)\rho\sigma^{2}\Big]
+=\frac{\sigma^{2}}{n}\Big[1+(n-1)\rho\Big].$$
+
+ For $\rho>0$ this is larger than $\sigma^{2}/n$, and as $n\to\infty$ it tends to $\rho\sigma^{2}$ rather than to $0$. Averaging correlated observations cannot remove their shared component of noise. This is why the Nadeau–Bengio correction in Q5 inflates the variance of the mean difference across overlapping cross-validation folds.
+
+**Connection to earlier questions**
+
+Taking the square root gives the standard error 
+
+$$\mathrm{SE}(\bar X)=\frac{\sigma}{\sqrt n},$$
+
+ which is the denominator in the CLT statement (Q1), the z- and t-statistics (Q2), and the confidence interval $\bar X\pm1.96\,\sigma/\sqrt n$ (Q3). It also shows that uncertainty shrinks like $1/\sqrt n$: quadrupling the sample size only halves the standard error.
+
+**In one sentence**
+
+For independent (or merely uncorrelated) observations with common variance $\sigma^{2}$, the variance of the sample mean is $\sigma^{2}/n$, because the cross-covariance terms vanish when expectations of products of independent variables factor into products of expectations, each of which is zero.
+
+------------------------------------------------------------------------
+
+## Q7. What is a Z-test, and why does $|Z|>1.96$ correspond to 5% significance? Show mathematically.
+
+**Answer**
+
+**What a Z-test is**
+
+A Z-test checks whether a sample mean is far enough from a hypothesised value $\mu_0$ that chance alone is an unlikely explanation. It assumes the population standard deviation $\sigma$ is known, and that either the data are normal or $n$ is large (so the CLT applies). 
+
+$$H_0:\mu=\mu_0
+\qquad\text{vs}\qquad
+H_1:\mu\neq\mu_0,$$
+
+ 
+
+$$Z=\frac{\bar X-\mu_0}{\sigma/\sqrt n}.$$
+
+Under $H_0$, we have $E[\bar X]=\mu_0$ and $\mathrm{Var}(\bar X)=\sigma^2/n$ (from Q6). Standardising a variable (subtracting its mean and dividing by its standard deviation) gives mean $0$ and variance $1$: 
+
+$$E[Z]=0,\qquad \mathrm{Var}(Z)=1,\qquad Z\sim N(0,1)$$
+
+ (exactly if the data are normal, approximately by the CLT otherwise).
+
+**Where 5% and 1.96 come from**
+
+*Step 1: define the error rate we accept.* The significance level $\alpha$ is the probability of rejecting $H_0$ when it is true (Type I error). We choose a rejection region $|Z|>c$ such that 
+
+$$P(|Z|>c\mid H_0)=\alpha=0.05.$$
+
+*Step 2: write this with the standard normal density.* 
+
+$$\varphi(z)=\frac{1}{\sqrt{2\pi}}e^{-z^{2}/2},
+\qquad
+\Phi(c)=\int_{-\infty}^{c}\varphi(z)\,dz.$$
+
+*Step 3: use symmetry.* Since $\varphi$ is symmetric about $0$, the two tails have equal probability: 
+
+$$P(|Z|>c)=P(Z>c)+P(Z<-c)=2\,P(Z>c)=2\big(1-\Phi(c)\big).$$
+
+*Step 4: solve for $c$.* 
+
+$$2\big(1-\Phi(c)\big)=0.05
+\;\Longrightarrow\;
+\Phi(c)=0.975
+\;\Longrightarrow\;
+c=\Phi^{-1}(0.975).$$
+
+*Step 5: evaluate.* The integral $\Phi(c)$ has no closed form, so $c$ is obtained from numerical integration or tables: 
+
+$$\Phi(1.96)=\int_{-\infty}^{1.96}\frac{1}{\sqrt{2\pi}}e^{-z^{2}/2}\,dz\approx 0.9750,$$
+
+ so 
+
+$$\boxed{c=1.96}
+\qquad\text{and}\qquad
+P(|Z|>1.96)=2(1-0.9750)=0.05.$$
+
+**Important clarification**
+
+The event $Z>1.96$ on its own has probability $2.5\%$, not $5\%$. The $5\%$ figure applies to the *two-sided* event $|Z|>1.96$, i.e. $Z>1.96$ *or* $Z<-1.96$, with each tail contributing $2.5\%$.
+
+| Test                     | Rejection region | Critical value |
+|:-------------------------|:----------------:|:--------------:|
+| Two-sided, $\alpha=0.05$ |     $|Z|>c$      |    $c=1.96$    |
+| One-sided, $\alpha=0.05$ |      $Z>c$       |   $c=1.645$    |
+
+For the one-sided case, $1-\Phi(c)=0.05\Rightarrow\Phi(c)=0.95\Rightarrow c=1.645$.
+
+**The p-value version**
+
+Given an observed value $z_{\text{obs}}$, 
+
+$$p=P\big(|Z|\ge|z_{\text{obs}}|\mid H_0\big)=2\big(1-\Phi(|z_{\text{obs}}|)\big).$$
+
+ Rejecting when $|z_{\text{obs}}|>1.96$ is equivalent to rejecting when $p<0.05$, because $p$ is a decreasing function of $|z_{\text{obs}}|$ and equals $0.05$ exactly at $|z_{\text{obs}}|=1.96$.
+
+**Example**
+
+Let $\bar X=171.2$, $\mu_0=170$, $\sigma=10$, $n=100$. Then 
+
+$$z=\frac{171.2-170}{10/\sqrt{100}}=1.2,
+\qquad
+p=2\big(1-\Phi(1.2)\big)=2(1-0.8849)=0.230.$$
+
+ Since $|1.2|<1.96$ (equivalently $p>0.05$), we fail to reject $H_0$.
+
+**Link to the confidence interval (Q3)**
+
+The acceptance region of the test is $|Z|\le1.96$: 
+
+$$-1.96\le\frac{\bar X-\mu_0}{\sigma/\sqrt n}\le1.96
+\iff
+\mu_0\in\left[\bar X-1.96\frac{\sigma}{\sqrt n},\ \bar X+1.96\frac{\sigma}{\sqrt n}\right].$$
+
+ So the $95\%$ confidence interval is exactly the set of values $\mu_0$ that the two-sided $5\%$ Z-test would not reject, which is why the same constant $1.96$ appears in both.
+
+**In one sentence**
+
+A Z-test standardises the sample mean under $H_0$ so that it follows $N(0,1)$, and the two-sided critical value $1.96$ is the point satisfying $P(|Z|>1.96)=2(1-\Phi(1.96))=0.05$, because $2.5\%$ of the standard normal probability lies in each tail beyond $\pm1.96$.
