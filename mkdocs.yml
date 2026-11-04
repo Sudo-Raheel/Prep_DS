@@ -33,6 +33,7 @@ nav:
       - Q&A: statistical-inference/qa.md
   - Probability:
       - First-step expectation: probability/expectation-first-step.md
+      - MLE and MAP: probability/mle-map.md
   - Model evaluation:
       - Overview: model-evaluation/index.md
       - Data drift: model-evaluation/drift.md
