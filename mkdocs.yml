@@ -20,7 +20,16 @@ nav:
       - AUC & ROC: classification/auc.md
       - Q&A: classification/qa.md
   - Statistical inference:
-      - p-value notes: statistical-inference/p-value-notes.md
+      - p-values and tests:
+          - Overview: statistical-inference/p-value/index.md
+          - t-distribution: statistical-inference/p-value/t-distribution.md
+          - One-sample t-test: statistical-inference/p-value/one-sample-t.md
+          - Two-sample t-test: statistical-inference/p-value/two-sample-t.md
+          - Paired t-test: statistical-inference/p-value/paired-t.md
+          - z-test: statistical-inference/p-value/z-test.md
+          - Wilcoxon signed-rank: statistical-inference/p-value/wilcoxon.md
+          - Chi-square independence: statistical-inference/p-value/chi-square.md
+          - One-way ANOVA: statistical-inference/p-value/anova.md
       - Q&A: statistical-inference/qa.md
   - Probability:
       - First-step expectation: probability/expectation-first-step.md

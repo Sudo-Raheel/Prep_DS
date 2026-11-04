@@ -239,11 +239,10 @@ Going from $\pi=0.1$ to $\pi=0.01$ in Table 2 is exactly this experiment with $
 
 Now compare two *different* classifiers on a data set of $10^6$ transactions with $1000$ frauds ($\pi=0.001$, $k=999$). Model A catches $60\%$ of the frauds while flagging only $0.1\%$ of legitimate transactions; Model B catches $80\%$ but flags $20\%$ of legitimate transactions. Interpolating linearly to the corner $(1,1)$ gives the ROC curves in Figure 4(a).
 
-\@lcccccc@ & TPR & FPR & TP & FP & Precision & Alerts\
-Model A & 0.60 & 0.001 & 600 & 999 & 0.375 & 1 599\
-Model B & 0.80 & 0.20 & 800 & 199 800 & 0.004 & 200 600\
-\
-\
+| Model | TPR | FPR | TP | FP | Precision | Alerts |
+|:--|:-:|:-:|:-:|:-:|:-:|:-:|
+| A | 0.60 | 0.001 | 600 | 999 | 0.375 | 1 599 |
+| B | 0.80 | 0.20 | 800 | 199 800 | 0.004 | 200 600 |
 
 ![fig_models](figs/fig_models.png)
 
