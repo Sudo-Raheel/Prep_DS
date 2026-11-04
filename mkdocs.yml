@@ -34,12 +34,15 @@ nav:
   - General Q&A: general-qa/interview-questions.md
 markdown_extensions:
   - admonition
+  - def_list
   - pymdownx.details
   - pymdownx.arithmatex: {generic: true}
   - pymdownx.superfences
   - pymdownx.tasklist: {custom_checkbox: true}
   - tables
   - toc: {permalink: true}
+extra_css:
+  - stylesheets/extra.css
 extra_javascript:
   - javascripts/mathjax.js
   - https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js

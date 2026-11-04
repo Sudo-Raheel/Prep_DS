@@ -6,9 +6,8 @@ $$p(x) = \mathbb{P}(Y=1\mid x),$$
 
  because decisions (block, review, allow) depend on a threshold that reflects the cost of each kind of error.
 
-> **Example**
->
-> **Example 1** (Running example). A payment network processes $1{,}000{,}000$ transactions, of which $5{,}000$ are fraud. The base rate (prior) is $\pi=\mathbb{P}(Y=1)=0.5\%$. A transaction with the pattern *3 a.m., large amount, new device* occurs in $3{,}000$ of the $5{,}000$ frauds and in about $10{,}000$ of the $995{,}000$ legitimate cases.
+!!! example "Example 1: Running example"
+    A payment network processes $1{,}000{,}000$ transactions, of which $5{,}000$ are fraud. The base rate (prior) is $\pi=\mathbb{P}(Y=1)=0.5\%$. A transaction with the pattern *3 a.m., large amount, new device* occurs in $3{,}000$ of the $5{,}000$ frauds and in about $10{,}000$ of the $995{,}000$ legitimate cases.
 
 Two ways of conditioning give very different answers: 
 
@@ -20,11 +19,10 @@ $$\mathbb{P}(\text{pattern}\mid\text{fraud})=\tfrac{3000}{5000}=60\%,
 
 # Odds
 
-> **Metric**
->
-> Definition: odds For an event with probability $p$, the *odds* are 
+!!! info "Definition: odds"
+    For an event with probability $p$, the *odds* are 
 
-$$\text{odds}(p)=\frac{p}{1-p},\qquad p=\frac{\text{odds}}{1+\text{odds}}.$$
+    $$\text{odds}(p)=\frac{p}{1-p},\qquad p=\frac{\text{odds}}{1+\text{odds}}.$$
 
 Odds restate a probability as “for versus against”. If $3$ of every $13$ alerts are fraud, then $p=3/13\approx 23\%$ and the odds are $3:10=0.30$.
 
@@ -49,19 +47,15 @@ $$\underbrace{\frac{\mathbb{P}(Y=1\mid x)}{\mathbb{P}(Y=0\mid x)}}_{\text{poster
     \times
     \underbrace{\frac{\mathbb{P}(x\mid Y=1)}{\mathbb{P}(x\mid Y=0)}}_{\text{likelihood ratio}}.$$
 
- The marginal $\mathbb{P}(x)$ appears in both posteriors and cancels.
+     The marginal $\mathbb{P}(x)$ appears in both posteriors and cancels.
 
-> **Example**
->
-> **Example 2**. In Example <a href="#ex:run" data-reference-type="ref" data-reference="ex:run">1</a> the prior odds are $5000:995000\approx 0.005$ and the likelihood ratio is $0.60/0.01=60$. Posterior odds $=0.005\times 60=0.30$, i.e. $3000:10000$, a $23\%$ fraud probability. The pattern is $60$ times more common among fraud, yet only $23\%$ of cases showing it are fraud, because the prior odds are about $1:199$.
+!!! example "Example 2"
+    In Example 1 the prior odds are $5000:995000\approx 0.005$ and the likelihood ratio is $0.60/0.01=60$. Posterior odds $=0.005\times 60=0.30$, i.e. $3000:10000$, a $23\%$ fraud probability. The pattern is $60$ times more common among fraud, yet only $23\%$ of cases showing it are fraud, because the prior odds are about $1:199$.
 
 # The logit (log-odds)
 
-> **Metric**
->
-> Definition: logit 
-
-$$\mathop{\mathrm{logit}}(p)=\ln\frac{p}{1-p}.$$
+!!! info "Definition: logit"
+    $$\mathop{\mathrm{logit}}(p)=\ln\frac{p}{1-p}.$$
 
 Odds are never negative, but a linear score $w^\top x+b$ can be any real number. The logarithm removes the last restriction: odds $<1$ give a negative logit, odds $=1$ give $0$, odds $>1$ give a positive logit, and $0,\infty$ map to $\mp\infty$. The logarithm also turns the product in Bayes’ rule into a sum: 
 
@@ -79,17 +73,13 @@ $$\mathop{\mathrm{logit}}\mathbb{P}(Y=1\mid x)=\mathop{\mathrm{logit}}\pi+\ln\fr
 
 : The logit is antisymmetric: $\mathop{\mathrm{logit}}(1-p)=-\mathop{\mathrm{logit}}(p)$.
 
-> **Example**
->
-> **Example 3**. The prior logit is $\ln(1/199)=-5.29$. The pattern adds $\ln 60=+4.09$, giving $-1.20$: odds $0.30$, probability $23\%$. The score rose by $4.09$ but stays negative because the prior was so low.
+!!! example "Example 3"
+    The prior logit is $\ln(1/199)=-5.29$. The pattern adds $\ln 60=+4.09$, giving $-1.20$: odds $0.30$, probability $23\%$. The score rose by $4.09$ but stays negative because the prior was so low.
 
 # The sigmoid
 
-> **Metric**
->
-> Definition: sigmoid 
-
-$$\sigma(z)=\frac{1}{1+e^{-z}},\qquad \sigma(\mathop{\mathrm{logit}}(p))=p.$$
+!!! info "Definition: sigmoid"
+    $$\sigma(z)=\frac{1}{1+e^{-z}},\qquad \sigma(\mathop{\mathrm{logit}}(p))=p.$$
 
 #### Derivation.
 
@@ -103,19 +93,17 @@ $\sigma(z)\in(0,1)$; $\sigma(0)=\tfrac12$; $\sigma(-z)=1-\sigma(z)$; $\sigma'(z)
 
 ![](figs/logit_tikz1.png)
 
-> **Insight**
->
-> Logit and sigmoid are the same relationship seen from two sides. A classifier works in score space, where addition and linear models are natural, and reports in probability space, where decisions and costs live.
+!!! tip "Key idea"
+    Logit and sigmoid are the same relationship seen from two sides. A classifier works in score space, where addition and linear models are natural, and reports in probability space, where decisions and costs live.
 
 # Logistic regression
 
-> **Metric**
->
-> Model Logistic regression assumes the log-odds are linear in the features: 
+!!! info "Model"
+    Logistic regression assumes the log-odds are linear in the features: 
 
-$$\mathop{\mathrm{logit}}\mathbb{P}(Y=1\mid x)=w^\top x+b
-> \quad\Longleftrightarrow\quad
-> \mathbb{P}(Y=1\mid x)=\sigma(w^\top x+b).$$
+    $$\mathop{\mathrm{logit}}\mathbb{P}(Y=1\mid x)=w^\top x+b
+    \quad\Longleftrightarrow\quad
+    \mathbb{P}(Y=1\mid x)=\sigma(w^\top x+b).$$
 
 #### Reading the weights.
 
@@ -141,12 +129,11 @@ $$\mathcal L=-\frac1N\sum_{i=1}^{N}\bigl[y_i\ln p_i+(1-y_i)\ln(1-p_i)\bigr].$$
 
  A confident wrong prediction is expensive: $p=0.01$ on a fraud case costs $-\ln 0.01=4.6$.
 
-> **Metric**
->
-> Gradient Using $\sigma'=\sigma(1-\sigma)$, 
+!!! info "Gradient"
+    Using $\sigma'=\sigma(1-\sigma)$, 
 
-$$\frac{\partial\mathcal L}{\partial z}=p-y,\qquad
-> \frac{\partial\mathcal L}{\partial w}=(p-y)\,x .$$
+    $$\frac{\partial\mathcal L}{\partial z}=p-y,\qquad
+    \frac{\partial\mathcal L}{\partial w}=(p-y)\,x .$$
 
 Consequences:
 
@@ -174,19 +161,15 @@ $$\mathbb{P}(Y=K\mid x)=\frac{1}{1+\sum_{j<K}e^{z_j}},\qquad \mathbb{P}(Y=k\mid 
 
  This is multinomial logistic regression, with $K-1$ weight vectors. The case $K=2$ is ordinary logistic regression.
 
-> **Example**
->
-> **Example 4**. Classes: legitimate (reference), card-not-present fraud, account takeover, with $z_{\text{cnp}}=1$, $z_{\text{ato}}=0$. Then $\mathbb{P}(\text{legit})=1/(1+e+1)=0.212$, $\mathbb{P}(\text{cnp})=0.576$, $\mathbb{P}(\text{ato})=0.212$.
+!!! example "Example 4"
+    Classes: legitimate (reference), card-not-present fraud, account takeover, with $z_{\text{cnp}}=1$, $z_{\text{ato}}=0$. Then $\mathbb{P}(\text{legit})=1/(1+e+1)=0.212$, $\mathbb{P}(\text{cnp})=0.576$, $\mathbb{P}(\text{ato})=0.212$.
 
 Choosing another reference changes the individual weights but not the probabilities: only score *differences* matter. This leads to the symmetric form.
 
 # Softmax
 
-> **Metric**
->
-> Definition: softmax 
-
-$$\mathop{\mathrm{softmax}}(z)_k=\frac{e^{z_k}}{\sum_{j=1}^{K}e^{z_j}}.$$
+!!! info "Definition: softmax"
+    $$\mathop{\mathrm{softmax}}(z)_k=\frac{e^{z_k}}{\sum_{j=1}^{K}e^{z_j}}.$$
 
 Dividing numerator and denominator by $e^{z_K}$ recovers the reference-class form. For $K=2$, $\mathop{\mathrm{softmax}}(z)_1=\sigma(z_1-z_2)$: the sigmoid is a two-class softmax.
 
@@ -224,29 +207,25 @@ $$\frac{\partial\mathcal L}{\partial z_k}=p_k-y_k,$$
 
  and sums to zero across classes, consistent with shift invariance.
 
-> **Example**
->
-> **Example 5**. Scores $(2,1,0)$ give $p=(0.6652,0.2447,0.0900)$. If the true class is $2$: $\mathcal L=-\ln0.2447=1.408$, gradient $(0.6652,-0.7553,0.0900)$. If it is class $1$: $\mathcal L=-\ln0.6652=0.408$.
+!!! example "Example 5"
+    Scores $(2,1,0)$ give $p=(0.6652,0.2447,0.0900)$. If the true class is $2$: $\mathcal L=-\ln0.2447=1.408$, gradient $(0.6652,-0.7553,0.0900)$. If it is class $1$: $\mathcal L=-\ln0.6652=0.408$.
 
 Squared error again suffers vanishing gradients for confident wrong predictions and is not the maximum-likelihood objective. In practice, frameworks fuse softmax and cross-entropy on raw logits (log-sum-exp trick) for stability.
 
 # Worked examples
 
-> **Example**
->
-> **Example 6** (Prior shift). A model trained when fraud was $0.5\%$ is deployed at $0.25\%$, assuming only the prior changed: 
+!!! example "Example 6: Prior shift"
+    A model trained when fraud was $0.5\%$ is deployed at $0.25\%$, assuming only the prior changed: 
 
-$$z_{\text{new}}=z_{\text{old}}+\mathop{\mathrm{logit}}(\pi_{\text{new}})-\mathop{\mathrm{logit}}(\pi_{\text{old}})=z_{\text{old}}-0.696 .$$
+    $$z_{\text{new}}=z_{\text{old}}+\mathop{\mathrm{logit}}(\pi_{\text{new}})-\mathop{\mathrm{logit}}(\pi_{\text{old}})=z_{\text{old}}-0.696 .$$
 
- Odds are multiplied by $0.4987$. A score of $23\%$ (odds $0.30$) becomes odds $0.150$, i.e. $13\%$. This is a bias shift, so ROC-AUC and PR-AUC are unchanged while precision at a fixed threshold changes. The same correction maps probabilities from a resampled training set back to the real base rate.
+     Odds are multiplied by $0.4987$. A score of $23\%$ (odds $0.30$) becomes odds $0.150$, i.e. $13\%$. This is a bias shift, so ROC-AUC and PR-AUC are unchanged while precision at a fixed threshold changes. The same correction maps probabilities from a resampled training set back to the real base rate.
 
-> **Example**
->
-> **Example 7** (Odds ratio). A weight of $0.7$ on “new device” gives odds ratio $e^{0.7}=2.014$. From baseline odds $0.00503$ (0.5%) the new-device odds are $0.01013$, about $1.0\%$. Doubling odds roughly doubles a small probability, but from $50\%$ it only reaches $67\%$.
+!!! example "Example 7: Odds ratio"
+    A weight of $0.7$ on “new device” gives odds ratio $e^{0.7}=2.014$. From baseline odds $0.00503$ (0.5%) the new-device odds are $0.01013$, about $1.0\%$. Doubling odds roughly doubles a small probability, but from $50\%$ it only reaches $67\%$.
 
-> **Example**
->
-> **Example 8** (Probabilities versus decisions). With $p=(0.665,0.245,0.090)$ for (legitimate, CNP, ATO) the arg-max is legitimate, yet the fraud mass is $33.5\%$. If account takeover is far costlier than a false alert, decide by expected cost, not arg-max.
+!!! example "Example 8: Probabilities versus decisions"
+    With $p=(0.665,0.245,0.090)$ for (legitimate, CNP, ATO) the arg-max is legitimate, yet the fraud mass is $33.5\%$. If account takeover is far costlier than a false alert, decide by expected cost, not arg-max.
 
 # Cheat sheet and interview one-liners
 

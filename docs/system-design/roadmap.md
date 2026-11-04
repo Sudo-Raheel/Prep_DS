@@ -4,7 +4,7 @@ Raheel • October 2026 • 5 to 6 hours per week
 
 **Goal.** By the end of week 4, take any open-ended prompt (“design a system that …”) and talk through a complete, defensible design in 40 minutes, including the serving and monitoring parts that research-focused candidates most often leave thin.
 
-**Weekly rhythm.** Four weekday sessions of 45 to 60 minutes for reading and concepts, plus one weekend session of about 90 minutes: one timed case spoken aloud (40 minutes), then a written review against the rubric in Section <a href="#sec:rubric" data-reference-type="ref" data-reference="sec:rubric">5</a>. Speaking aloud is the part that matters most; reading alone does not prepare you for the round.
+**Weekly rhythm.** Four weekday sessions of 45 to 60 minutes for reading and concepts, plus one weekend session of about 90 minutes: one timed case spoken aloud (40 minutes), then a written review against the rubric in Section 5. Speaking aloud is the part that matters most; reading alone does not prepare you for the round.
 
 # The answer framework
 

@@ -10,5 +10,4 @@ window.MathJax = {
       Ex: "\\mathbb{E}"
     }
   },
-  options: { ignoreHtmlClass: ".*|", processHtmlClass: "arithmatex" }
 };
