@@ -18,6 +18,7 @@ nav:
   - Classification:
       - Logistic & multiclass: classification/logit-multiclass.md
       - AUC & ROC: classification/auc.md
+      - Naive Bayes for fraud: classification/naive-bayes.md
       - Q&A: classification/qa.md
   - Statistical inference:
       - p-values and tests:

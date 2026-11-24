@@ -470,7 +470,7 @@ Use a sufficiently representative dataset, validation-based complexity selection
 
 Bayes’ theorem is $P(A\mid B)=P(B\mid A)P(A)/P(B)$ when $P(B)>0$. It converts prior probabilities into posterior probabilities using observed evidence. Applications include probabilistic classification, Bayesian parameter estimation, filtering, and uncertainty-aware predictions. Posterior estimates depend on both the likelihood model and prior assumptions.
 
-**Q.Why is Naive Bayes called *naive*?**
+**Q.Why is Naive Bayes called *naive*?** (Full fraud-focused notes: [Naive Bayes for fraud in production](../classification/naive-bayes.md).)
 
 Naive Bayes assumes predictors are conditionally independent given the class: $P(X_1,\ldots,X_d\mid Y)=\prod_j P(X_j\mid Y)$. This assumption is often unrealistic (words in a document, for example, are dependent) but yields fast, competitive classifiers in tasks such as text classification. Its raw probabilities can be poorly calibrated when dependence is strong.
 
